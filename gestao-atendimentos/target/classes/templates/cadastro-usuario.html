@@ -1,0 +1,154 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+<head>
+    <title>Cadastro de Usuário</title>
+    <link rel="stylesheet" href="/css/colors.css"> <meta name="viewport" content="width=device-width, initial-scale=1.0">
+</head>
+<body>
+    <div class="main-container">
+        <header class="app-header">
+            <a href="/main" class="back-to-menu-button">Voltar ao Menu Principal</a>
+            <h1>Cadastro de Usuário</h1>
+            <div class="user-info" sec:authorize="isAuthenticated()">
+                Bem-vindo(a), <span sec:authentication="name">Usuário</span>!
+            </div>
+        </header>
+
+        <main class="dashboard-content">
+            <section class="card full-width">
+                <h3>Gerenciar Usuários</h3>
+
+                <div th:if="${successMessage}" class="success-message">
+                    <p th:text="${successMessage}"></p>
+                </div>
+                <div th:if="${errorMessage}" class="error-message">
+                    <p th:text="${errorMessage}"></p>
+                </div>
+
+                <form th:action="@{/cadastro-usuario/salvar}" th:object="${usuario}" method="post" enctype="multipart/form-data">
+                    <div class="input-group file-upload-group">
+                        <label for="fotoUsuario">Foto do Usuário:</label>
+                        <input type="file" id="fotoUsuario" name="fotoUsuario" accept="image/*" />
+                        <div class="file-info">
+                            <span id="fileName">Nenhum arquivo selecionado</span>
+                            <button type="button" class="upload-button">Escolher Arquivo</button>
+                        </div>
+                    </div>
+
+                    <div class="input-group">
+                        <label for="idLogin">ID de Login:</label>
+                        <input type="text" id="idLogin" th:field="*{username}" placeholder="Ex: joao.silva" required />
+                    </div>
+                    <div class="input-group">
+                        <label for="nomeCompleto">Nome Completo:</label>
+                        <input type="text" id="nomeCompleto" th:field="*{fullName}" placeholder="Ex: João da Silva" required />
+                    </div>
+                    <div class="input-group">
+                        <label for="senha">Senha:</label>
+                        <input type="password" id="senha" th:field="*{password}" placeholder="********" required />
+                        <label for="confirmSenha" class="small-label">Confirmar Senha:</label>
+                        <input type="password" id="confirmSenha" name="confirmPassword" placeholder="********" />
+                    </div>
+
+                    <div class="input-group">
+                        <label for="departamento">Departamento:</label>
+                        <select id="departamento" th:field="*{department}" required>
+                            <option value="">Selecione um Departamento</option>
+                            <option value="Vendas">Vendas</option>
+                            <option value="Logistica">Logística</option>
+                            <option value="Tecnico">Técnico</option>
+                            <option value="Financeiro">Financeiro</option>
+                            <option value="Fiscal_Emissao">Fiscal Emissão</option>
+                            <option value="Fiscal_Apuracao">Fiscal Apuração</option>
+                            <option value="Fiscal_Entradas">Fiscal Entradas</option>
+                            <option value="Compras">Compras</option>
+                            <option value="Outros">Outros</option>
+                        </select>
+                    </div>
+                    <div class="input-group">
+                        <label for="cargo">Cargo:</label>
+                        <select id="cargo" th:field="*{role}" required>
+                            <option value="">Selecione um Cargo</option>
+                            <option value="Atendente">Atendente</option>
+                            <option value="Analista">Analista</option>
+                            <option value="Supervisor">Supervisor</option>
+                            <option value="Gestor">Gestor</option>
+                            <option value="ADMIN">ADMIN</option> </select>
+                    </div>
+                    
+                    <input type="hidden" th:field="*{id}" />
+
+                    <div class="button-group-form">
+                        <button type="submit" class="action-button primary-button">Salvar</button>
+                        
+                        <button type="submit" th:formaction="@{/cadastro-usuario/deletar}" class="action-button danger-button" 
+                                onclick="return confirm('Tem certeza que deseja deletar este usuário?')" 
+                                sec:authorize="hasAuthority('ADMIN')">Deletar</button>
+                        
+                        <a href="/cadastro-usuario/listar" class="action-button secondary-button">Visualizar Usuários</a>
+                    </div>
+                    <input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}" />
+                </form>
+
+                <div class="user-list-section" sec:authorize="hasAuthority('ADMIN')">
+                    <h4>Usuários Cadastrados</h4>
+                    <table class="data-table">
+                        <thead>
+                            <tr>
+                                <th>ID</th>
+                                <th>ID de Login</th>
+                                <th>Nome Completo</th>
+                                <th>Departamento</th>
+                                <th>Cargo</th>
+                                <th>Ações</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr th:each="u : ${users}">
+                                <td th:text="${u.id}">1</td>
+                                <td th:text="${u.username}">admin</td>
+                                <td th:text="${u.fullName}">Administrador Geral</td>
+                                <td th:text="${u.department}">Outros</td>
+                                <td th:text="${u.role}">ADMIN</td>
+                                <td>
+                                    <a th:href="@{/cadastro-usuario/editar(id=${u.id})}" class="action-button small-button">Editar</a>
+                                    <form th:action="@{/cadastro-usuario/deletar}" method="post" style="display:inline;">
+                                        <input type="hidden" name="id" th:value="${u.id}" />
+                                        <button type="submit" class="action-button small-button danger-button" 
+                                                onclick="return confirm('Tem certeza que deseja deletar o usuário ' + [[${u.username}]] + '?')">Deletar</button>
+                                        <input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}" />
+                                    </form>
+                                </td>
+                            </tr>
+                            </tbody>
+                    </table>
+                    <p th:if="${#lists.isEmpty(users)}">Nenhum usuário cadastrado.</p>
+                </div>
+
+            </section>
+        </main>
+
+        <footer class="app-footer">
+            <div class="user-profile">
+                <img src="/images/default-user.png" alt="Foto do Usuário" class="user-photo">
+                <span class="user-name" sec:authorize="isAuthenticated()" sec:authentication="name">Usuário</span>
+            </div>
+            <form th:action="@{/logout}" method="post">
+                <button type="submit" class="logout-button">Sair</button>
+            </form>
+        </footer>
+    </div>
+
+    <script>
+        // Script para mostrar o nome do arquivo selecionado na foto
+        document.getElementById('fotoUsuario').addEventListener('change', function() {
+            const fileName = this.files[0] ? this.files[0].name : 'Nenhum arquivo selecionado';
+            document.getElementById('fileName').innerText = fileName;
+        });
+
+        document.querySelector('.upload-button').addEventListener('click', function() {
+            document.getElementById('fotoUsuario').click();
+        });
+    </script>
+</body>
+</html>
