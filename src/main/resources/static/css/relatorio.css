@@ -1,0 +1,96 @@
+/* src/main/resources/static/css/relatorio.css */
+@import url('_variables.css');
+
+/* Estilos da tela (mantidos como você já tinha) */
+.relatorio-content {
+    flex-grow: 1;
+    padding: 30px;
+    background-color: var(--branco);
+    display: flex;
+    flex-direction: column;
+    gap: 25px;
+}
+
+/* ... (demais estilos da tela continuam) ... */
+
+/* --- Estilos de Impressão --- */
+@media print {
+    body {
+        font-size: 11px !important;
+        color: #000 !important;
+        margin: 0 !important;
+        padding: 0 !important;
+        background: #fff !important;
+    }
+
+    .app-header,
+    .main-menu,
+    .filter-card,
+    .app-footer,
+    .report-actions {
+        display: none !important;
+    }
+
+    .main-container,
+    .dashboard-content.relatorio-content,
+    .results-card {
+        margin: 0 !important;
+        padding: 0 !important;
+        background: transparent !important;
+        box-shadow: none !important;
+        border: none !important;
+    }
+
+    .results-card h4 {
+        text-align: center !important;
+        font-size: 16px !important;
+        margin: 0 0 20px 0 !important;
+        border-bottom: 2px solid #000 !important;
+        padding-bottom: 5px;
+    }
+
+    .data-table {
+        width: 100% !important;
+        border-collapse: collapse !important;
+        table-layout: auto !important;
+    }
+
+    .data-table thead {
+        display: table-header-group !important;
+    }
+
+    .data-table thead th {
+        background-color: #e0e0e0 !important; /* Azul escuro */
+        color: #0d47a1 !important;            /* Letras brancas */
+        font-weight: bold !important;
+        text-transform: uppercase;
+        padding: 6px !important;
+        border: 1px solid #000 !important;
+        text-align: left !important;
+    }
+
+    .data-table tbody td {
+        border: 1px solid #000 !important;
+        padding: 5px 6px !important;
+        vertical-align: middle !important;
+        white-space: normal !important;
+        word-wrap: break-word !important;
+        text-align: center !important;
+    }
+
+    .data-table tbody tr:nth-child(even) {
+        background-color: #f5f5f5 !important;
+    }
+
+    .data-table td::before {
+        display: none !important;
+    }
+
+    /* Colunas amplas para conteúdo longo */
+    .data-table th:nth-of-type(5),
+    .data-table td:nth-of-type(5),
+    .data-table th:nth-of-type(6),
+    .data-table td:nth-of-type(6) {
+        width: 25% !important;
+    }
+}

@@ -1,0 +1,31 @@
+/* src/main/resources/static/css/_variables.css */
+
+/* Definição de Cores e Fontes */
+:root {
+    --azul-claro: #e0f0ff;
+    --azul-medio: #007bff; /* Um azul vibrante para botões */
+    --azul-escuro: #003f88; /* Um azul mais profundo para texto/background */
+    --branco: #ffffff;
+    --cinza-claro: #f8f9fa;
+    --cinza-escuro-texto: #343a40; /* Cor para o texto principal */
+    --sombra-leve: rgba(0, 0, 0, 0.1);
+    --sombra-media: rgba(0, 0, 0, 0.15);
+    --borda-arredondada: 8px;
+    --transicao-rapida: all 0.3s ease-in-out;
+    --fonte-principal: 'Segoe UI', Roboto, Helvetica, Arial, sans-serif; /* Fonte moderna */
+}
+
+/* Estilos globais muito básicos que afetam tudo */
+html {
+    box-sizing: border-box;
+}
+
+*, *::before, *::after {
+    box-sizing: inherit;
+}
+
+body {
+    font-family: var(--fonte-principal);
+    margin: 0;
+    color: var(--cinza-escuro-texto);
+}

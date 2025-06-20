@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+<head>
+    <title>Tela Principal - Gestão de Atendimentos</title>
+    <link rel="stylesheet" th:href="@{/css/main.css}">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+</head>
+<body>
+    <div class="main-container">
+        <header class="app-header">
+            <h1>Gestão de Atendimentos</h1>
+            <div class="user-info" sec:authorize="isAuthenticated()">
+                Bem-vindo(a), <span sec:authentication="name">Usuário</span>!
+            </div>
+        </header>
+
+        <nav class="main-menu">
+            <a href="/cadastro-usuario" class="menu-button">Cadastro de Usuário</a>
+            <a href="/cadastro-atendimento" class="menu-button">Cadastro de Atendimentos</a>
+            <a href="/relatorio-atendimentos" class="menu-button">Relatório de Atendimentos</a>
+        </nav>
+
+        <main class="dashboard-content">
+            <section class="dashboard-section">
+                <h3>Dashboard de BI</h3>
+                <div class="dashboard-grid">
+                    <div class="card">
+                        <h4>Atendimentos Mensais</h4>
+                        <p class="big-number" id="atendimentosMensais">0</p>
+                    </div>
+                    <div class="card">
+                        <h4>Atendimentos Diários</h4>
+                        <p class="big-number" id="atendimentosDiarios">0</p>
+                    </div>
+                    <div class="card full-width">
+                        <h4>Top 10 Clientes Atendidos</h4>
+                        <ul id="topClientes">
+                            </ul>
+                    </div>
+                    <div class="card full-width">
+                        <h4>Top 10 Empresas Atendidas</h4>
+                        <ul id="topEmpresas">
+                            </ul>
+                    </div>
+                </div>
+            </section>
+        </main>
+
+        <footer class="app-footer">
+            <div class="user-profile">
+                <!-- Caminho corrigido para a logo -->
+                <img th:src="@{/img/Logo.png}" alt="Logo da Gestão de Atendimentos" class="app-logo-footer">
+                <span class="user-name" sec:authorize="isAuthenticated()" sec:authentication="name">Usuário</span>
+            </div>
+            <form th:action="@{/logout}" method="post">
+                <input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}" />
+                <button type="submit" class="logout-button">Sair</button>
+            </form>
+        </footer>
+    </div>
+
+    <script th:inline="javascript">
+        const dashboardData = {
+            atendimentosMensais: [[${atendimentosMensais}]],
+            atendimentosDiarios: [[${atendimentosDiarios}]],
+            topClientes: [
+                // Itera sobre topClientes e gera um array de objetos JavaScript válidos
+                <th:block th:each="c, iterStat : ${topClientes}">
+                    { nome: [[${c[0]}]], quantidade: [[${c[1]}]] }[[${!iterStat.last ? ',' : ''}]]
+                </th:block>
+            ],
+            topEmpresas: [
+                // Itera sobre topEmpresas e gera um array de objetos JavaScript válidos
+                <th:block th:each="e, iterStat : ${topEmpresas}">
+                    { nome: [[${e[0]}]], quantidade: [[${e[1]}]] }[[${!iterStat.last ? ',' : ''}]]
+                </th:block>
+            ]
+        };
+
+        document.addEventListener('DOMContentLoaded', function() {
+            document.getElementById('atendimentosMensais').innerText = dashboardData.atendimentosMensais;
+            document.getElementById('atendimentosDiarios').innerText = dashboardData.atendimentosDiarios;
+
+            const topClientesList = document.getElementById('topClientes');
+            topClientesList.innerHTML = ''; // Limpa o conteúdo inicial (os <li> hardcoded, se existirem)
+            dashboardData.topClientes.forEach(item => {
+                const li = document.createElement('li');
+                // Use item.nome e item.quantidade, pois foi assim que você gerou o JS
+                li.innerText = `${item.nome} - ${item.quantidade} atendimentos`; // CORRIGIDO: de item.count para item.quantidade
+                topClientesList.appendChild(li);
+            });
+
+            const topEmpresasList = document.getElementById('topEmpresas');
+            topEmpresasList.innerHTML = ''; // Limpa o conteúdo inicial
+            dashboardData.topEmpresas.forEach(item => {
+                const li = document.createElement('li');
+                // Use item.nome e item.quantidade
+                li.innerText = `${item.nome} - ${item.quantidade} atendimentos`; // CORRIGIDO: de item.count para item.quantidade
+                topEmpresasList.appendChild(li);
+            });
+        });
+    </script>
+</body>
+</html>

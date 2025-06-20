@@ -1,0 +1,216 @@
+/* src/main/resources/static/css/cadastro-atendimento.css */
+
+@import url('_variables.css'); /* Importa as variáveis de cores e fontes */
+
+/*
+   Este arquivo vai conter estilos específicos para a página de cadastro de atendimentos.
+   Ele deve importar apenas '_variables.css' e aproveitar as classes já definidas em 'main.css' e 'forms.css'.
+   Não importe 'main.css' ou 'forms.css' aqui, pois eles já devem ser linkados diretamente no HTML.
+*/
+
+/* Exemplo de estilo específico, se houver necessidade de um override ou algo único */
+.atendimento-list-section h4 {
+    color: var(--azul-escuro);
+    margin-top: 30px; /* Espaço antes do título da tabela de atendimentos */
+    margin-bottom: 20px;
+    font-size: 1.4em;
+    border-bottom: 1px solid var(--azul-claro);
+    padding-bottom: 10px;
+}
+
+
+
+/* Estilos para o link "Voltar ao Menu Principal" (se houver um na página de cadastro de atendimento) */
+.back-to-menu {
+    padding: 20px 30px; /* Adapte conforme necessário */
+    background-color: var(--cinza-claro); /* Fundo sutil */
+    border-bottom: 1px solid var(--borda-claro); /* Supondo que você tenha uma variável --borda-claro em _variables.css */
+    display: flex;
+    justify-content: flex-start; /* Alinha o botão à esquerda */
+    align-items: center;
+}
+
+.back-to-menu .button-link {
+    background-color: var(--branco); /* */
+    color: var(--azul-escuro); /* */
+    padding: 8px 15px; /* */
+    border-radius: var(--borda-arredondada); /* */
+    text-decoration: none; /* */
+    font-weight: 600; /* */
+    transition: var(--transicao-rapida); /* */
+    box-shadow: 0 2px 5px var(--sombra-leve); /* */
+    white-space: nowrap;
+}
+
+.back-to-menu .button-link:hover {
+    background-color: var(--azul-claro); /* */
+    color: var(--azul-medio); /* */
+    transform: translateY(-2px); /* */
+    box-shadow: 0 4px 8px var(--sombra-media); /* */
+}
+
+/* Estilos para o conteúdo principal do dashboard */
+.dashboard-content {
+    padding: 30px; /* Ajuste o padding conforme necessário */
+    background-color: var(--cinza-claro); /* Fundo para o dashboard. Pode ser branco também, dependendo do contraste desejado */
+    flex-grow: 1; /* Garante que o conteúdo ocupe o espaço restante */
+    display: flex;
+    flex-direction: column; /* Organiza os filhos em coluna */
+    gap: 25px; /* Espaçamento entre as seções (cards) */
+}
+
+/* Estilos para as seções de cartão dentro do dashboard */
+.dashboard-content .card {
+    background-color: var(--branco); /* */
+    border-radius: var(--borda-arredondada); /* */
+    box-shadow: 0 4px 15px var(--sombra-leve); /* */
+    padding: 30px; /* */
+    margin-bottom: 0; /* Remove a margem inferior se houver, já que o gap fará isso */
+}
+
+/* Reutilizando a classe .card.full-width do seu HTML */
+.card.full-width {
+    background-color: var(--cinza-claro); /* */
+    padding: 25px; /* */
+    border-radius: var(--borda-arredondada); /* */
+    box-shadow: 0 5px 15px var(--sombra-leve); /* */
+    margin-bottom: 30px; /* */
+}
+
+.card.full-width h3 {
+    color: var(--azul-escuro); /* */
+    margin-top: 0; /* */
+    margin-bottom: 25px; /* */
+    font-size: 1.6em; /* */
+    border-bottom: 2px solid var(--azul-claro); /* */
+    padding-bottom: 10px; /* */
+}
+
+/* --- Estilos do Formulário (Reutilizando de forms.css e cadastro-usuario.css) --- */
+/* Você pode adicionar overrides aqui se precisar de algo específico apenas para este formulário */
+
+form {
+    display: flex;
+    flex-direction: column;
+    gap: 15px; /* Espaçamento entre os grupos de input */
+}
+
+.input-group {
+    display: flex;
+    flex-direction: column;
+    margin-bottom: 15px; /* Adicione ou ajuste margem se não for coberto pelo gap do form */
+}
+
+.input-group label {
+    font-weight: 600; /* */
+    margin-bottom: 8px; /* */
+    color: var(--cinza-escuro-texto); /* */
+    font-size: 0.95em; /* */
+}
+
+.input-group input[type="text"],
+.input-group input[type="password"],
+.input-group input[type="email"],
+.input-group textarea,
+.input-group select {
+    padding: 12px 15px; /* */
+    border: 1px solid #ced4da; /* Uma cor de borda neutra. Ou use var(--borda-claro) se definida. */
+    border-radius: var(--borda-arredondada-pequena); /* Ou var(--borda-arredondada) se não tiver pequena */
+    font-size: 1em; /* */
+    color: var(--cinza-escuro-texto); /* */
+    background-color: var(--branco); /* */
+    transition: border-color 0.3s ease, box-shadow 0.3s ease; /* */
+}
+
+.input-group input[type="text"]:focus,
+.input-group input[type="password"]:focus,
+.input-group input[type="email"]:focus,
+.input-group textarea:focus,
+.input-group select:focus {
+    border-color: var(--azul-medio); /* */
+    box-shadow: 0 0 0 0.2rem rgba(0, 123, 255, 0.25); /* Sombra de foco com cor do azul-medio */
+    outline: none; /* */
+}
+
+/* Estilos específicos para textarea para garantir que fique bem */
+.input-group textarea {
+    resize: vertical; /* Permite redimensionar apenas verticalmente */
+    min-height: 100px; /* Altura mínima para textareas */
+}
+
+/* Estilo para o grupo de botões de um único botão (como o Salvar) */
+.button-group-single {
+    display: flex; /* */
+    justify-content: center; /* */
+    margin-top: 20px; /* */
+}
+
+.login-button { /* Usando a classe do login para manter o estilo de botão primário */
+    background-color: var(--azul-medio); /* */
+    color: var(--branco); /* */
+    padding: 14px 25px; /* */
+    border: none; /* */
+    border-radius: 5px; /* */
+    font-size: 1.1em; /* */
+    font-weight: 600; /* */
+    cursor: pointer; /* */
+    transition: var(--transicao-rapida); /* */
+    width: 100%; /* */
+    max-width: 300px; /* Limita a largura do botão em telas maiores */
+    letter-spacing: 0.5px; /* */
+}
+
+.login-button:hover {
+    background-color: var(--azul-escuro); /* */
+    box-shadow: 0 5px 15px var(--sombra-leve); /* */
+    transform: translateY(-2px); /* */
+}
+
+.login-button:active {
+    transform: translateY(0); /* */
+    background-color: #002d6b; /* */
+}
+
+/* --- Mensagens de Feedback (Sucesso/Erro) --- */
+.success-message, .error-message {
+    padding: 15px 20px; /* */
+    border-radius: 5px; /* */
+    margin-bottom: 20px; /* */
+    font-weight: 600; /* */
+    text-align: center; /* */
+}
+
+.success-message {
+    background-color: #d4edda; /* Verde claro */
+    color: #155724; /* Verde escuro */
+    border: 1px solid #c3e6cb; /* */
+}
+
+.error-message {
+    background-color: #f8d7da; /* Vermelho claro */
+    color: #721c24; /* Vermelho escuro */
+    border: 1px solid #f5c6cb; /* */
+}
+
+
+/* --- Responsividade para Telas Menores --- */
+@media (max-width: 768px) {
+    .dashboard-content {
+        padding: 20px;
+    }
+
+    .card.full-width {
+        padding: 20px;
+    }
+
+    .input-group input[type="text"],
+    .input-group textarea,
+    .input-group select {
+        padding: 10px 12px;
+    }
+
+    .login-button {
+        padding: 12px 20px;
+        font-size: 1em;
+    }
+}

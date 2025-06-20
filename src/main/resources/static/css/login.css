@@ -1,0 +1,198 @@
+/* src/main/resources/static/css/login.css */
+
+@import url('_variables.css'); /* Importa as variáveis de cores e fontes */
+
+body {
+    background: linear-gradient(135deg, var(--azul-claro) 0%, var(--azul-medio) 100%); /* Gradiente de fundo */
+    min-height: 100vh; /* Garante que o body ocupa a altura total */
+    display: flex; /* Habilita flexbox no body */
+    justify-content: center; /* Centraliza horizontalmente */
+    align-items: center; /* Centraliza verticalmente */
+    /* overflow-x: hidden; */ /* Evita scroll horizontal */
+}
+
+/* --- Estilos para o Formulário de Login --- */
+.login-container {
+    background-color: var(--branco);
+    padding: 40px;
+    border-radius: var(--borda-arredondada);
+    box-shadow: 0 10px 25px var(--sombra-media); /* Sombra mais pronunciada */
+    width: 100%;
+    max-width: 400px; /* Largura máxima para telas maiores */
+    text-align: center;
+    transform: translateY(0); /* Estado inicial para animação */
+    animation: fadeInScale 0.6s ease-out forwards; /* Animação de entrada */
+
+}
+
+/* Animação de entrada para a caixa de login */
+@keyframes fadeInScale {
+    from { opacity: 0; transform: translateY(20px) scale(0.95); }
+    to { opacity: 1; transform: translateY(0) scale(1); }
+}
+
+h2 {
+    color: var(--azul-escuro);
+    margin-bottom: 30px;
+    font-size: 2em;
+    font-weight: 600;
+}
+
+/* Grupo de Input (Label + Input) */
+.input-group {
+    margin-bottom: 20px;
+    text-align: left; /* Alinha o texto da label à esquerda */
+}
+
+label {
+    display: block; /* Cada label em uma nova linha */
+    margin-bottom: 8px;
+    font-weight: 500;
+    color: var(--azul-escuro); /* Cor para os rótulos */
+    font-size: 0.95em;
+}
+
+/* Estilo para os Campos de Input de Texto e Senha */
+input[type="text"],
+input[type="password"] {
+    width: calc(100% - 20px); /* Largura total menos padding */
+    padding: 12px 10px;
+    border: 1px solid #ced4da;
+    border-radius: 5px;
+    font-size: 1em;
+    transition: var(--transicao-rapida);
+    box-sizing: border-box; /* Garante que padding não aumente a largura */
+}
+
+input[type="text"]:focus,
+input[type="password"]:focus {
+    border-color: var(--azul-medio);
+    box-shadow: 0 0 0 0.2rem rgba(0, 123, 255, 0.25);/* Sombra ao focar */
+    outline: none;/* Remove o outline padrão do navegador */
+}
+
+input::placeholder {
+    color: #a0a0a0;
+    font-style: italic;
+}
+
+/* Grupo de Opções (Lembrar-me e Esqueceu a Senha) */
+.options-group {
+    display: flex;
+    justify-content: space-between; /* Espaça os itens: Lembrar-me à esquerda, Link à direita */
+    align-items: center;
+    margin-bottom: 25px;
+    font-size: 0.9em;
+}
+
+.remember-me {
+    display: flex;
+    align-items: center;
+    color: var(--cinza-escuro-texto);
+}
+
+.remember-me input[type="checkbox"] {
+    margin-right: 8px;
+    width: 16px;
+    height: 16px;
+    accent-color: var(--azul-medio);
+    cursor: pointer;
+}
+
+.forgot-password-link {
+    color: var(--azul-medio);
+    text-decoration: none;
+    transition: var(--transicao-rapida);
+    font-weight: 500;
+}
+
+.forgot-password-link:hover {
+    text-decoration: underline;
+    color: var(--azul-escuro);
+}
+
+.error-message {
+    background-color: #ffe0e0;
+    color: #cc0000;
+    border: 1px solid #ff9999;
+    padding: 10px 15px;
+    border-radius: 5px;
+    margin-bottom: 20px;
+    font-size: 0.9em;
+    text-align: center;
+    animation: fadeIn 0.4s ease-out; /* Animação simples para a mensagem */
+}
+
+@keyframes fadeIn {
+    from { opacity: 0; transform: translateY(-10px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+
+/* Grupo para o Botão Único (Login) */
+
+.button-group-single {
+    display: flex;
+    justify-content: center;
+    margin-top: 20px;
+}
+
+.login-button {
+    background-color: var(--azul-medio);
+    color: var(--branco);
+    padding: 14px 25px;
+    border: none;
+    border-radius: 5px;
+    font-size: 1.1em;
+    font-weight: 600;
+    cursor: pointer;
+    transition: var(--transicao-rapida);
+    width: 100%;
+    margin-top: 20px; /*já definido no .button-group-single */
+    letter-spacing: 0.5px;
+}
+
+.login-button:hover {
+    background-color: var(--azul-escuro);
+    box-shadow: 0 5px 15px var(--sombra-leve);
+    transform: translateY(-2px);
+}
+
+.login-button:active {
+    transform: translateY(0);
+    background-color: #002d6b;
+}
+
+/* Responsividade Básica */
+
+@media (max-width: 600px) {
+    .login-container {
+        padding: 30px 20px;
+        margin: 0 20px;
+    }
+
+    h2 {
+        font-size: 1.8em;
+    }
+
+    .login-button {
+        padding: 12px 20px;
+        font-size: 1em;
+    }
+}
+
+.success-message {
+    background-color: #d4edda;
+    color: #155724;
+    border: 1px solid #c3e6cb;
+    padding: 10px 15px;
+    border-radius: 5px;
+    margin-bottom: 20px;
+    font-size: 0.9em;
+    text-align: center;
+    animation: fadeIn 0.4s ease-out;
+}
+
+.text-center-link {
+    text-align: center;
+    margin-top: 20px;
+}

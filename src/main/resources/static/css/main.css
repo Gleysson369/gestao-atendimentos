@@ -1,0 +1,242 @@
+/* src/main/resources/static/css/main.css */
+
+@import url('_variables.css'); /* Importa as variáveis de cores e fontes */
+
+body {
+    background: linear-gradient(135deg, var(--azul-claro) 0%, var(--azul-medio) 100%); /* Gradiente de fundo */
+    /* Removido display: flex etc. daqui para que o main-container possa ocupar o fluxo normal da página */
+    /* As regras de centralização do body em login.css não se aplicam aqui porque o main-container já toma conta */
+}
+
+/* --- Container Principal da Aplicação (Tela Main) --- */
+.main-container {
+    display: flex;
+    flex-direction: column;
+    width: 100%; /* Ocupa a largura total para se ajustar ao body */
+    max-width: 1200px; /* Limita a largura em telas maiores */
+    min-height: 100vh; /* Ocupa a altura total do viewport */
+    background-color: var(--cinza-claro); /* Fundo sutil para a área da aplicação */
+    box-shadow: 0 0 20px var(--sombra-media);
+    margin: 0 auto; /* Centraliza o container na página */
+    border-radius: var(--borda-arredondada);
+    overflow: hidden; /* Garante que os cantos arredondados sejam aplicados */
+}
+
+/* --- Cabeçalho da Aplicação --- */
+.app-header {
+    background-color: var(--azul-escuro);
+    color: var(--branco);
+    padding: 20px 30px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    box-shadow: 0 2px 10px var(--sombra-leve);
+}
+
+.app-header h1 {
+    margin: 0;
+    font-size: 1.8em;
+    font-weight: 700;
+}
+
+.user-info {
+    font-size: 1.1em;
+    font-weight: 500;
+}
+
+/* --- Menu de Navegação Principal --- */
+.main-menu {
+    background-color: var(--azul-medio);
+    padding: 15px 30px;
+    display: flex;
+    justify-content: flex-start;
+    gap: 20px;
+    flex-wrap: wrap;
+    box-shadow: inset 0 -2px 5px rgba(0,0,0,0.1);
+}
+
+.menu-button {
+    background-color: var(--branco);
+    color: var(--azul-escuro);
+    padding: 10px 20px;
+    border-radius: 5px;
+    text-decoration: none;
+    font-weight: 600;
+    transition: var(--transicao-rapida);
+    box-shadow: 0 2px 5px var(--sombra-leve);
+}
+
+.menu-button:hover {
+    background-color: var(--azul-claro);
+    color: var(--azul-medio);
+    transform: translateY(-2px);
+    box-shadow: 0 4px 8px var(--sombra-media);
+}
+
+/* --- Conteúdo Principal (Dashboard) --- */
+.dashboard-content {
+    flex-grow: 1;
+    padding: 30px;
+    background-color: var(--branco);
+}
+
+.dashboard-section h3 {
+    color: var(--azul-escuro);
+    margin-bottom: 25px;
+    font-size: 1.6em;
+    border-bottom: 2px solid var(--azul-claro);
+    padding-bottom: 10px;
+}
+
+.dashboard-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 25px;
+}
+
+.card {
+    background-color: var(--cinza-claro);
+    padding: 20px;
+    border-radius: var(--borda-arredondada);
+    box-shadow: 0 5px 15px var(--sombra-leve);
+    text-align: center;
+    transition: var(--transicao-rapida);
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+}
+
+.card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 8px 20px var(--sombra-media);
+}
+
+.card h4 {
+    color: var(--azul-escuro);
+    margin-top: 0;
+    margin-bottom: 15px;
+    font-size: 1.3em;
+    font-weight: 600;
+}
+
+.big-number {
+    font-size: 3em;
+    color: var(--azul-medio);
+    font-weight: 700;
+    margin: 10px 0;
+}
+
+.card ul {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    text-align: left;
+}
+
+.card ul li {
+    padding: 8px 0;
+    border-bottom: 1px dotted #e0e0e0;
+    font-size: 0.95em;
+    color: var(--cinza-escuro-texto);
+}
+
+.card ul li:last-child {
+    border-bottom: none;
+}
+
+.card.full-width {
+    grid-column: 1 / -1;
+}
+
+/* --- Rodapé da Aplicação --- */
+.app-footer {
+    background-color: var(--azul-escuro);
+    color: var(--branco);
+    padding: 15px 30px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border-top: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.user-profile {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+/* Estilos para a logo no footer */
+.app-logo-footer {
+    width: 60px; /* Ajuste o tamanho conforme necessário */
+    height: auto; /* Mantém a proporção da imagem */
+    border-radius: 0; /* Remove borda arredondada se houver */
+    border: none; /* Remove borda se houver */
+    object-fit: contain; /* Garante que a imagem se ajuste sem cortar */
+}
+
+/* Remover os estilos antigos do user-photo se eles impactassem a logo */
+.user-photo {
+    /* Mantenha apenas se você ainda tiver user-photo em outro lugar.
+       Se não, você pode remover esta regra. */
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    border: 2px solid var(--branco);
+    object-fit: cover;
+}
+
+
+.user-name {
+    font-weight: 500;
+    font-size: 1.05em;
+}
+
+.logout-button {
+    background-color: #dc3545;
+    color: var(--branco);
+    padding: 8px 18px;
+    border: none;
+    border-radius: 5px;
+    font-size: 0.95em;
+    font-weight: 600;
+    cursor: pointer;
+    transition: var(--transicao-rapida);
+}
+
+.logout-button:hover {
+    background-color: #c82333;
+    box-shadow: 0 3px 8px var(--sombra-leve);
+    transform: translateY(-1px);
+}
+
+/* --- Responsividade para Telas Menores --- */
+@media (max-width: 768px) {
+    .app-header {
+        flex-direction: column;
+        text-align: center;
+        gap: 10px;
+    }
+
+    .main-menu {
+        justify-content: center;
+        padding: 15px;
+    }
+
+    .menu-button {
+        flex-grow: 1;
+        text-align: center;
+    }
+
+    .dashboard-content {
+        padding: 20px;
+    }
+
+    .dashboard-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .app-footer {
+        flex-direction: column;
+        gap: 15px;
+    }
+}
