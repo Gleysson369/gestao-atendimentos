@@ -1,4 +1,3 @@
-// src/main/java/com/gleysson/flavio/gestao_atendimentos/service/CustomUserDetailsService.java
 package com.gleysson.flavio.gestao_atendimentos.service;
 
 import com.gleysson.flavio.gestao_atendimentos.model.Usuario;
@@ -33,9 +32,9 @@ public class CustomUserDetailsService implements UserDetailsService {
 
         System.out.println("DEBUG: Usuário '" + username + "' encontrado. Role(s): " + authorities);
 
-        // Retorne sua CustomUserDetails em vez de um User padrão
+        // Retorne sua CustomUserDetails, passando o objeto Usuario completo
         return new CustomUserDetails(
-                usuario,
+                usuario, // Passa o objeto Usuario completo
                 authorities
         );
     }

@@ -11,32 +11,25 @@
 }
 
 /* Estilos para o link "Voltar ao Menu Principal" */
-.back-to-menu {
-    padding: 20px 30px;
-    background-color: var(--cinza-claro); /* Um fundo sutil para o cabeçalho específico desta página */
-    border-bottom: 1px solid var(--borda-claro);
-    display: flex;
-    justify-content: flex-start; /* Alinha o botão à esquerda */
-    align-items: center;
-}
-
-.back-to-menu .button-link {
-    background-color: var(--branco);
-    color: var(--azul-escuro);
+/* Adicionado ao header, então pode ser estilizado via main.css ou aqui se for específico */
+.back-to-menu-button { /* Usando a classe existente do main.css, apenas para garantir */
+    background-color: #6c757d;
+    color: var(--branco);
     padding: 8px 15px;
-    border-radius: var(--borda-arredondada);
+    border: none;
+    border-radius: 5px;
+    font-size: 0.9em;
+    font-weight: 500;
     text-decoration: none;
-    font-weight: 600;
     transition: var(--transicao-rapida);
-    box-shadow: 0 2px 5px var(--sombra-leve);
-    white-space: nowrap;
+    cursor: pointer;
+    margin-right: auto;
 }
 
-.back-to-menu .button-link:hover {
-    background-color: var(--azul-claro);
-    color: var(--azul-medio);
-    transform: translateY(-2px);
-    box-shadow: 0 4px 8px var(--sombra-media);
+.back-to-menu-button:hover {
+    background-color: #5a6268;
+    box-shadow: 0 2px 8px var(--sombra-leve);
+    transform: translateY(-1px);
 }
 
 
@@ -45,7 +38,7 @@
 .dashboard-content {
     padding: 30px; /* Ajuste o padding conforme necessário */
     background-color: var(--cinza-claro); /* Fundo para o dashboard. Se o main-container já é cinza-claro,
-                                           considere usar 'var(--branco)' aqui para contraste */
+                                            considere usar 'var(--branco)' aqui para contraste */
     flex-grow: 1; /* Garante que o conteúdo ocupe o espaço restante */
     display: flex;
     flex-direction: column; /* Organiza os filhos em coluna */
@@ -103,6 +96,19 @@
     background-color: #f8d7da; /* Vermelho claro */
     color: #721c24; /* Vermelho escuro */
     border: 1px solid #f5c6cb;
+}
+
+/* --- Mensagem de Informação (para usuários não-ADMIN) --- */
+.info-message {
+    background-color: #fff3cd; /* Amarelo claro para alerta */
+    color: #856404; /* Marrom escuro para texto */
+    border: 1px solid #ffeeba; /* Borda amarela */
+    padding: 15px;
+    margin-bottom: 20px;
+    border-radius: 8px;
+    text-align: center;
+    font-size: 0.95em;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.05); /* Sombra suave */
 }
 
 /* --- Estilos do Formulário --- */
@@ -199,7 +205,7 @@ form {
 }
 
 /* --- Grupo de Botões do Formulário (corrigido para .button-group) --- */
-.button-group {
+.button-group-form { /* Renomeado de .button-group para evitar conflitos */
     display: flex;
     gap: 15px;
     margin-top: 25px;
@@ -208,7 +214,7 @@ form {
 }
 
 /* Estilos base para todos os botões (para ser consistente com main.css se existir) */
-.button {
+.action-button { /* Usando a classe action-button existente no seu HTML */
     padding: 12px 25px;
     border: none;
     border-radius: var(--borda-arredondada-pequena);
@@ -222,30 +228,50 @@ form {
     max-width: 200px; /* Limita o tamanho máximo de cada botão */
 }
 
-.button.primary {
+.action-button.primary {
     background-color: var(--azul-medio);
     color: var(--branco);
 }
 
-.button.primary:hover {
+.action-button.primary:hover {
     background-color: var(--azul-escuro);
     box-shadow: 0 4px 10px var(--azul-sombra);
     transform: translateY(-2px);
 }
 
-.button.danger {
+.action-button.secondary { /* Para o botão "Novo Usuário" */
+    background-color: #6c757d;
+    color: var(--branco);
+}
+
+.action-button.secondary:hover {
+    background-color: #5a6268;
+    box-shadow: 0 4px 10px rgba(0,0,0,0.2);
+    transform: translateY(-2px);
+}
+
+.action-button.danger {
     background-color: var(--vermelho-principal); /* Usando variável para vermelho */
     color: var(--branco);
 }
 
-.button.danger:hover {
+.action-button.danger:hover {
     background-color: var(--vermelho-escuro); /* Usando variável para vermelho */
     box-shadow: 0 4px 10px var(--vermelho-sombra);
     transform: translateY(-2px);
 }
 
+/* Estilo para botão desabilitado */
+.disabled-button {
+    opacity: 0.6;
+    cursor: not-allowed;
+    /* pointer-events: none; /* Pode desabilitar eventos de mouse se não quiser o alert */
+}
+/* Se você quiser que o alert ainda funcione, não use pointer-events: none; */
+
+
 /* Estilos para botões de link na tabela (se aplicável) */
-.button-link.small {
+.action-buttons-cell .action-button.edit { /* Mantém o estilo para Editar */
     padding: 6px 12px; /* Ajuste para botões menores em tabelas */
     font-size: 0.85em;
     background-color: var(--azul-claro);
@@ -258,21 +284,27 @@ form {
     transition: var(--transicao-rapida);
 }
 
-.button-link.small:hover {
+.action-buttons-cell .action-button.edit:hover {
     background-color: var(--azul-medio);
     color: var(--branco);
     transform: translateY(-1px);
 }
 
-.button-link.small.danger {
-    background-color: var(--vermelho-claro); /* Um vermelho mais suave para link danger */
-    color: var(--vermelho-principal);
-    border: 1px solid var(--vermelho-principal);
-}
-
-.button-link.small.danger:hover {
+.action-buttons-cell .action-button.delete { /* Mantém o estilo para Deletar */
     background-color: var(--vermelho-principal);
     color: var(--branco);
+    padding: 6px 12px;
+    border: none;
+    border-radius: var(--borda-arredondada-pequena);
+    font-size: 0.85em;
+    font-weight: 700;
+    cursor: pointer;
+    transition: var(--transicao-rapida);
+    display: inline-block;
+}
+
+.action-buttons-cell .action-button.delete:hover {
+    background-color: var(--vermelho-escuro);
     transform: translateY(-1px);
 }
 
@@ -355,13 +387,13 @@ form {
         width: 100%; /* Botão de upload ocupa 100% da largura */
     }
 
-    .button-group {
+    .button-group-form { /* Usando a classe correta */
         flex-direction: column;
         align-items: stretch; /* Estica os botões para a largura total */
         gap: 10px;
     }
 
-    .button {
+    .action-button { /* Usando a classe correta */
         max-width: 100%; /* Botões ocupam a largura total em telas pequenas */
     }
 
@@ -429,12 +461,12 @@ form {
         display: inline-block;
     }
 
-    .back-to-menu {
+    .back-to-menu { /* Esta regra não está mais no HTML fornecido */
         padding: 15px 20px;
         justify-content: center; /* Centraliza o botão em telas pequenas */
     }
 
-    .back-to-menu .button-link {
+    .back-to-menu .button-link { /* Esta regra não está mais no HTML fornecido */
         width: 100%;
         text-align: center;
     }
@@ -452,7 +484,7 @@ form {
     .input-group input,
     .input-group select,
     .file-upload-group .upload-button,
-    .button {
+    .action-button { /* Usando a classe correta */
         padding: 10px;
         font-size: 0.9em;
     }

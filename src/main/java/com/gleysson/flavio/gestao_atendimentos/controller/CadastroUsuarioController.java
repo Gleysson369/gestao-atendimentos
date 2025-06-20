@@ -10,13 +10,10 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
-// import org.springframework.web.multipart.MultipartFile; // REMOVIDO: Não precisamos mais do MultipartFile
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import org.springframework.web.bind.annotation.ModelAttribute;
 
-// import java.io.IOException; // REMOVIDO: Não precisamos mais de IOException se não processar arquivos
 import java.util.Optional;
-// import java.util.Base64; // REMOVIDO: Não precisamos mais de Base64 se não processar fotos
 
 @SuppressWarnings("unused")
 @Controller
@@ -45,7 +42,6 @@ public class CadastroUsuarioController {
     @PostMapping("/salvar")
     @PreAuthorize("hasRole('ADMIN')") // Apenas ADMIN pode salvar/editar usuários
     public String salvarUsuario(@ModelAttribute Usuario usuario,
-                                // @RequestParam("photo") MultipartFile file, // REMOVIDO: Não recebemos mais a foto
                                 RedirectAttributes redirectAttributes) {
         try {
             if (usuario.getId() == null) { // Novo usuário
@@ -65,10 +61,6 @@ public class CadastroUsuarioController {
                         // Se uma nova senha for fornecida, criptografá-la
                         usuario.setPassword(passwordEncoder.encode(usuario.getPassword()));
                     }
-                    // REMOVIDO: Não precisamos mais manter a foto existente
-                    // if (file.isEmpty()) {
-                    //     usuario.setPhoto(existingUser.getPhoto());
-                    // }
                 } else {
                     redirectAttributes.addFlashAttribute("errorMessage", "Usuário não encontrado para edição.");
                     return "redirect:/cadastro-usuario";
@@ -126,19 +118,5 @@ public class CadastroUsuarioController {
             redirectAttributes.addFlashAttribute("errorMessage", "Erro ao deletar usuário: " + e.getMessage());
         }
         return "redirect:/cadastro-usuario";
-    }
-
-    // Método para carregar a imagem do usuário (opcional, se você quiser exibir a foto do usuário logado)
-    @ModelAttribute("currentUser")
-    public Usuario getCurrentUser() {
-        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-        if (authentication != null && authentication.isAuthenticated()) {
-            String username = authentication.getName();
-            // AQUI VOCÊ DEVE GARANTIR QUE O MÉTODO findByUsername RETORNE UM USUÁRIO SEM O CAMPO DE FOTO OU COM ELE NULO
-            // CASO CONTRÁRIO, VOCÊ AINDA PODE TER PROBLEMAS SE O OBJETO USUARIO TIVER UM CAMPO 'photoBase64' QUE ESTÁ SENDO ACESSADO
-            // NO main.html (que causou o erro inicial)
-            return usuarioRepository.findByUsername(username);
-        }
-        return null;
     }
 }

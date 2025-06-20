@@ -1,7 +1,5 @@
 package com.gleysson.flavio.gestao_atendimentos.model;
 
-import org.springframework.security.core.Transient; // Este import pode não ser mais necessário, dependendo de como você o usa
-
 import jakarta.persistence.*;
 
 @Entity
@@ -28,11 +26,7 @@ public class Usuario {
     @Column(nullable = false)
     private Cargo cargo;
 
-    // REMOVIDO: Campo 'photo' e suas anotações
-    // @Lob // Para armazenar objetos binários grandes, como fotos
-    // @Column(columnDefinition = "bytea") // Para PostgreSQL, use "bytea"
-    // private byte[] photo; // Foto do usuário, renomeado para 'photo'
-
+ 
     @Column(nullable = false)
     private String role; // Papel do usuário (ex: ADMIN, USER)
 
@@ -68,10 +62,6 @@ public class Usuario {
 
     public Cargo getCargo() { return cargo; }
     public void setCargo(Cargo cargo) { this.cargo = cargo; }
-
-    // REMOVIDO: Getters e Setters para 'photo'
-    // public byte[] getPhoto() { return photo; } // Renomeado para getPhoto
-    // public void setPhoto(byte[] photo) { this.photo = photo; } // Renomeado para setPhoto
 
     public String getRole() { return role; }
     public void setRole(String role) { this.role = role; }

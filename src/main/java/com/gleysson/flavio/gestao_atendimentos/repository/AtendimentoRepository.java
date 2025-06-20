@@ -11,7 +11,7 @@ public interface AtendimentoRepository extends JpaRepository<Atendimento, Long> 
     List<Atendimento> findByNomeClienteContainingIgnoreCase(String nomeCliente);
 
     // Mude de String para Atendimento.CanalAtendimento
-    List<Atendimento> findByCanalAtendimento(Atendimento.CanalAtendimento canalAtendimento); // <<< CORRIGIDO
+    List<Atendimento> findByCanalAtendimento(Atendimento.CanalAtendimento canalAtendimento); 
 
     List<Atendimento> findByDataHoraAtendimentoBetween(LocalDateTime inicio, LocalDateTime fim);
 }

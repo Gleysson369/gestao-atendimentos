@@ -12,14 +12,13 @@
         <header class="app-header">
             <h1>Relatório de Atendimentos</h1>
             <div class="user-info" sec:authorize="isAuthenticated()">
-                Bem-vindo(a), <span sec:authentication="name">Usuário</span>!
             </div>
         </header>
 
-       <nav class="main-menu">
+        <nav class="main-menu">
             <a th:href="@{/main}" class="menu-button">Tela Principal</a>
-            <a th:href="@{/cadastro-usuario}" class="menu-button">Cadastro de Usuário</a>
-            <a th:href="@{/cadastro-atendimento}" class="menu-button">Cadastro de Atendimentos</a>
+            <a href="/cadastro-usuario" class="menu-button">Cadastro de Usuário</a>
+            <a href="/cadastro-atendimento" class="menu-button">Cadastro de Atendimentos</a>
         </nav>
 
         <main class="dashboard-content relatorio-content">
@@ -125,7 +124,7 @@
             <footer class="app-footer">
                 <div class="user-profile">
                     <img th:src="@{/img/Logo.png}" alt="Logo da Gestão de Atendimentos" class="app-logo-footer">
-                    <span class="user-name" sec:authorize="isAuthenticated()" sec:authentication="name">Usuário</span>
+                    <span class="user-name" sec:authorize="isAuthenticated()" sec:authentication="principal.fullName">Usuário</span>
                 </div>
                 <form th:action="@{/logout}" method="post">
                     <input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}" />

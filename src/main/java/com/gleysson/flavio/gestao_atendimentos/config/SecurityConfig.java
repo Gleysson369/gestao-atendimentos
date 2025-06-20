@@ -9,7 +9,6 @@ import org.springframework.security.config.annotation.authentication.builders.Au
 import org.springframework.security.config.annotation.method.configuration.EnableMethodSecurity;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
-// import org.springframework.security.config.annotation.web.configurers.AbstractHttpConfigurer; // Remova este import se não for mais usar
 
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -44,9 +43,7 @@ public class SecurityConfig {
     @Bean
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
         http
-            // .csrf(AbstractHttpConfigurer::disable) // <-- REMOVA OU COMENTE ESSA LINHA!
-            // O CSRF é habilitado por padrão no Spring Security,
-            // então, ao remover a linha acima, ele volta a funcionar.
+           
             .authorizeHttpRequests(auth -> auth
                 .requestMatchers(
                     "/login",

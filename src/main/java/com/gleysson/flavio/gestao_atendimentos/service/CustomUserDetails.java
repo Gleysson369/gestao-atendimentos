@@ -1,32 +1,24 @@
-// src/main/java/com/gleysson/flavio/gestao_atendimentos/service/CustomUserDetails.java
 package com.gleysson.flavio.gestao_atendimentos.service;
 
-import com.gleysson.flavio.gestao_atendimentos.model.Usuario;
+import com.gleysson.flavio.gestao_atendimentos.model.Usuario; // Importa a classe Usuario
 import org.springframework.security.core.GrantedAuthority;
-import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.User;
 
 import java.util.Collection;
-import java.util.Collections;
-// import java.util.Base64; // REMOVIDO: Não precisamos mais do Base64
 
 public class CustomUserDetails extends User {
 
     private final Long id;
     private final String fullName;
-    // REMOVIDO: Campo para a foto em Base64
-    // private final String photoBase64;
+    private final Usuario.Departamento departamento; // Adicione este campo
+    private final Usuario.Cargo cargo;           // Adicione este campo
 
     public CustomUserDetails(Usuario usuario, Collection<? extends GrantedAuthority> authorities) {
         super(usuario.getUsername(), usuario.getPassword(), authorities);
         this.id = usuario.getId();
         this.fullName = usuario.getFullName();
-        // REMOVIDO: Lógica de conversão da foto para Base64
-        // if (usuario.getPhoto() != null && usuario.getPhoto().length > 0) {
-        //     this.photoBase64 = Base64.getEncoder().encodeToString(usuario.getPhoto());
-        // } else {
-        //     this.photoBase64 = null;
-        // }
+        this.departamento = usuario.getDepartamento(); // Atribua o departamento
+        this.cargo = usuario.getCargo();           // Atribua o cargo
     }
 
     public Long getId() {
@@ -37,8 +29,11 @@ public class CustomUserDetails extends User {
         return fullName;
     }
 
-    // REMOVIDO: Getter para photoBase64
-    // public String getPhotoBase64() {
-    //     return photoBase64;
-    // }
+    public Usuario.Departamento getDepartamento() { // Adicione o getter para departamento
+        return departamento;
+    }
+
+    public Usuario.Cargo getCargo() {           // Adicione o getter para cargo
+        return cargo;
+    }
 }
