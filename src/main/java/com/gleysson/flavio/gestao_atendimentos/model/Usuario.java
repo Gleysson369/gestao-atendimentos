@@ -26,18 +26,52 @@ public class Usuario {
     @Column(nullable = false)
     private Cargo cargo;
 
- 
+    // A role do usuário pode ser derivada do Cargo ou ser um campo separado.
+    // Se for um campo separado, mantenha como String e use-o para Spring Security.
+    // Ex: "ROLE_ADMIN", "ROLE_ANALISTA".
+    // Se for derivado do Cargo, você pode ter um método no Usuario que retorne a Role.
+    // Por simplicidade, vou manter 'role' como String, como você tinha.
     @Column(nullable = false)
-    private String role; // Papel do usuário (ex: ADMIN, USER)
+    private String role; // Papel do usuário (ex: ADMIN, ANALISTA)
 
     // Enums internos para Departamento e Cargo
     public enum Departamento {
-        VENDAS, LOGISTICA, TECNICO, FINANCEIRO, FISCAL_EMISSAO, FISCAL_APURACAO,
-        FISCAL_ENTRADAS, COMPRAS, OUTROS
+        VENDAS("Vendas"),
+        LOGISTICA("Logística"),
+        TECNICO("Técnico"),
+        FINANCEIRO("Financeiro"),
+        FISCAL_EMISSAO("Fiscal (Emissão)"),
+        FISCAL_APURACAO("Fiscal (Apuração)"),
+        FISCAL_ENTRADAS("Fiscal (Entradas)"),
+        COMPRAS("Compras"),
+        OUTROS("Outros");
+
+        private final String displayValue;
+
+        Departamento(String displayValue) {
+            this.displayValue = displayValue;
+        }
+
+        public String getDisplayValue() {
+            return displayValue;
+        }
     }
 
     public enum Cargo {
-        ATENDENTE, ANALISTA, SUPERVISOR, GESTOR
+        ATENDENTE("Atendente"),
+        ANALISTA("Analista"),
+        SUPERVISOR("Supervisor"),
+        GESTOR("Gestor");
+
+        private final String displayValue;
+
+        Cargo(String displayValue) {
+            this.displayValue = displayValue;
+        }
+
+        public String getDisplayValue() {
+            return displayValue;
+        }
     }
 
     // Construtor padrão

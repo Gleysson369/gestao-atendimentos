@@ -213,4 +213,35 @@ form {
         padding: 12px 20px;
         font-size: 1em;
     }
+    /* Estilos para a seção da lista de atendimentos para controlar a altura e rolagem */
+.atendimento-list-section {
+    /* Opcional: Adicione um espaçamento inferior para separar do rodapé, se necessário */
+    margin-bottom: 20px;
+}
+
+.table-responsive {
+    max-height: 60vh; /* Define a altura máxima como 60% da altura da viewport */
+    /* Você pode ajustar '60vh' para um valor fixo em pixels, ex: '400px',
+       ou '50vh' se a tela ficar muito apertada. */
+    overflow-y: auto; /* Adiciona uma barra de rolagem vertical quando o conteúdo exceder a altura máxima */
+    border: 1px solid #dee2e6; /* Opcional: Adiciona uma borda sutil para a área de rolagem */
+    border-radius: var(--borda-arredondada); /* Mantém os cantos arredondados */
+    box-shadow: 0 2px 8px var(--sombra-leve); /* Opcional: Sombra para a área de rolagem */
+    background-color: var(--branco); /* Fundo branco para a área da tabela */
+    padding: 1px; /* Um pequeno padding para evitar que o conteúdo encoste nas bordas da rolagem */
+}
+
+/* Garante que a tabela dentro do contêiner de rolagem use toda a largura disponível */
+.table-responsive .data-table {
+    width: 100%;
+    /* Remove a sombra daqui se já adicionou ao .table-responsive */
+    box-shadow: none;
+}
+
+/* Opcional: Para ajustar a rolagem em telas muito pequenas, onde a tabela pode ser larga demais */
+@media (max-width: 992px) {
+    .table-responsive {
+        overflow-x: auto; /* Permite rolagem horizontal em telas menores */
+    }
+}
 }

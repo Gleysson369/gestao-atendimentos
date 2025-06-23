@@ -1,6 +1,7 @@
 package com.gleysson.flavio.gestao_atendimentos.model;
 
 import jakarta.persistence.*;
+import org.springframework.format.annotation.DateTimeFormat;
 import java.time.LocalDateTime;
 
 @Entity
@@ -10,10 +11,10 @@ public class Atendimento {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    private String empresaCliente; // Nome da empresa
-
+    private String empresaCliente;
     private String nomeCliente;
 
+    @DateTimeFormat(pattern = "yyyy-MM-dd'T'HH:mm")
     private LocalDateTime dataHoraAtendimento;
 
     @Column(length = 1000)
@@ -23,22 +24,37 @@ public class Atendimento {
     private String solucaoPassada;
 
     private String numeroCRS;
-
     private String telefone;
-
     private String anydesk;
 
     @Enumerated(EnumType.STRING)
     private CanalAtendimento canalAtendimento;
 
-    // ENUM para canal de atendimento
+    @ManyToOne
+    @JoinColumn(name = "usuario_atendente_id")
+    private Usuario usuarioAtendente;
+
+    // ENUM para canal de atendimento - COM MKON_WHATSAPP INCLUÍDO
     public enum CanalAtendimento {
-        TELEFONE,
-        MKON_WHATSAPP,
-        EMAIL
+        TELEFONE("Telefone"),
+        WHATSAPP("WhatsApp"), // Mantido como opção geral de WhatsApp
+        MKON_WHATSAPP("Mkon WhatsApp"), // Adicionado de volta para compatibilidade, se necessário
+        EMAIL("E-mail"),
+        PRESENCIAL("Presencial"),
+        OUTRO("Outro");
+
+        private final String displayValue;
+
+        CanalAtendimento(String displayValue) {
+            this.displayValue = displayValue;
+        }
+
+        public String getDisplayValue() {
+            return displayValue;
+        }
     }
 
-    // Getters e Setters
+    // Getters e Setters (mantidos como estavam)
     public Long getId() { return id; }
     public void setId(Long id) { this.id = id; }
 
@@ -68,4 +84,7 @@ public class Atendimento {
 
     public CanalAtendimento getCanalAtendimento() { return canalAtendimento; }
     public void setCanalAtendimento(CanalAtendimento canalAtendimento) { this.canalAtendimento = canalAtendimento; }
+
+    public Usuario getUsuarioAtendente() { return usuarioAtendente; }
+    public void setUsuarioAtendente(Usuario usuarioAtendente) { this.usuarioAtendente = usuarioAtendente; }
 }
