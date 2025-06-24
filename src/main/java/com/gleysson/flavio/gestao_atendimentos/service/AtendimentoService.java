@@ -11,7 +11,7 @@ import org.springframework.stereotype.Service;
 import java.time.LocalDateTime;
 import java.util.Collections;
 import java.util.List;
-import java.util.Optional; // Importe esta classe
+import java.util.Optional;
 
 @Service
 public class AtendimentoService {
@@ -20,48 +20,49 @@ public class AtendimentoService {
     private AtendimentoRepository atendimentoRepository;
 
     @Autowired
-    private UsuarioRepository usuarioRepository;
+    private UsuarioRepository usuarioRepository; // Mantenha este @Autowired aqui
 
-    public List<Atendimento> buscarTodosAtendimentos() {
-        List<Atendimento> atendimentos = atendimentoRepository.findAll();
-        // Garante que nunca retorne null, sempre uma lista (vazia ou com elementos)
+    // NOVO MÉTODO PARA BUSCAR ATENDIMENTOS POR USUÁRIO
+    public List<Atendimento> buscarAtendimentosPorUsuario(Usuario usuario) {
+        // Garante que o usuário não é nulo antes de buscar
+        if (usuario == null) {
+            return Collections.emptyList();
+        }
+        List<Atendimento> atendimentos = atendimentoRepository.findByUsuarioAtendente(usuario);
         return atendimentos != null ? atendimentos : Collections.emptyList();
     }
 
-    // --- MÉTODO ADICIONADO/CORRIGIDO ---
+    public List<Atendimento> buscarTodosAtendimentos() {
+        List<Atendimento> atendimentos = atendimentoRepository.findAll();
+        return atendimentos != null ? atendimentos : Collections.emptyList();
+    }
+
     public Optional<Atendimento> buscarAtendimentoPorId(Long id) {
         return atendimentoRepository.findById(id);
     }
-    // ------------------------------------
 
     public Atendimento salvarAtendimento(Atendimento atendimento) {
-        // Se a data e hora do atendimento não foram definidas, use a hora atual
         if (atendimento.getDataHoraAtendimento() == null) {
             atendimento.setDataHoraAtendimento(LocalDateTime.now());
         }
 
-        // NOVO: Associar o usuário logado ao atendimento
-        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-        if (authentication != null && authentication.isAuthenticated() && !"anonymousUser".equals(authentication.getPrincipal())) {
-            // Obter o username do usuário logado (geralmente é o principal.getName())
-            String username = authentication.getName();
+        // NOVO: Associar o usuário logado ao atendimento se for um NOVO atendimento
+        if (atendimento.getId() == null || atendimento.getUsuarioAtendente() == null) { // Adicionado verificação para permitir re-salvar com atendente
+            Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+            if (authentication != null && authentication.isAuthenticated() && !"anonymousUser".equals(authentication.getPrincipal())) {
+                String username = authentication.getName();
 
-            // Buscar o objeto Usuario completo no banco de dados
-            Usuario usuarioLogado = usuarioRepository.findByUsername(username);
+                // CORREÇÃO AQUI: Chamar findByUsername do repository que retorna Optional
+                Optional<Usuario> usuarioLogadoOpt = usuarioRepository.findByUsername(username);
 
-            if (usuarioLogado != null) {
-                atendimento.setUsuarioAtendente(usuarioLogado); // Define o usuário que atendeu
+                if (usuarioLogadoOpt.isPresent()) {
+                    atendimento.setUsuarioAtendente(usuarioLogadoOpt.get());
+                } else {
+                    System.err.println("Aviso: Usuário logado '" + username + "' não encontrado no banco de dados ao salvar atendimento ID: " + atendimento.getId());
+                }
             } else {
-                // ISTO É CRÍTICO: Se o usuário autenticado não for encontrado no DB, há um problema.
-                // Você pode logar, lançar uma exceção ou definir o atendente como nulo, dependendo da sua regra de negócio.
-                // Por segurança, é bom que atendimentos sempre tenham um atendente, se o sistema exige login.
-                System.err.println("Aviso: Usuário logado '" + username + "' não encontrado no banco de dados ao salvar atendimento ID: " + atendimento.getId());
-                // Opcional: throw new RuntimeException("Usuário logado não encontrado no sistema.");
+                System.err.println("Aviso: Tentativa de salvar atendimento sem usuário autenticado.");
             }
-        } else {
-            // Se não há usuário autenticado (ex: se esta rota fosse acessível sem login, o que não é o caso aqui)
-            System.err.println("Aviso: Tentativa de salvar atendimento sem usuário autenticado.");
-            // Opcional: atendimento.setUsuarioAtendente(null);
         }
 
         return atendimentoRepository.save(atendimento);
