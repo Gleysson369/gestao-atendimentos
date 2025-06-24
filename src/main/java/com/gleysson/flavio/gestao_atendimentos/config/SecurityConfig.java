@@ -9,14 +9,12 @@ import org.springframework.security.config.annotation.authentication.builders.Au
 import org.springframework.security.config.annotation.method.configuration.EnableMethodSecurity;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
-import org.springframework.security.web.access.AccessDeniedHandler; // NOVO IMPORT
-import org.springframework.security.web.access.AccessDeniedHandlerImpl; // NOVO IMPORT
 
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
-import org.springframework.http.HttpMethod;
+import org.springframework.http.HttpMethod; // Mantenha este import, pode ser útil para outras regras futuras
 
 @Configuration
 @EnableWebSecurity
@@ -57,11 +55,11 @@ public class SecurityConfig {
                     "/images/**",
                     "/webjars/**",
                     "/error",
-                    "/acesso-negado" // Permite acesso a esta página de erro personalizada
+                    "/acesso-negado"
                 ).permitAll()
-                .requestMatchers("/cadastro-usuario/**").hasRole("ADMIN")
-                .requestMatchers(HttpMethod.POST, "/cadastro-atendimento/deletar/**").hasRole("ADMIN")
-                .requestMatchers("/cadastro-atendimento/**").authenticated()
+                .requestMatchers("/cadastro-usuario/**").hasRole("ADMIN") // APENAS ADMIN pode acessar tudo em /cadastro-usuario
+                // REMOVIDO: .requestMatchers(HttpMethod.POST, "/cadastro-atendimento/deletar/**").hasRole("ADMIN")
+                .requestMatchers("/cadastro-atendimento/**").authenticated() // QUALQUER usuário autenticado pode acessar TUDO em /cadastro-atendimento (incluindo deletar)
                 .anyRequest().authenticated()
             )
             .formLogin(form -> form
@@ -78,7 +76,7 @@ public class SecurityConfig {
                 .permitAll()
             )
             .exceptionHandling(exceptions -> exceptions
-                .accessDeniedPage("/acesso-negado") // <-- NOVO: Redireciona para /acesso-negado em caso de 403
+                .accessDeniedPage("/acesso-negado")
             );
         return http.build();
     }
