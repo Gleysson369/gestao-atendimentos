@@ -3,7 +3,7 @@ package com.gleysson.flavio.gestao_atendimentos.controller;
 import com.gleysson.flavio.gestao_atendimentos.model.Usuario;
 import com.gleysson.flavio.gestao_atendimentos.repository.UsuarioRepository;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.access.prepost.PreAuthorize;
+import org.springframework.security.access.prepost.PreAuthorize; // Importe esta anotação
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -11,13 +11,14 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
-import org.springframework.web.bind.annotation.ModelAttribute;
 
+import java.util.List; // Importe List
 import java.util.Optional;
 
 @SuppressWarnings("unused")
 @Controller
 @RequestMapping("/cadastro-usuario")
+@PreAuthorize("hasRole('ADMIN')") // <-- APENAS ADMIN PODE ACESSAR ESTE CONTROLLER
 public class CadastroUsuarioController {
 
     @Autowired
@@ -26,7 +27,7 @@ public class CadastroUsuarioController {
     @Autowired
     private PasswordEncoder passwordEncoder;
 
-    // Exibe o formulário com dados vazios e a lista de usuários
+    // Exibe o formulário com dados vazios e a lista de usuários. Acesso apenas para ADMIN.
     @GetMapping
     public String mostrarFormulario(Model model) {
         if (!model.containsAttribute("usuario")) {
@@ -38,11 +39,10 @@ public class CadastroUsuarioController {
         return "cadastro-usuario";
     }
 
-    // Salvar/Atualizar Usuário
+    // Salvar/Atualizar Usuário. Acesso apenas para ADMIN.
     @PostMapping("/salvar")
-    @PreAuthorize("hasRole('ADMIN')") // Apenas ADMIN pode salvar/editar usuários
     public String salvarUsuario(@ModelAttribute Usuario usuario,
-                                RedirectAttributes redirectAttributes) {
+                                 RedirectAttributes redirectAttributes) {
         try {
             if (usuario.getId() == null) { // Novo usuário
                 if (usuarioRepository.findByUsername(usuario.getUsername()) != null) {
@@ -54,11 +54,9 @@ public class CadastroUsuarioController {
                 Optional<Usuario> existingUserOptional = usuarioRepository.findById(usuario.getId());
                 if (existingUserOptional.isPresent()) {
                     Usuario existingUser = existingUserOptional.get();
-                    // Manter a senha existente se uma nova não for fornecida (formulário pode enviar campo vazio)
                     if (usuario.getPassword() == null || usuario.getPassword().isEmpty()) {
                         usuario.setPassword(existingUser.getPassword());
                     } else {
-                        // Se uma nova senha for fornecida, criptografá-la
                         usuario.setPassword(passwordEncoder.encode(usuario.getPassword()));
                     }
                 } else {
@@ -76,30 +74,26 @@ public class CadastroUsuarioController {
         return "redirect:/cadastro-usuario";
     }
 
-
-    // Edição de Usuário (preencher formulário para edição)
+    // Edição de Usuário (preencher formulário para edição). Acesso apenas para ADMIN.
     @GetMapping("/editar/{id}")
-    @PreAuthorize("hasRole('ADMIN')") // Apenas ADMIN pode editar usuários
     public String editarUsuario(@PathVariable("id") Long id, Model model, RedirectAttributes redirectAttributes) {
         Optional<Usuario> usuarioOpt = usuarioRepository.findById(id);
 
         if (usuarioOpt.isPresent()) {
             Usuario usuario = usuarioOpt.get();
-
-            model.addAttribute("usuario", usuario); // Adiciona o objeto Usuario ao modelo
+            model.addAttribute("usuario", usuario);
         } else {
             redirectAttributes.addFlashAttribute("errorMessage", "Usuário não encontrado para edição.");
             return "redirect:/cadastro-usuario";
         }
-        model.addAttribute("users", usuarioRepository.findAll()); // Recarrega a lista de usuários para exibir abaixo do formulário
+        model.addAttribute("users", usuarioRepository.findAll());
         model.addAttribute("departamentos", Usuario.Departamento.values());
         model.addAttribute("cargos", Usuario.Cargo.values());
         return "cadastro-usuario";
     }
 
-    // Deletar Usuário
+    // Deletar Usuário. Acesso apenas para ADMIN.
     @PostMapping("/deletar/{id}")
-    @PreAuthorize("hasRole('ADMIN')") // Apenas ADMIN pode deletar usuários
     public String deletarUsuario(@PathVariable("id") Long id, RedirectAttributes redirectAttributes) {
         try {
             // Verifica se o usuário logado está tentando deletar a si mesmo (opcional, mas boa prática)

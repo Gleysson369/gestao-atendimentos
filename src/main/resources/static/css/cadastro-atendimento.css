@@ -1,199 +1,256 @@
-/* src/main/resources/static/css/cadastro-atendimento.css */
+@import url('_variables.css');
 
-@import url('_variables.css'); /* Importa as variáveis de cores e fontes */
-
-/*
-   Este arquivo vai conter estilos específicos para a página de cadastro de atendimentos.
-   Ele deve importar apenas '_variables.css' e aproveitar as classes já definidas em 'main.css' e 'forms.css'.
-   Não importe 'main.css' ou 'forms.css' aqui, pois eles já devem ser linkados diretamente no HTML.
-*/
-
-/* Exemplo de estilo específico, se houver necessidade de um override ou algo único */
+/* Título da seção de atendimentos */
 .atendimento-list-section h4 {
     color: var(--azul-escuro);
-    margin-top: 30px; /* Espaço antes do título da tabela de atendimentos */
+    margin-top: 30px;
     margin-bottom: 20px;
     font-size: 1.4em;
     border-bottom: 1px solid var(--azul-claro);
     padding-bottom: 10px;
 }
 
-
-
-/* Estilos para o link "Voltar ao Menu Principal" (se houver um na página de cadastro de atendimento) */
+/* Botão voltar */
 .back-to-menu {
-    padding: 20px 30px; /* Adapte conforme necessário */
-    background-color: var(--cinza-claro); /* Fundo sutil */
-    border-bottom: 1px solid var(--borda-claro); /* Supondo que você tenha uma variável --borda-claro em _variables.css */
+    padding: 20px 30px;
+    background-color: var(--cinza-claro);
+    border-bottom: 1px solid var(--borda-claro);
     display: flex;
-    justify-content: flex-start; /* Alinha o botão à esquerda */
+    justify-content: flex-start;
     align-items: center;
 }
 
 .back-to-menu .button-link {
-    background-color: var(--branco); /* */
-    color: var(--azul-escuro); /* */
-    padding: 8px 15px; /* */
-    border-radius: var(--borda-arredondada); /* */
-    text-decoration: none; /* */
-    font-weight: 600; /* */
-    transition: var(--transicao-rapida); /* */
-    box-shadow: 0 2px 5px var(--sombra-leve); /* */
+    background-color: var(--branco);
+    color: var(--azul-escuro);
+    padding: 8px 15px;
+    border-radius: var(--borda-arredondada);
+    text-decoration: none;
+    font-weight: 600;
+    transition: var(--transicao-rapida);
+    box-shadow: 0 2px 5px var(--sombra-leve);
     white-space: nowrap;
 }
 
 .back-to-menu .button-link:hover {
-    background-color: var(--azul-claro); /* */
-    color: var(--azul-medio); /* */
-    transform: translateY(-2px); /* */
-    box-shadow: 0 4px 8px var(--sombra-media); /* */
+    background-color: var(--azul-claro);
+    color: var(--azul-medio);
+    transform: translateY(-2px);
+    box-shadow: 0 4px 8px var(--sombra-media);
 }
 
-/* Estilos para o conteúdo principal do dashboard */
+/* Conteúdo do dashboard */
 .dashboard-content {
-    padding: 30px; /* Ajuste o padding conforme necessário */
-    background-color: var(--cinza-claro); /* Fundo para o dashboard. Pode ser branco também, dependendo do contraste desejado */
-    flex-grow: 1; /* Garante que o conteúdo ocupe o espaço restante */
+    padding: 30px;
+    background-color: var(--cinza-claro);
+    flex-grow: 1;
     display: flex;
-    flex-direction: column; /* Organiza os filhos em coluna */
-    gap: 25px; /* Espaçamento entre as seções (cards) */
+    flex-direction: column;
+    gap: 25px;
 }
 
-/* Estilos para as seções de cartão dentro do dashboard */
-.dashboard-content .card {
-    background-color: var(--branco); /* */
-    border-radius: var(--borda-arredondada); /* */
-    box-shadow: 0 4px 15px var(--sombra-leve); /* */
-    padding: 30px; /* */
-    margin-bottom: 0; /* Remove a margem inferior se houver, já que o gap fará isso */
-}
-
-/* Reutilizando a classe .card.full-width do seu HTML */
+/* Cartões */
+.dashboard-content .card,
 .card.full-width {
-    background-color: var(--cinza-claro); /* */
-    padding: 25px; /* */
-    border-radius: var(--borda-arredondada); /* */
-    box-shadow: 0 5px 15px var(--sombra-leve); /* */
-    margin-bottom: 30px; /* */
+    background-color: var(--branco);
+    border-radius: var(--borda-arredondada);
+    box-shadow: 0 5px 15px var(--sombra-leve);
+    padding: 25px;
+    margin-bottom: 30px;
 }
 
 .card.full-width h3 {
-    color: var(--azul-escuro); /* */
-    margin-top: 0; /* */
-    margin-bottom: 25px; /* */
-    font-size: 1.6em; /* */
-    border-bottom: 2px solid var(--azul-claro); /* */
-    padding-bottom: 10px; /* */
+    color: var(--azul-escuro);
+    margin-bottom: 25px;
+    font-size: 1.6em;
+    border-bottom: 2px solid var(--azul-claro);
+    padding-bottom: 10px;
 }
 
-/* --- Estilos do Formulário (Reutilizando de forms.css e cadastro-usuario.css) --- */
-/* Você pode adicionar overrides aqui se precisar de algo específico apenas para este formulário */
-
+/* Formulário */
 form {
     display: flex;
     flex-direction: column;
-    gap: 15px; /* Espaçamento entre os grupos de input */
+    gap: 15px;
 }
 
 .input-group {
     display: flex;
     flex-direction: column;
-    margin-bottom: 15px; /* Adicione ou ajuste margem se não for coberto pelo gap do form */
+    margin-bottom: 15px;
 }
 
 .input-group label {
-    font-weight: 600; /* */
-    margin-bottom: 8px; /* */
-    color: var(--cinza-escuro-texto); /* */
-    font-size: 0.95em; /* */
+    font-weight: 600;
+    margin-bottom: 8px;
+    color: var(--cinza-escuro-texto);
+    font-size: 0.95em;
 }
 
 .input-group input[type="text"],
 .input-group input[type="password"],
 .input-group input[type="email"],
+.input-group input[type="datetime-local"],
 .input-group textarea,
 .input-group select {
-    padding: 12px 15px; /* */
-    border: 1px solid #ced4da; /* Uma cor de borda neutra. Ou use var(--borda-claro) se definida. */
-    border-radius: var(--borda-arredondada-pequena); /* Ou var(--borda-arredondada) se não tiver pequena */
-    font-size: 1em; /* */
-    color: var(--cinza-escuro-texto); /* */
-    background-color: var(--branco); /* */
-    transition: border-color 0.3s ease, box-shadow 0.3s ease; /* */
+    padding: 12px 15px;
+    border: 1px solid var(--borda-claro);
+    border-radius: var(--borda-arredondada-pequena);
+    font-size: 1em;
+    color: var(--cinza-escuro-texto);
+    background-color: var(--branco);
+    transition: border-color 0.3s ease, box-shadow 0.3s ease;
 }
 
-.input-group input[type="text"]:focus,
-.input-group input[type="password"]:focus,
-.input-group input[type="email"]:focus,
+.input-group input:focus,
 .input-group textarea:focus,
 .input-group select:focus {
-    border-color: var(--azul-medio); /* */
-    box-shadow: 0 0 0 0.2rem rgba(0, 123, 255, 0.25); /* Sombra de foco com cor do azul-medio */
-    outline: none; /* */
+    border-color: var(--azul-medio);
+    box-shadow: 0 0 0 0.2rem var(--azul-foco);
+    outline: none;
 }
 
-/* Estilos específicos para textarea para garantir que fique bem */
 .input-group textarea {
-    resize: vertical; /* Permite redimensionar apenas verticalmente */
-    min-height: 100px; /* Altura mínima para textareas */
+    resize: vertical;
+    min-height: 100px;
 }
 
-/* Estilo para o grupo de botões de um único botão (como o Salvar) */
-.button-group-single {
-    display: flex; /* */
-    justify-content: center; /* */
-    margin-top: 20px; /* */
+/* Botões */
+.button-group-form {
+    display: flex;
+    gap: 10px;
+    margin-top: 20px;
 }
 
-.login-button { /* Usando a classe do login para manter o estilo de botão primário */
-    background-color: var(--azul-medio); /* */
-    color: var(--branco); /* */
-    padding: 14px 25px; /* */
-    border: none; /* */
-    border-radius: 5px; /* */
-    font-size: 1.1em; /* */
-    font-weight: 600; /* */
-    cursor: pointer; /* */
-    transition: var(--transicao-rapida); /* */
-    width: 100%; /* */
-    max-width: 300px; /* Limita a largura do botão em telas maiores */
-    letter-spacing: 0.5px; /* */
+.action-button {
+    padding: 6px 14px;
+    font-size: 0.9em;
+    border: none;
+    border-radius: var(--borda-arredondada-pequena);
+    font-weight: 600;
+    cursor: pointer;
+    transition: var(--transicao-rapida);
+    text-decoration: none;
+    display: inline-block;
+    text-align: center; /* Garante que o texto dentro do botão esteja centralizado */
+    white-space: nowrap; /* Evita que o texto do botão quebre em várias linhas */
 }
 
-.login-button:hover {
-    background-color: var(--azul-escuro); /* */
-    box-shadow: 0 5px 15px var(--sombra-leve); /* */
-    transform: translateY(-2px); /* */
+.action-button.primary {
+    background-color: var(--azul-medio);
+    color: var(--branco);
 }
 
-.login-button:active {
-    transform: translateY(0); /* */
-    background-color: #002d6b; /* */
+.action-button.primary:hover {
+    background-color: var(--azul-escuro);
 }
 
-/* --- Mensagens de Feedback (Sucesso/Erro) --- */
+.action-button.secondary {
+    background-color: var(--cinza-claro);
+    color: var(--azul-escuro);
+}
+
+.action-button.secondary:hover {
+    background-color: var(--azul-claro);
+    color: var(--azul-medio);
+}
+
+.edit-button {
+    background-color: var(--azul-medio);
+    color: var(--branco);
+}
+
+.edit-button:hover {
+    background-color: var(--azul-escuro);
+}
+
+.delete-button {
+    background-color: var(--vermelho-principal);
+    color: var(--branco);
+}
+
+.delete-button:hover {
+    background-color: var(--vermelho-escuro);
+}
+
+/* Mensagens */
 .success-message, .error-message {
-    padding: 15px 20px; /* */
-    border-radius: 5px; /* */
-    margin-bottom: 20px; /* */
-    font-weight: 600; /* */
-    text-align: center; /* */
+    padding: 15px 20px;
+    border-radius: 5px;
+    margin-bottom: 20px;
+    font-weight: 600;
+    text-align: center;
 }
 
 .success-message {
-    background-color: #d4edda; /* Verde claro */
-    color: #155724; /* Verde escuro */
-    border: 1px solid #c3e6cb; /* */
+    background-color: #d4edda;
+    color: #155724;
+    border: 1px solid #c3e6cb;
 }
 
 .error-message {
-    background-color: #f8d7da; /* Vermelho claro */
-    color: #721c24; /* Vermelho escuro */
-    border: 1px solid #f5c6cb; /* */
+    background-color: #f8d7da;
+    color: #721c24;
+    border: 1px solid #f5c6cb;
 }
 
+/* Tabela responsiva */
+.table-responsive {
+    overflow-x: auto; /* Permite scroll horizontal em telas pequenas */
+    width: 100%;
+    border-radius: var(--borda-arredondada);
+    box-shadow: 0 2px 8px var(--sombra-leve);
+    background-color: var(--branco);
+    padding: 1px;
+}
 
-/* --- Responsividade para Telas Menores --- */
+.data-table {
+    width: 100%;
+    /* table-layout: fixed; REMOVIDO ou ajustado. Fixed pode forçar colunas a ficarem muito pequenas. */
+    /* word-wrap: break-word; Isso faz a quebra, mas precisamos de espaço */
+    border-collapse: collapse;
+}
+
+.data-table th, .data-table td {
+    padding: 12px 10px; /* Aumenta o padding para mais espaço interno */
+    text-align: left;
+    border-bottom: 1px solid var(--borda-claro);
+    vertical-align: top; /* Alinha o conteúdo ao topo para multilinhas */
+}
+
+.data-table thead th {
+    background-color: var(--azul-escuro); /* Cor de fundo do cabeçalho */
+    color: var(--branco); /* Cor do texto do cabeçalho */
+    font-weight: 600;
+    position: sticky; /* Mantém o cabeçalho visível ao rolar */
+    top: 0;
+    z-index: 10;
+}
+
+/* Larguras para as colunas da tabela */
+.data-table th:nth-child(1), .data-table td:nth-child(1) { min-width: 60px; max-width: 80px; } /* ID Atendente */
+.data-table th:nth-child(2), .data-table td:nth-child(2) { min-width: 120px; max-width: 180px; } /* Atendente */
+.data-table th:nth-child(3), .data-table td:nth-child(3) { min-width: 120px; max-width: 150px; } /* Departamento */
+.data-table th:nth-child(4), .data-table td:nth-child(4) { min-width: 50px; max-width: 70px; } /* ID Atendimento */
+.data-table th:nth-child(5), .data-table td:nth-child(5) { min-width: 100px; max-width: 150px; } /* Empresa */
+.data-table th:nth-child(6), .data-table td:nth-child(6) { min-width: 100px; max-width: 150px; } /* Cliente */
+.data-table th:nth-child(7), .data-table td:nth-child(7) { min-width: 120px; max-width: 150px; } /* Data/Hora */
+.data-table th:nth-child(8), .data-table td:nth-child(8) { min-width: 200px; max-width: 300px; } /* Motivo */
+.data-table th:nth-child(9), .data-table td:nth-child(9) { min-width: 200px; max-width: 300px; } /* Solução */
+.data-table th:nth-child(10), .data-table td:nth-child(10) { min-width: 80px; max-width: 120px; } /* Canal */
+.data-table th:nth-child(11), .data-table td:nth-child(11) { min-width: 120px; max-width: 150px; } /* Ações */
+
+/* Estilo para a célula de ações */
+.action-buttons-cell {
+    display: flex; /* Permite que os botões fiquem lado a lado */
+    gap: 5px; /* Espaço entre os botões */
+    flex-wrap: wrap; /* Permite que os botões quebrem para a próxima linha se não houver espaço */
+    justify-content: flex-start; /* Alinha os botões ao início da célula */
+    align-items: center; /* Centraliza verticalmente os botões */
+    height: 100%; /* Ocupa a altura total da célula para melhor alinhamento */
+}
+
+/* Responsividade da tabela para telas pequenas */
 @media (max-width: 768px) {
     .dashboard-content {
         padding: 20px;
@@ -203,45 +260,60 @@ form {
         padding: 20px;
     }
 
-    .input-group input[type="text"],
+    .input-group input,
     .input-group textarea,
     .input-group select {
         padding: 10px 12px;
     }
 
-    .login-button {
-        padding: 12px 20px;
-        font-size: 1em;
+    .button-group-form {
+        flex-direction: column;
     }
-    /* Estilos para a seção da lista de atendimentos para controlar a altura e rolagem */
-.atendimento-list-section {
-    /* Opcional: Adicione um espaçamento inferior para separar do rodapé, se necessário */
-    margin-bottom: 20px;
-}
 
-.table-responsive {
-    max-height: 60vh; /* Define a altura máxima como 60% da altura da viewport */
-    /* Você pode ajustar '60vh' para um valor fixo em pixels, ex: '400px',
-       ou '50vh' se a tela ficar muito apertada. */
-    overflow-y: auto; /* Adiciona uma barra de rolagem vertical quando o conteúdo exceder a altura máxima */
-    border: 1px solid #dee2e6; /* Opcional: Adiciona uma borda sutil para a área de rolagem */
-    border-radius: var(--borda-arredondada); /* Mantém os cantos arredondados */
-    box-shadow: 0 2px 8px var(--sombra-leve); /* Opcional: Sombra para a área de rolagem */
-    background-color: var(--branco); /* Fundo branco para a área da tabela */
-    padding: 1px; /* Um pequeno padding para evitar que o conteúdo encoste nas bordas da rolagem */
-}
-
-/* Garante que a tabela dentro do contêiner de rolagem use toda a largura disponível */
-.table-responsive .data-table {
-    width: 100%;
-    /* Remove a sombra daqui se já adicionou ao .table-responsive */
-    box-shadow: none;
-}
-
-/* Opcional: Para ajustar a rolagem em telas muito pequenas, onde a tabela pode ser larga demais */
-@media (max-width: 992px) {
-    .table-responsive {
-        overflow-x: auto; /* Permite rolagem horizontal em telas menores */
+    .data-table {
+        font-size: 0.85em; /* Reduz a fonte para caber mais */
     }
-}
+
+    /* Esconde cabeçalhos da tabela e exibe data-label em telas pequenas */
+    .data-table thead {
+        display: none;
+    }
+
+    .data-table, .data-table tbody, .data-table tr, .data-table td {
+        display: block;
+        width: 100%;
+    }
+
+    .data-table tr {
+        margin-bottom: 15px;
+        border: 1px solid var(--borda-claro);
+        border-radius: var(--borda-arredondada);
+        box-shadow: 0 2px 5px var(--sombra-leve);
+        padding: 10px;
+        background-color: var(--branco);
+    }
+
+    .data-table td {
+        border: none;
+        position: relative;
+        padding-left: 100px; /* Espaço para o data-label */
+        text-align: right;
+    }
+
+    .data-table td::before {
+        content: attr(data-label);
+        position: absolute;
+        left: 10px;
+        width: 90px;
+        padding-right: 10px;
+        white-space: nowrap;
+        text-align: left;
+        font-weight: bold;
+        color: var(--cinza-escuro-texto);
+    }
+
+    .action-buttons-cell {
+        justify-content: flex-end; /* Alinha os botões para a direita em mobile */
+        margin-top: 10px; /* Espaço entre o último campo e os botões */
+    }
 }

@@ -18,8 +18,7 @@
         <nav class="main-menu">
             <a th:href="@{/main}" class="menu-button">Tela Principal</a>
             <a href="/cadastro-usuario" class="menu-button">Cadastro de Usuário</a>
-            <a href="/relatorio-atendimentos" class="menu-button">Relatório de Atendimentos</a>
-        </nav>
+            </nav>
 
         <main class="dashboard-content">
             <section class="card full-width">
@@ -36,60 +35,51 @@
                     <input type="hidden" th:field="*{id}" />
                     <input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}" />
 
-                    <!-- Nome do Cliente -->
                     <div class="input-group">
                         <label for="nomeCliente">Nome do Cliente:</label>
                         <input type="text" id="nomeCliente" th:field="*{nomeCliente}" placeholder="Nome Completo do Cliente" required>
                     </div>
 
-                    <!-- Empresa do Cliente -->
                     <div class="input-group">
                         <label for="empresaCliente">Empresa do Cliente:</label>
                         <input type="text" id="empresaCliente" th:field="*{empresaCliente}" placeholder="Nome da Empresa do Cliente" required>
                     </div>
 
-                    <!-- Data e Hora de Atendimento -->
                     <div class="input-group">
                         <label for="dataHoraAtendimento">Data e Hora de Atendimento:</label>
                         <input type="datetime-local" id="dataHoraAtendimento" th:field="*{dataHoraAtendimento}" required>
                     </div>
 
-                    <!-- Telefone -->
                     <div class="input-group">
                         <label for="telefone">Telefone:</label>
                         <input type="text" id="telefone" th:field="*{telefone}" placeholder="Telefone de contato (opcional)">
                     </div>
 
-                    <!-- AnyDesk -->
                     <div class="input-group">
                         <label for="anydesk">AnyDesk:</label>
                         <input type="text" id="anydesk" th:field="*{anydesk}" placeholder="ID do AnyDesk (opcional)">
                     </div>
 
-                    <!-- Número da CRS -->
                     <div class="input-group">
                         <label for="numeroCRS">Número da CRS:</label>
                         <input type="text" id="numeroCRS" th:field="*{numeroCRS}" placeholder="Número da CRS (opcional)">
                     </div>
 
-                    <!-- Canal de Atendimento -->
                     <div class="input-group">
                         <label for="canalAtendimento">Canal de Atendimento:</label>
                         <select id="canalAtendimento" th:field="*{canalAtendimento}" required>
                             <option value="">Selecione o Canal</option>
                             <option th:each="canal : ${T(com.gleysson.flavio.gestao_atendimentos.model.Atendimento.CanalAtendimento).values()}"
-                                    th:value="${canal}" th:text="${canal}"
-                                    th:selected="${atendimento.canalAtendimento != null and atendimento.canalAtendimento.name() == canal}"></option>
+                                        th:value="${canal}" th:text="${canal}"
+                                        th:selected="${atendimento.canalAtendimento != null and atendimento.canalAtendimento.name() == canal}"></option>
                         </select>
                     </div>
 
-                    <!-- Motivo do Contato -->
                     <div class="input-group">
                         <label for="motivoContato">Motivo do Contato:</label>
                         <textarea id="motivoContato" th:field="*{motivoContato}" rows="4" placeholder="Descreva o motivo do contato" required></textarea>
                     </div>
 
-                    <!-- Solução Passada -->
                     <div class="input-group">
                         <label for="solucaoPassada">Solução Passada:</label>
                         <textarea id="solucaoPassada" th:field="*{solucaoPassada}" rows="4" placeholder="Descreva a solução fornecida" required></textarea>
@@ -125,7 +115,7 @@
                             <tr th:each="atendimentoItem : ${atendimentos}">
                                 <td th:text="${atendimentoItem.usuarioAtendente?.id}" data-label="ID Atendente:">Usuário ID</td>
                                 <td th:text="${atendimentoItem.usuarioAtendente?.fullName}" data-label="Atendente:">Nome Atendente</td>
-                                <td th:text="${atendimentoItem.usuarioAtendente?.department}" data-label="Departamento Atendente:">Depto Atendente</td>
+                                <td th:text="${atendimentoItem.usuarioAtendente?.departamento}" data-label="Departamento Atendente:">Depto Atendente</td>
                                 <td th:text="${atendimentoItem.id}" data-label="ID:">1</td>
                                 <td th:text="${atendimentoItem.empresaCliente}" data-label="Empresa:">Empresa XYZ</td>
                                 <td th:text="${atendimentoItem.nomeCliente}" data-label="Cliente:">João da Silva</td>

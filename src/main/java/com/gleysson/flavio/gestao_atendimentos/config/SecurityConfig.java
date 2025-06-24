@@ -9,11 +9,14 @@ import org.springframework.security.config.annotation.authentication.builders.Au
 import org.springframework.security.config.annotation.method.configuration.EnableMethodSecurity;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
+import org.springframework.security.web.access.AccessDeniedHandler; // NOVO IMPORT
+import org.springframework.security.web.access.AccessDeniedHandlerImpl; // NOVO IMPORT
 
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
+import org.springframework.http.HttpMethod;
 
 @Configuration
 @EnableWebSecurity
@@ -43,7 +46,7 @@ public class SecurityConfig {
     @Bean
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
         http
-           
+
             .authorizeHttpRequests(auth -> auth
                 .requestMatchers(
                     "/login",
@@ -53,8 +56,12 @@ public class SecurityConfig {
                     "/img/**",
                     "/images/**",
                     "/webjars/**",
-                    "/error"
+                    "/error",
+                    "/acesso-negado" // Permite acesso a esta página de erro personalizada
                 ).permitAll()
+                .requestMatchers("/cadastro-usuario/**").hasRole("ADMIN")
+                .requestMatchers(HttpMethod.POST, "/cadastro-atendimento/deletar/**").hasRole("ADMIN")
+                .requestMatchers("/cadastro-atendimento/**").authenticated()
                 .anyRequest().authenticated()
             )
             .formLogin(form -> form
@@ -69,6 +76,9 @@ public class SecurityConfig {
                 .invalidateHttpSession(true)
                 .deleteCookies("JSESSIONID")
                 .permitAll()
+            )
+            .exceptionHandling(exceptions -> exceptions
+                .accessDeniedPage("/acesso-negado") // <-- NOVO: Redireciona para /acesso-negado em caso de 403
             );
         return http.build();
     }

@@ -1,16 +1,17 @@
 package com.gleysson.flavio.gestao_atendimentos.service;
 
 import com.gleysson.flavio.gestao_atendimentos.model.Atendimento;
-import com.gleysson.flavio.gestao_atendimentos.model.Usuario; // Importar o modelo Usuario
+import com.gleysson.flavio.gestao_atendimentos.model.Usuario;
 import com.gleysson.flavio.gestao_atendimentos.repository.AtendimentoRepository;
-import com.gleysson.flavio.gestao_atendimentos.repository.UsuarioRepository; // Importar o repositório de Usuario
+import com.gleysson.flavio.gestao_atendimentos.repository.UsuarioRepository;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.core.Authentication; // Importar para obter autenticação
-import org.springframework.security.core.context.SecurityContextHolder; // Importar para obter o contexto de segurança
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 import java.time.LocalDateTime;
+import java.util.Collections;
 import java.util.List;
-import java.util.Optional;
+import java.util.Optional; // Importe esta classe
 
 @Service
 public class AtendimentoService {
@@ -19,15 +20,19 @@ public class AtendimentoService {
     private AtendimentoRepository atendimentoRepository;
 
     @Autowired
-    private UsuarioRepository usuarioRepository; // INJEÇÃO: Adicione o repositório de Usuario
+    private UsuarioRepository usuarioRepository;
 
     public List<Atendimento> buscarTodosAtendimentos() {
-        return atendimentoRepository.findAll();
+        List<Atendimento> atendimentos = atendimentoRepository.findAll();
+        // Garante que nunca retorne null, sempre uma lista (vazia ou com elementos)
+        return atendimentos != null ? atendimentos : Collections.emptyList();
     }
 
+    // --- MÉTODO ADICIONADO/CORRIGIDO ---
     public Optional<Atendimento> buscarAtendimentoPorId(Long id) {
         return atendimentoRepository.findById(id);
     }
+    // ------------------------------------
 
     public Atendimento salvarAtendimento(Atendimento atendimento) {
         // Se a data e hora do atendimento não foram definidas, use a hora atual
