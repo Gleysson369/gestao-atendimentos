@@ -168,7 +168,8 @@
 
 .data-table th, .data-table td {
     padding: 12px 15px;
-    text-align: left;
+    text-align: center;
+    font-size: 0.5em;
     border-bottom: 1px solid #dee2e6;
 }
 

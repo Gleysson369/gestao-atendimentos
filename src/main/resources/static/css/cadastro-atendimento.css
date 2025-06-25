@@ -222,6 +222,7 @@ form {
     background-color: var(--azul-escuro); /* Cor de fundo do cabeçalho */
     color: var(--branco); /* Cor do texto do cabeçalho */
     font-weight: 600;
+    text-align: center;
     position: sticky; /* Mantém o cabeçalho visível ao rolar */
     top: 0;
     z-index: 10;
