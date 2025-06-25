@@ -7,7 +7,8 @@ import org.springframework.context.annotation.Lazy;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
-import java.util.Optional; // Já importado, ótimo!
+import java.util.List; // Importar List
+import java.util.Optional;
 
 @SuppressWarnings("unused")
 @Service
@@ -21,15 +22,14 @@ public class UsuarioService {
     private PasswordEncoder passwordEncoder;
 
     public boolean redefinirSenha(String username, String newPassword) {
-        // CORREÇÃO: Usar Optional para a busca
         Optional<Usuario> usuarioOpt = usuarioRepository.findByUsername(username);
 
-        if (usuarioOpt.isEmpty()) { // Usar isEmpty() ou !usuarioOpt.isPresent()
+        if (usuarioOpt.isEmpty()) {
             System.out.println("Usuário não encontrado para redefinição de senha: " + username);
             return false;
         }
 
-        Usuario usuario = usuarioOpt.get(); // Obter o usuário se ele existir
+        Usuario usuario = usuarioOpt.get();
 
         try {
             String encodedPassword = passwordEncoder.encode(newPassword);
@@ -44,8 +44,12 @@ public class UsuarioService {
         }
     }
 
-    // CORREÇÃO: Alterar retorno para Optional<Usuario> para consistência com o Repository
     public Optional<Usuario> findByUsername(String username) {
         return usuarioRepository.findByUsername(username);
+    }
+
+    // NOVO MÉTODO: Retorna todos os usuários
+    public List<Usuario> buscarTodosUsuarios() {
+        return usuarioRepository.findAll();
     }
 }

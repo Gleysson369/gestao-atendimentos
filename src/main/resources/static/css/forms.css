@@ -3,24 +3,26 @@
 @import url('_variables.css'); /* Importa as variáveis de cores e fontes */
 
 /* --- Estilos para o Botão "Voltar ao Menu Principal" (em headers) --- */
+/* No seu forms.css */
+
 .back-to-menu-button {
-    background-color: #6c757d;
-    color: var(--branco);
-    padding: 8px 15px;
-    border: none;
-    border-radius: 5px;
-    font-size: 0.9em;
-    font-weight: 500;
-    text-decoration: none;
-    transition: var(--transicao-rapida);
-    cursor: pointer;
-    margin-right: auto;
+ background-color: #6c757d; /* Pode ser uma variável como --cinza-botao-neutro se definida */
+ color: var(--branco);
+ padding: 8px 15px;
+ border: none;
+ border-radius: var(--borda-arredondada-pequena); /* Usando variável */
+ font-size: 0.9em;
+ font-weight: 500;
+ text-decoration: none;
+ transition: var(--transicao-padrao); /* Usando variável */
+ cursor: pointer;
+ margin-right: auto;
 }
 
 .back-to-menu-button:hover {
-    background-color: #5a6268;
-    box-shadow: 0 2px 8px var(--sombra-leve);
-    transform: translateY(-1px);
+ background-color: #5a6268; /* Pode ser uma variável para hover */
+ box-shadow: 0 2px 8px var(--sombra-leve);
+ transform: translateY(-1px);
 }
 
 /* --- Estilos para Botões de Ação Comuns (Salvar, Deletar, Alterar, Exportar) --- */
@@ -60,13 +62,17 @@
 }
 
 .action-button.secondary-button {
-    background-color: #6c757d;
-    color: var(--branco);
+    background-color: var(--branco); /* Fundo branco */
+    color: var(--azul-medio); /* Texto azul, combinando com o padrão do sistema */
+    border: 1px solid var(--azul-medio); /* Borda azul */
+    box-shadow: 0 2px 4px var(--sombra-leve);
 }
 
 .action-button.secondary-button:hover {
-    background-color: #5a6268;
-    box-shadow: 0 4px 10px var(--sombra-leve);
+    background-color: var(--fundo-hover-claro); /* Fundo cinza claro no hover */
+    color: var(--azul-escuro); /* Texto azul mais escuro no hover */
+    border-color: var(--azul-escuro); /* Borda azul mais escura no hover */
+    box-shadow: 0 3px 6px var(--sombra-media); /* Sombra mais intensa no hover */
     transform: translateY(-2px);
 }
 
