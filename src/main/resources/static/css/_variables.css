@@ -1,0 +1,42 @@
+/* src/main/resources/static/css/_variables.css */
+
+/* Definição de Cores e Fontes */
+:root {
+    --preto-grafico: #000000;
+    --azul-claro: #e0f0ff;
+    --azul-medio: #007bff; /* Um azul vibrante para botões */
+    --azul-escuro: #003f88; /* Um azul mais profundo para texto/background */
+    --branco: #ffffff;
+    --cinza-claro: #f8f9fa;
+    --cinza-escuro-texto: #343a40; /* Cor para o texto principal */
+    --sombra-leve: rgba(0, 0, 0, 0.1);
+    --sombra-media: rgba(0, 0, 0, 0.15);
+    --borda-arredondada: 8px;
+    --transicao-rapida: all 0.3s ease-in-out;
+    --fonte-principal: 'Segoe UI', Roboto, Helvetica, Arial, sans-serif; /* Fonte moderna */
+
+     /* Variáveis para cores de destaque e botões de deletar */
+    --vermelho-principal: #dc3545; /* Vermelho padrão para ação de deletar */
+    --vermelho-escuro: #c82333; /* Vermelho mais escuro para hover */
+    --vermelho-sombra: rgba(220, 53, 69, 0.4); /* Sombra para botões vermelhos */
+    --borda-claro: #ced4da; /* Borda mais clara para inputs e tabelas */
+    --azul-foco: rgba(0, 123, 255, 0.25); /* Sombra de foco para inputs */
+    --borda-arredondada-pequena: 5px; /* Borda arredondada menor para elementos */
+    --transicao-padrao: all 0.2s ease-in-out; /* Transição mais genérica */
+    --fundo-hover-claro: #e9ecef; /* Fundo cinza bem claro para hover em tabelas */
+}
+
+/* Estilos globais muito básicos que afetam tudo */
+html {
+    box-sizing: border-box;
+}
+
+*, *::before, *::after {
+    box-sizing: inherit;
+}
+
+body {
+    font-family: var(--fonte-principal);
+    margin: 0;
+    color: var(--cinza-escuro-texto);
+}

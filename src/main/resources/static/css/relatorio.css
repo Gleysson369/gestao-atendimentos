@@ -1,0 +1,371 @@
+.filter-card {
+    background-color: #f8f9fa; /* Um tom de cinza bem claro para o fundo */
+    border-radius: 12px; /* Cantos mais arredondados */
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1); /* Sombra mais suave e proeminente */
+    padding: 30px; /* Mais preenchimento interno */
+    transition: all 0.3s ease;
+}
+
+.filter-card:hover {
+    box-shadow: 0 6px 20px rgba(0, 0, 0, 0.15); /* Sombra um pouco maior no hover */
+}
+
+.filter-card h3 {
+    color: #333; /* Cor mais escura para o título */
+    font-size: 1.8em; /* Aumenta o tamanho da fonte */
+    margin-bottom: 25px; /* Mais espaço abaixo do título */
+    text-align: center;
+    border-bottom: 2px solid var(--azul-primario); /* Linha divisória com cor primária */
+    padding-bottom: 10px;
+}
+
+/* Estilo para a grade de filtros */
+.filter-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); /* Colunas responsivas */
+    gap: 20px; /* Espaço entre os campos */
+    margin-bottom: 30px; /* Espaço antes do botão */
+}
+
+/* Estilo para cada grupo de input */
+.input-group {
+    margin-bottom: 0; /* Remove margem inferior padrão, pois o gap já a fornece */
+}
+
+.input-group label {
+    display: block;
+    margin-bottom: 8px;
+    font-weight: 600; /* Texto da label mais forte */
+    color: #555;
+    font-size: 0.95em;
+}
+
+/* Estilo para inputs e selects */
+.filter-card input[type="text"],
+.filter-card input[type="date"],
+.filter-card select {
+    width: 100%;
+    padding: 12px 15px; /* Mais padding */
+    border: 1px solid #ddd; /* Borda suave */
+    border-radius: 8px; /* Cantos arredondados */
+    font-size: 1em;
+    color: #444;
+    background-color: #fff;
+    transition: all 0.3s ease;
+    box-sizing: border-box; /* Garante que padding e border não aumentem a largura total */
+}
+
+.filter-card input[type="text"]::placeholder,
+.filter-card input[type="date"]::placeholder {
+    color: #aaa; /* Cor do placeholder */
+}
+
+.filter-card input[type="text"]:focus,
+.filter-card input[type="date"]:focus,
+.filter-card select:focus {
+    border-color: var(--azul-primario); /* Borda fica azul ao focar */
+    box-shadow: 0 0 0 3px rgba(var(--azul-primario-rgb), 0.2); /* Sombra suave ao focar */
+    outline: none; /* Remove outline padrão */
+}
+
+/* Apenas centraliza o grupo de botões, o estilo dos botões vem de forms.css */
+.button-group-form {
+    text-align: center; /* Centraliza o botão */
+    margin-top: 20px;
+}
+
+/* Ajustes para telas menores */
+@media (max-width: 768px) {
+    .filter-card {
+        padding: 20px;
+    }
+
+    .filter-grid {
+        grid-template-columns: 1fr; /* Uma coluna em telas pequenas */
+        gap: 15px;
+    }
+
+    .filter-card h3 {
+        font-size: 1.5em;
+        margin-bottom: 20px;
+    }
+
+    .filter-card input,
+    .filter-card select {
+        padding: 10px 12px;
+        font-size: 0.95em;
+    }
+}
+/* --- Estilos de Impressão --- */
+@media print {
+    body {
+        font-size: 10pt !important; /* Tamanho da fonte geral para impressão */
+        color: #000 !important;
+        margin: 10mm !important; /* Margem da página para melhor visualização na impressão */
+        padding: 0 !important;
+        background: #fff !important;
+    }
+
+    /* Esconde elementos que não devem aparecer na impressão */
+    .app-header,
+    .main-menu,
+    .filter-card,
+    .app-footer,
+    .report-actions,
+    .button-group-form /* Garante que os botões do filtro também sumam */ {
+        display: none !important;
+    }
+
+    .main-container,
+    .dashboard-content.relatorio-content,
+    .results-card {
+        margin: 0 !important;
+        padding: 0 !important;
+        background: transparent !important;
+        box-shadow: none !important;
+        border: none !important;
+        width: 100% !important; /* Garante que o container ocupe toda a largura */
+        max-width: none !important; /* Remove qualquer limitação de largura */
+    }
+
+    .results-card h4 {
+        text-align: center !important;
+        font-size: 14pt !important; /* Título maior para impressão */
+        margin: 0 0 15px 0 !important;
+        border-bottom: 2px solid #000 !important;
+        padding-bottom: 5px;
+    }
+
+    .data-table {
+        width: 100% !important;
+        border-collapse: collapse !important;
+        table-layout: fixed !important; /* Força o layout da tabela a ser fixo */
+        word-wrap: break-word; /* Permite que o texto quebre para caber na coluna */
+    }
+
+    .data-table thead {
+        display: table-header-group !important;
+    }
+
+    .data-table thead th {
+        background-color: #e0e0e0 !important; /* Azul escuro */
+        color: #0d47a1 !important;            /* Letras brancas */
+        font-weight: bold !important;
+        text-transform: uppercase;
+        padding: 5px !important; /* Padding um pouco menor para economizar espaço */
+        border: 1px solid #000 !important;
+        text-align: center !important; /* Centraliza o texto do cabeçalho */
+        font-size: 8pt !important; /* Fonte menor para cabeçalhos na impressão */
+    }
+
+    .data-table tbody td {
+        border: 1px solid #000 !important;
+        padding: 4px 5px !important; /* Padding ainda menor para células */
+        vertical-align: top !important; /* Alinha o texto ao topo da célula */
+        white-space: normal !important;
+        word-wrap: break-word !important;
+        text-align: center !important; /* Centraliza o texto das células */
+        font-size: 8pt !important; /* Fonte menor para células na impressão */
+    }
+
+    .data-table tbody tr:nth-child(even) {
+        background-color: #f5f5f5 !important;
+    }
+
+    .data-table td::before {
+        display: none !important; /* Esconde labels responsivas em impressão */
+    }
+
+    /* Colunas amplas para conteúdo longo - Distribuição para 14 colunas */
+    /* Você pode ajustar essas porcentagens conforme a necessidade do seu conteúdo */
+    .data-table th, .data-table td {
+        width: 7.14% !important; /* 100% / 14 colunas = aproximadamente 7.14% para cada */
+    }
+
+    /* Sobrescreve para colunas específicas se elas precisarem de mais espaço */
+    .data-table th:nth-of-type(6), /* Nome do Cliente */
+    .data-table td:nth-of-type(6),
+    .data-table th:nth-of-type(7), /* Data e Hora */
+    .data-table td:nth-of-type(7),
+    .data-table th:nth-of-type(8), /* Motivo do Contato */
+    .data-table td:nth-of-type(8),
+    .data-table th:nth-of-type(9), /* Solução Passada */
+    .data-table td:nth-of-type(9) {
+        width: 10% !important; /* Aumenta a largura para colunas com mais texto */
+    }
+
+    /* Ajusta as demais colunas para compensar o aumento das anteriores */
+    .data-table th:nth-of-type(1), /* ID Atendente */
+    .data-table td:nth-of-type(1),
+    .data-table th:nth-of-type(2), /* Atendente */
+    .data-table td:nth-of-type(2),
+    .data-table th:nth-of-type(3), /* Departamento Atendente */
+    .data-table td:nth-of-type(3),
+    .data-table th:nth-of-type(4), /* ID Atendimento */
+    .data-table td:nth-of-type(4),
+    .data-table th:nth-of-type(5), /* Empresa do Cliente */
+    .data-table td:nth-of-type(5),
+    .data-table th:nth-of-type(10), /* Número da CRS */
+    .data-table td:nth-of-type(10),
+    .data-table th:nth-of-type(11), /* Telefone */
+    .data-table td:nth-of-type(11),
+    .data-table th:nth-of-type(12), /* AnyDesk */
+    .data-table td:nth-of-type(12),
+    .data-table th:nth-of-type(13), /* Canal de Atendimento */
+    .data-table td:nth-of-type(13),
+    .data-table th:nth-of-type(14), /* Se houver 14ª coluna, ajuste aqui */
+    .data-table td:nth-of-type(14) {
+        width: 6% !important; /* Diminui a largura para colunas com menos texto */
+    }
+
+    /* Garante que linhas não se quebrem no meio da impressão */
+    .data-table tr {
+        page-break-inside: avoid !important;
+    }
+}
+
+/* Estilos para o botão Copiar */
+.copy-button {
+    background-color: #4CAF50; /* Um verde vibrante */
+    color: white;
+    padding: 6px 10px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 0.85em;
+    transition: background-color 0.3s ease;
+}
+
+.copy-button:hover {
+    background-color: #45a049; /* Um verde um pouco mais escuro no hover */
+}
+
+ /* Estilos básicos para o modal de relatório (existente) */
+        .modal-overlay {
+            display: none; /* Inicia oculto */
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.7);
+            justify-content: center;
+            align-items: center;
+            z-index: 1000;
+            overflow-y: auto; /* Permite rolagem dentro do modal se o conteúdo for grande */
+        }
+
+        .modal-content {
+            background-color: #fff;
+            padding: 20px;
+            border-radius: 0; /* Removido para tela cheia */
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+            width: 100%; /* Alterado para 100% */
+            max-width: 100%; /* Alterado para 100% ou removido */
+            height: 100vh; /* Alterado para 100vh */
+            max-height: 100vh; /* Alterado para 100vh */
+            position: relative;
+            overflow-y: auto; /* Adiciona rolagem ao conteúdo do modal */
+            margin: 0; /* Adicionado para remover margens */
+        }
+
+        .close-button {
+            position: absolute;
+            top: 10px;
+            right: 10px;
+            background: none;
+            border: none;
+            font-size: 1.5em;
+            cursor: pointer;
+            color: #333;
+        }
+
+        /* Ajustes para a tabela dentro do modal */
+        .modal-content .data-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 15px;
+        }
+
+        .modal-content .data-table th,
+        .modal-content .data-table td {
+            border: 1px solid #ddd;
+            padding: 8px;
+            text-align: left;
+        }
+
+        .modal-content .report-actions {
+            margin-top: 20px;
+            display: flex;
+            justify-content: center;
+            gap: 10px;
+        }
+        /* Estilos para o botão Copiar */
+        .copy-button {
+            background-color: #4CAF50; /* Um verde vibrante */
+            color: white;
+            padding: 6px 10px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 0.85em;
+            transition: background-color 0.3s ease;
+        }
+
+        .copy-button:hover {
+            background-color: #45a049; /* Um verde um pouco mais escuro no hover */
+        }
+
+        /* NOVO: Estilos para o Modal de Dados do Atendimento */
+        .data-modal-overlay {
+            display: none; /* Inicia oculto */
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.7);
+            justify-content: center;
+            align-items: center;
+            z-index: 2000; /* Z-index maior para ficar acima do modal de relatório */
+        }
+
+        .data-modal-content {
+            background-color: #fff;
+            padding: 25px;
+            border-radius: 8px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+            width: 90%;
+            max-width: 600px; /* Largura máxima controlada */
+            position: relative;
+            animation: fadeIn 0.3s ease-out; /* Animação simples de entrada */
+        }
+
+        .data-modal-content h4 {
+            margin-top: 0;
+            color: #333;
+            text-align: center;
+            margin-bottom: 20px;
+        }
+
+        .data-modal-content textarea {
+            width: calc(100% - 20px); /* Ajusta a largura com padding */
+            height: 250px; /* Altura fixa para a área de texto */
+            padding: 10px;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            font-size: 1em;
+            line-height: 1.5;
+            resize: vertical; /* Permite redimensionar verticalmente */
+            margin-bottom: 15px;
+        }
+
+        .data-modal-content .button-group {
+            text-align: center;
+        }
+
+        /* Animação de entrada */
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(-20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }

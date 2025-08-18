@@ -1,0 +1,308 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+<head>
+    <title>Cadastro de Usuário</title>
+    <link rel="stylesheet" th:href="@{/css/main.css}">
+    <link rel="stylesheet" th:href="@{/css/cadastro-usuario.css}">
+    <link rel="stylesheet" th:href="@{/css/forms.css}">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <style>
+        /* Estilos para o Modal em tela cheia */
+        .modal {
+            display: none; /* Escondido por padrão */
+            position: fixed; /* Fixa a posição */
+            z-index: 1000; /* Fica no topo de tudo */
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            overflow: auto; /* Adiciona scroll se o conteúdo for muito grande */
+            background-color: rgba(0,0,0,0.8); /* Fundo preto mais escuro para preencher a tela */
+            display: flex; /* Para centralizar o conteúdo */
+            justify-content: center;
+            align-items: center;
+        }
+
+        .modal-content {
+            background-color: #fefefe;
+            padding: 20px;
+            border: 1px solid #888;
+            width: 95%; /* Quase 100% da largura da tela */
+            height: 95%; /* Quase 100% da altura da tela */
+            max-width: none; /* Remove a largura máxima para permitir tela cheia */
+            max-height: none; /* Remove a altura máxima para permitir tela cheia */
+            box-shadow: 0 4px 8px 0 rgba(0,0,0,0.2), 0 6px 20px 0 rgba(0,0,0,0.19);
+            animation-name: animatetop;
+            animation-duration: 0.4s;
+            border-radius: 8px;
+            position: relative; /* Para posicionar o botão de fechar */
+            display: flex; /* Permite organizar o conteúdo interno (título, tabela) */
+            flex-direction: column; /* Conteúdo em coluna */
+        }
+
+        /* Ajusta o cabeçalho do modal */
+        .modal-content h4 {
+            margin-top: 0;
+            margin-bottom: 20px;
+            text-align: center;
+        }
+
+        /* Ajusta a área da tabela para preencher o espaço restante no modal */
+        .modal .table-responsive {
+            flex-grow: 1; /* Faz com que a tabela ocupe o espaço disponível */
+            overflow-y: auto; /* Adiciona scroll na tabela se ela for muito grande */
+        }
+
+        /* Animação para aparecer o modal */
+        @keyframes animatetop {
+            from {opacity: 0}
+            to {opacity: 1}
+        }
+
+        .close-button {
+            color: #aaa;
+            font-size: 35px; /* Aumenta o tamanho do botão de fechar */
+            font-weight: bold;
+            position: absolute;
+            top: 10px;
+            right: 20px;
+            cursor: pointer;
+        }
+
+        .close-button:hover,
+        .close-button:focus {
+            color: black;
+            text-decoration: none;
+            cursor: pointer;
+        }
+
+        /* Estilo para o botão de abrir o modal */
+        .open-modal-button {
+            background-color: #007bff; /* Azul, para diferenciar */
+            color: white;
+            padding: 10px 15px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 16px;
+            margin-top: 20px;
+        }
+
+        .open-modal-button:hover {
+            background-color: #0056b3;
+        }
+
+        /* Estilo da tabela dentro do modal */
+        .modal .data-table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+
+        .modal .data-table th,
+        .modal .data-table td {
+            border: 1px solid #ddd;
+            padding: 8px;
+            text-align: left;
+        }
+
+        .modal .data-table th {
+            background-color: #f2f2f2;
+        }
+
+        /* Ocultar a seção original da lista de usuários, pois ela estará no modal */
+        .user-list-section {
+            display: none;
+        }
+    </style>
+</head>
+<body>
+    <div class="main-container">
+        <header class="app-header">
+            <h1>Cadastro de Usuários</h1>
+            <div class="user-info" sec:authorize="isAuthenticated()">
+            </div>
+        </header>
+
+        <nav class="main-menu">
+            <a href="/main" class="menu-button">Tela Principal</a>
+            <a href="/relatorio-atendimentos" class="menu-button">Relatório de Atendimentos</a>
+            <a href="/cadastro-atendimento" class="menu-button">Cadastro de Atendimentos</a>
+        </nav>
+
+        <main class="dashboard-content">
+            <section class="card full-width">
+                <h3>Cadastro de Usuários</h3>
+
+                <div th:if="${successMessage}" class="success-message">
+                    <p th:text="${successMessage}"></p>
+                </div>
+                <div th:if="${errorMessage}" class="error-message">
+                    <p th:text="${errorMessage}"></p>
+                </div>
+
+                <div sec:authorize="!hasRole('ADMIN')" class="info-message">
+                    <p>
+                        Para salvar alterações ou cadastrar novos usuários, você precisa ter o papel **ADMIN**.
+                        Por favor, solicite a um administrador ou altere seu papel.
+                    </p>
+                </div>
+
+                <form th:action="@{/cadastro-usuario/salvar}" th:object="${usuario}" method="post" id="userForm">
+                    <input type="hidden" th:field="*{id}" />
+                    <input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}" />
+
+                    <div class="input-group">
+                        <label for="username">ID de Login:</label>
+                        <input type="text" id="username" th:field="*{username}" placeholder="ID de Login" required>
+                    </div>
+
+                    <div class="input-group">
+                        <label for="fullName">Nome Completo:</label>
+                        <input type="text" id="fullName" th:field="*{fullName}" placeholder="Nome Completo do Usuário" required>
+                    </div>
+
+                    <div class="input-group">
+                        <label for="password">Senha:</label>
+                        <input type="password" id="password" name="password" placeholder="Preencha para alterar a senha" th:required="${usuario.id == null}"/>
+                        <p th:if="${usuario.id != null}" class="help-text">Deixe em branco para não alterar a senha.</p>
+                    </div>
+
+                    <div class="input-group">
+                        <label for="departamento">Departamento:</label>
+                        <select id="departamento" th:field="*{departamento}" required>
+                            <option value="">Selecione um departamento</option>
+                            <option th:each="depto : ${departamentos}"
+                                        th:value="${depto}"
+                                        th:text="${depto}"
+                                        th:selected="${usuario.departamento != null and usuario.departamento.name() == depto}"></option>
+                        </select>
+                    </div>
+
+                    <div class="input-group">
+                        <label for="cargo">Cargo:</label>
+                        <select id="cargo" th:field="*{cargo}" required>
+                            <option value="">Selecione um cargo</option>
+                            <option th:each="carg : ${cargos}"
+                                        th:value="${carg}"
+                                        th:text="${carg}"
+                                        th:selected="${usuario.cargo != null and usuario.cargo.name() == carg}"></option>
+                        </select>
+                    </div>
+
+                    <div class="input-group" sec:authorize="hasRole('ADMIN')">
+                        <label for="role">Papel (Role):</label>
+                        <select id="role" th:field="*{role}" required>
+                            <option value="">Selecione um papel</option>
+                            <option value="ADMIN" th:selected="${usuario.role == 'ADMIN'}">ADMIN</option>
+                            <option value="USER" th:selected="${usuario.role == 'USER'}">USER</option>
+                        </select>
+                    </div>
+
+                    <div class="button-group-form">
+                        <button type="submit" class="action-button primary"
+                                sec:authorize="hasRole('ADMIN')">Salvar Usuário</button>
+                        <button type="button" class="action-button primary disabled-button"
+                                sec:authorize="!hasRole('ADMIN')" disabled
+                                onclick="alert('Apenas usuários com papel ADMIN podem salvar usuários. Por favor, solicite a um administrador ou altere seu papel.');">Salvar Usuário</button>
+
+                        <a th:if="${usuario.id != null}" th:href="@{/cadastro-usuario}" class="action-button secondary">Novo Usuário</a>
+                    </div>
+                </form>
+
+                <button id="openUsersModal" class="open-modal-button">Ver Usuários Cadastrados</button>
+
+            </section>
+
+            <div id="usersModal" class="modal">
+                <div class="modal-content">
+                    <span class="close-button">&times;</span>
+                    <h4>Usuários Cadastrados</h4>
+                    <div class="table-responsive">
+                        <table class="data-table">
+                            <thead>
+                                <tr>
+                                    <th>ID</th>
+                                    <th>ID de Login</th>
+                                    <th>Nome Completo</th>
+                                    <th>Departamento</th>
+                                    <th>Cargo</th>
+                                    <th>Papel</th>
+                                    <th>Ações</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr th:each="user : ${users}">
+                                    <td th:text="${user.id}" data-label="ID:"></td>
+                                    <td th:text="${user.username}" data-label="ID de Login:"></td>
+                                    <td th:text="${user.fullName}" data-label="Nome Completo:"></td>
+                                    <td th:text="${user.departamento}" data-label="Departamento:"></td>
+                                    <td th:text="${user.cargo}" data-label="Cargo:"></td>
+                                    <td th:text="${user.role}" data-label="Papel:"></td>
+                                    <td data-label="Ações:">
+                                        <div class="action-buttons-cell">
+                                            <a th:href="@{/cadastro-usuario/editar/{id}(id=${user.id})}" class="action-button edit" sec:authorize="hasRole('ADMIN')">Editar</a>
+                                            <form th:action="@{/cadastro-usuario/deletar/{id}(id=${user.id})}" method="post"
+                                                  onsubmit="return confirm('Tem certeza que deseja deletar este usuário?');"
+                                                  sec:authorize="hasRole('ADMIN')" style="display:inline;">
+                                                <button type="submit" class="action-button delete">Deletar</button>
+                                                <input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}" />
+                                            </form>
+                                        </div>
+                                    </td>
+                                </tr>
+                                <tr th:if="${#lists.isEmpty(users)}">
+                                    <td colspan="7">Nenhum usuário cadastrado.</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+
+            <section class="card full-width user-list-section" style="display:none;">
+                 </section>
+
+        </main>
+
+        <footer class="app-footer">
+            <div class="user-profile">
+                <img th:src="@{/img/Logo.png}" alt="Logo da Gestão de Atendimentos" class="app-logo-footer">
+                <span class="user-name" sec:authorize="isAuthenticated()" sec:authentication="principal.fullName">Usuário</span>
+            </div>
+            <form th:action="@{/logout}" method="post">
+                <input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}" />
+                <button type="submit" class="logout-button">Sair</button>
+            </form>
+        </footer>
+    </div>
+
+    <script th:inline="javascript">
+        document.getElementById('userForm').addEventListener('submit', function(event) {
+            const passwordField = document.getElementById('password');
+            if (passwordField.value.trim() === '' && !passwordField.hasAttribute('required') && !confirm('Você não preencheu a senha. Deseja continuar sem alterar a senha?')) {
+                event.preventDefault();
+            }
+        });
+
+        // Lógica do Modal
+        const modal = document.getElementById('usersModal');
+        const openModalBtn = document.getElementById('openUsersModal');
+        const closeBtn = document.querySelector('.close-button');
+
+        openModalBtn.onclick = function() {
+            modal.style.display = 'flex'; // Altera para 'flex' para usar flexbox para centralização
+        }
+
+        closeBtn.onclick = function() {
+            modal.style.display = 'none';
+        }
+
+        // Fechar o modal clicando fora do conteúdo
+        window.onclick = function(event) {
+            if (event.target == modal) {
+                modal.style.display = 'none';
+            }
+        }
+    </script>
+</body>
+</html>
