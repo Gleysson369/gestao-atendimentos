@@ -1,5 +1,6 @@
 /* src/main/resources/static/css/main.css */
 
+<<<<<<< HEAD
 @import url('_variables.css');
 
 body {
@@ -19,6 +20,31 @@ body {
     overflow: hidden;
 }
 
+=======
+@import url('_variables.css'); /* Importa as variáveis de cores e fontes */
+
+body {
+    background: linear-gradient(135deg, var(--azul-claro) 0%, var(--azul-medio) 100%); /* Gradiente de fundo */
+    /* Removido display: flex etc. daqui para que o main-container possa ocupar o fluxo normal da página */
+    /* As regras de centralização do body em login.css não se aplicam aqui porque o main-container já toma conta */
+}
+
+/* --- Container Principal da Aplicação (Tela Main) --- */
+.main-container {
+    display: flex;
+    flex-direction: column;
+    width: 100%; /* Ocupa a largura total para se ajustar ao body */
+    max-width: 1200px; /* Limita a largura em telas maiores */
+    min-height: 100vh; /* Ocupa a altura total do viewport */
+    background-color: var(--cinza-claro); /* Fundo sutil para a área da aplicação */
+    box-shadow: 0 0 20px var(--sombra-media);
+    margin: 0 auto; /* Centraliza o container na página */
+    border-radius: var(--borda-arredondada);
+    overflow: hidden; /* Garante que os cantos arredondados sejam aplicados */
+}
+
+/* --- Cabeçalho da Aplicação --- */
+>>>>>>> cb233c539ce045cc47cef0f5933a2b64b8ec5509
 .app-header {
     background-color: var(--azul-escuro);
     color: var(--branco);
@@ -40,6 +66,10 @@ body {
     font-weight: 500;
 }
 
+<<<<<<< HEAD
+=======
+/* --- Menu de Navegação Principal --- */
+>>>>>>> cb233c539ce045cc47cef0f5933a2b64b8ec5509
 .main-menu {
     background-color: var(--azul-medio);
     padding: 15px 30px;
@@ -68,6 +98,10 @@ body {
     box-shadow: 0 4px 8px var(--sombra-media);
 }
 
+<<<<<<< HEAD
+=======
+/* --- Conteúdo Principal (Dashboard) --- */
+>>>>>>> cb233c539ce045cc47cef0f5933a2b64b8ec5509
 .dashboard-content {
     flex-grow: 1;
     padding: 30px;
@@ -142,6 +176,7 @@ body {
     grid-column: 1 / -1;
 }
 
+<<<<<<< HEAD
 /* --- Estilos para Gráficos de Barras Verticais --- */
 .vertical-bar-chart {
     display: flex;
@@ -200,6 +235,9 @@ body {
 }
 
 /* Rodapé da Aplicação */
+=======
+/* --- Rodapé da Aplicação --- */
+>>>>>>> cb233c539ce045cc47cef0f5933a2b64b8ec5509
 .app-footer {
     background-color: var(--azul-escuro);
     color: var(--branco);
@@ -210,18 +248,22 @@ body {
     border-top: 1px solid rgba(255, 255, 255, 0.1);
 }
 
+<<<<<<< HEAD
 .app-version {
     flex-grow: 1; /* Permite que este elemento ocupe o espaço extra */
     text-align: center; /* Centraliza o texto */
     margin: 0; /* Remove margens extras */
 }
 
+=======
+>>>>>>> cb233c539ce045cc47cef0f5933a2b64b8ec5509
 .user-profile {
     display: flex;
     align-items: center;
     gap: 10px;
 }
 
+<<<<<<< HEAD
 .app-logo-footer {
     width: 60px;
     height: auto;
@@ -230,6 +272,29 @@ body {
     object-fit: contain;
 }
 
+=======
+/* Estilos para a logo no footer */
+.app-logo-footer {
+    width: 60px; /* Ajuste o tamanho conforme necessário */
+    height: auto; /* Mantém a proporção da imagem */
+    border-radius: 0; /* Remove borda arredondada se houver */
+    border: none; /* Remove borda se houver */
+    object-fit: contain; /* Garante que a imagem se ajuste sem cortar */
+}
+
+/* Remover os estilos antigos do user-photo se eles impactassem a logo */
+.user-photo {
+    /* Mantenha apenas se você ainda tiver user-photo em outro lugar.
+       Se não, você pode remover esta regra. */
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    border: 2px solid var(--branco);
+    object-fit: cover;
+}
+
+
+>>>>>>> cb233c539ce045cc47cef0f5933a2b64b8ec5509
 .user-name {
     font-weight: 500;
     font-size: 1.05em;
@@ -253,7 +318,11 @@ body {
     transform: translateY(-1px);
 }
 
+<<<<<<< HEAD
 /* Responsividade */
+=======
+/* --- Responsividade para Telas Menores --- */
+>>>>>>> cb233c539ce045cc47cef0f5933a2b64b8ec5509
 @media (max-width: 768px) {
     .app-header {
         flex-direction: column;
@@ -283,6 +352,7 @@ body {
         flex-direction: column;
         gap: 15px;
     }
+<<<<<<< HEAD
 
     .vertical-bar-chart {
         height: 200px;
@@ -323,4 +393,6 @@ body {
     color: var(--branco);
     box-shadow: 0 2px 5px var(--sombra-media) inset;
     pointer-events: none; /* Desabilita o clique no botão ativo */
+=======
+>>>>>>> cb233c539ce045cc47cef0f5933a2b64b8ec5509
 }

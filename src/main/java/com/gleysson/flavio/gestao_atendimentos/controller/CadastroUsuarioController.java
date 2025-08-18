@@ -3,7 +3,11 @@ package com.gleysson.flavio.gestao_atendimentos.controller;
 import com.gleysson.flavio.gestao_atendimentos.model.Usuario;
 import com.gleysson.flavio.gestao_atendimentos.repository.UsuarioRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+<<<<<<< HEAD
 import org.springframework.security.access.prepost.PreAuthorize;
+=======
+import org.springframework.security.access.prepost.PreAuthorize; // Importe esta anotação
+>>>>>>> cb233c539ce045cc47cef0f5933a2b64b8ec5509
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -12,11 +16,21 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+<<<<<<< HEAD
 import java.util.Optional; // Já estava aqui, mas é bom revisar
 
 @Controller
 @RequestMapping("/cadastro-usuario")
 @PreAuthorize("hasRole('ADMIN')") // Apenas ADMIN pode acessar este controller
+=======
+import java.util.List; // Importe List
+import java.util.Optional;
+
+@SuppressWarnings("unused")
+@Controller
+@RequestMapping("/cadastro-usuario")
+@PreAuthorize("hasRole('ADMIN')") // <-- APENAS ADMIN PODE ACESSAR ESTE CONTROLLER
+>>>>>>> cb233c539ce045cc47cef0f5933a2b64b8ec5509
 public class CadastroUsuarioController {
 
     @Autowired
@@ -40,6 +54,7 @@ public class CadastroUsuarioController {
     // Salvar/Atualizar Usuário. Acesso apenas para ADMIN.
     @PostMapping("/salvar")
     public String salvarUsuario(@ModelAttribute Usuario usuario,
+<<<<<<< HEAD
                                 RedirectAttributes redirectAttributes) {
         try {
             if (usuario.getId() == null) { // Novo usuário
@@ -49,16 +64,31 @@ public class CadastroUsuarioController {
                     return "redirect:/cadastro-usuario";
                 }
                 // Codifica a senha apenas para novos usuários ou se uma nova senha for fornecida
+=======
+                                 RedirectAttributes redirectAttributes) {
+        try {
+            if (usuario.getId() == null) { // Novo usuário
+                if (usuarioRepository.findByUsername(usuario.getUsername()) != null) {
+                    redirectAttributes.addFlashAttribute("errorMessage", "Nome de usuário já existe. Por favor, escolha outro.");
+                    return "redirect:/cadastro-usuario";
+                }
+>>>>>>> cb233c539ce045cc47cef0f5933a2b64b8ec5509
                 usuario.setPassword(passwordEncoder.encode(usuario.getPassword()));
             } else { // Edição de usuário existente
                 Optional<Usuario> existingUserOptional = usuarioRepository.findById(usuario.getId());
                 if (existingUserOptional.isPresent()) {
                     Usuario existingUser = existingUserOptional.get();
+<<<<<<< HEAD
                     // Se a senha estiver vazia no formulário, mantém a senha existente
                     if (usuario.getPassword() == null || usuario.getPassword().isEmpty()) {
                         usuario.setPassword(existingUser.getPassword());
                     } else {
                         // Se uma nova senha for fornecida, codifica-a
+=======
+                    if (usuario.getPassword() == null || usuario.getPassword().isEmpty()) {
+                        usuario.setPassword(existingUser.getPassword());
+                    } else {
+>>>>>>> cb233c539ce045cc47cef0f5933a2b64b8ec5509
                         usuario.setPassword(passwordEncoder.encode(usuario.getPassword()));
                     }
                 } else {
@@ -70,10 +100,15 @@ public class CadastroUsuarioController {
             usuarioRepository.save(usuario);
             redirectAttributes.addFlashAttribute("successMessage", "Usuário salvo com sucesso!");
         } catch (Exception e) {
+<<<<<<< HEAD
             // É bom logar o erro completo para depuração, mas exibir uma mensagem genérica para o usuário
             System.err.println("Erro ao salvar usuário: " + e.getMessage()); // Log no console do servidor
             e.printStackTrace(); // Para depuração mais detalhada
             redirectAttributes.addFlashAttribute("errorMessage", "Erro ao salvar usuário. Por favor, tente novamente.");
+=======
+            redirectAttributes.addFlashAttribute("errorMessage", "Erro ao salvar usuário: " + e.getMessage());
+            e.printStackTrace(); // Para depuração
+>>>>>>> cb233c539ce045cc47cef0f5933a2b64b8ec5509
         }
         return "redirect:/cadastro-usuario";
     }
@@ -113,9 +148,13 @@ public class CadastroUsuarioController {
             usuarioRepository.deleteById(id);
             redirectAttributes.addFlashAttribute("successMessage", "Usuário deletado com sucesso!");
         } catch (Exception e) {
+<<<<<<< HEAD
             System.err.println("Erro ao deletar usuário: " + e.getMessage()); // Log no console do servidor
             e.printStackTrace(); // Para depuração mais detalhada
             redirectAttributes.addFlashAttribute("errorMessage", "Erro ao deletar usuário. Por favor, tente novamente.");
+=======
+            redirectAttributes.addFlashAttribute("errorMessage", "Erro ao deletar usuário: " + e.getMessage());
+>>>>>>> cb233c539ce045cc47cef0f5933a2b64b8ec5509
         }
         return "redirect:/cadastro-usuario";
     }

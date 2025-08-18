@@ -1,5 +1,6 @@
 package com.gleysson.flavio.gestao_atendimentos.controller;
 
+<<<<<<< HEAD
 import com.gleysson.flavio.gestao_atendimentos.model.Usuario;
 import com.gleysson.flavio.gestao_atendimentos.service.DashboardService;
 import com.gleysson.flavio.gestao_atendimentos.service.UsuarioService;
@@ -13,10 +14,16 @@ import org.springframework.web.bind.annotation.RequestParam;
 
 import java.util.Map;
 import java.util.Optional;
+=======
+import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.GetMapping;
+>>>>>>> cb233c539ce045cc47cef0f5933a2b64b8ec5509
 
 @Controller
 public class MainController {
 
+<<<<<<< HEAD
     @Autowired
     private UsuarioService usuarioService;
 
@@ -58,5 +65,23 @@ public class MainController {
     @GetMapping("/")
     public String redirectToMain() {
         return "redirect:/main";
+=======
+    @GetMapping("/main") // ESTE DEVE PERMANECER AQUI
+    public String mainPage(Model model) {
+        // Mock dos dados para o dashboard
+        model.addAttribute("atendimentosMensais", 32);
+        model.addAttribute("atendimentosDiarios", 5);
+        model.addAttribute("topClientes", new String[][] {
+            {"Cliente A", "15"},
+            {"Cliente B", "12"},
+            {"Cliente C", "10"}
+        });         
+        model.addAttribute("topEmpresas", new String[][] {
+            {"Empresa X", "20"},
+            {"Empresa Y", "18"},
+            {"Empresa Z", "14"}
+        });
+        return "main"; // busca o arquivo main.html em templates
+>>>>>>> cb233c539ce045cc47cef0f5933a2b64b8ec5509
     }
 }

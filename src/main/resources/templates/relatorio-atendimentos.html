@@ -6,14 +6,21 @@
     <link rel="stylesheet" th:href="@{/css/forms.css}">
     <link rel="stylesheet" th:href="@{/css/relatorio.css}">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+<<<<<<< HEAD
     
+=======
+>>>>>>> cb233c539ce045cc47cef0f5933a2b64b8ec5509
 </head>
 <body>
     <div class="main-container">
         <header class="app-header">
             <h1>Relatório de Atendimentos</h1>
             <div class="user-info" sec:authorize="isAuthenticated()">
+<<<<<<< HEAD
                 </div>
+=======
+            </div>
+>>>>>>> cb233c539ce045cc47cef0f5933a2b64b8ec5509
         </header>
 
         <nav class="main-menu">
@@ -35,10 +42,18 @@
                             <label for="empresaCliente">Empresa do Cliente:</label>
                             <input type="text" id="empresaCliente" name="empresaCliente" th:value="${filtros.empresaCliente}" placeholder="Digite a empresa do cliente" />
                         </div>
+<<<<<<< HEAD
+=======
+                        <!-- Campo para Data de Início -->
+>>>>>>> cb233c539ce045cc47cef0f5933a2b64b8ec5509
                         <div class="input-group">
                             <label for="dataInicio">Data de Início:</label>
                             <input type="date" id="dataInicio" name="dataInicio" th:value="${filtros.dataInicio != null ? #temporals.format(filtros.dataInicio, 'yyyy-MM-dd') : ''}" />
                         </div>
+<<<<<<< HEAD
+=======
+                        <!-- Campo para Data Final -->
+>>>>>>> cb233c539ce045cc47cef0f5933a2b64b8ec5509
                         <div class="input-group">
                             <label for="dataFim">Data Final:</label>
                             <input type="date" id="dataFim" name="dataFim" th:value="${filtros.dataFim != null ? #temporals.format(filtros.dataFim, 'yyyy-MM-dd') : ''}" />
@@ -49,7 +64,11 @@
                                 <option value="">Todos</option>
                                 <th:block th:each="canal : ${canaisAtendimento}">
                                     <option th:value="${canal.name()}"
+<<<<<<< HEAD
                                             th:text="${canal.displayValue}"
+=======
+                                            th:text="${canal.name()}"
+>>>>>>> cb233c539ce045cc47cef0f5933a2b64b8ec5509
                                             th:selected="${filtros.canalAtendimento == canal.name()}">
                                     </option>
                                 </th:block>
@@ -90,10 +109,69 @@
                         </div>
                     </div>
                     <div class="button-group-form">
+<<<<<<< HEAD
                         <button type="submit" name="aplicarFiltros" value="true" class="action-button primary-button">Aplicar Filtros</button>
                     </div>
                 </form>
             </section>
+=======
+                        <button type="submit" class="action-button primary-button">Aplicar Filtros</button></div>
+                </form>
+            </section>
+
+            <section class="card results-card" id="resultsCard">
+                <h4>Resultados do Relatório</h4>
+                <div th:if="${errorMessage}" class="error-message">
+                    <p th:text="${errorMessage}"></p>
+                </div>
+                <div class="table-responsive">
+                    <table class="data-table">
+                        <thead>
+                            <tr>
+                                <th>ID Atendente</th>
+                                <th>Atendente</th>
+                                <th>Departamento Atendente</th>
+                                <th>ID Atendimento</th>
+                                <th>Empresa do Cliente</th>
+                                <th>Nome do Cliente</th>
+                                <th>Data e Hora</th>
+                                <th>Motivo do Contato</th>
+                                <th>Solução Passada</th>
+                                <th>Número da CRS</th>
+                                <th>Telefone</th>
+                                <th>AnyDesk</th>
+                                <th>Canal de Atendimento</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr th:each="atendimento : ${atendimentos}">
+                                <td th:text="${atendimento.usuarioAtendente?.id}" data-label="ID Atendente:">Usuário ID</td>
+                                <td th:text="${atendimento.usuarioAtendente?.fullName}" data-label="Atendente:">Nome Atendente</td>
+                                <td th:text="${atendimento.usuarioAtendente?.departamento?.displayValue}" data-label="Departamento Atendente:">Depto Atendente</td>
+                                <td th:text="${atendimento.id}" data-label="ID Atendimento:">1</td>
+                                <td th:text="${atendimento.empresaCliente}" data-label="Empresa do Cliente:">Empresa Teste Ltda.</td>
+                                <td th:text="${atendimento.nomeCliente}" data-label="Nome do Cliente:">Maria Silva</td>
+                                <td th:text="${#temporals.format(atendimento.dataHoraAtendimento, 'dd/MM/yyyy HH:mm')}" data-label="Data e Hora:">01/01/2023 10:00</td>
+                                <td th:text="${atendimento.motivoContato}" data-label="Motivo do Contato:">Dúvida sobre o produto X.</td>
+                                <td th:text="${atendimento.solucaoPassada}" data-label="Solução Passada:">Instruções de uso detalhadas.</td>
+                                <td th:text="${atendimento.numeroCRS}" data-label="Número da CRS:">CRS-2023-001</td>
+                                <td th:text="${atendimento.telefone}" data-label="Telefone:">(11) 98765-4321</td>
+                                <td th:text="${atendimento.anydesk}" data-label="AnyDesk:">123 456 789</td>
+                                <td th:text="${atendimento.canalAtendimento}" data-label="Canal de Atendimento:">TELEFONE</td>
+                            </tr>
+                            <tr th:if="${#lists.isEmpty(atendimentos)}">
+                                <td colspan="14">Nenhum atendimento encontrado com os filtros aplicados.</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+                <div class="report-actions">
+                    <button type="button" class="action-button secondary-button" onclick="printResultsSection()">Imprimir</button>
+                    <button type="button" class="action-button secondary-button" onclick="exportToPdf()">Gerar PDF</button>
+                    <button type="button" class="action-button secondary-button" onclick="exportToExcel()">Exportar para Excel</button>
+                </div>
+            </section>
+>>>>>>> cb233c539ce045cc47cef0f5933a2b64b8ec5509
         </main>
 
         <footer class="app-footer">
@@ -105,6 +183,7 @@
                 <input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}" />
                 <button type="submit" class="logout-button">Sair</button>
             </form>
+<<<<<<< HEAD
         </footer>
     </div>
 
@@ -220,6 +299,11 @@
             }
         });
 
+=======
+    </div>
+
+    <script th:inline="javascript">
+>>>>>>> cb233c539ce045cc47cef0f5933a2b64b8ec5509
         // Guarda os estilos originais dos elementos antes de escondê-los
         const originalStyles = {};
 
@@ -228,9 +312,13 @@
                 document.querySelector('.app-header'),
                 document.querySelector('.main-menu'),
                 document.getElementById('filterCard'),
+<<<<<<< HEAD
                 document.querySelector('.app-footer'),
                 document.querySelector('.modal-content .close-button'), // Esconder o botão fechar
                 document.querySelector('.modal-content .report-actions') // Esconder os botões de ação dentro do modal
+=======
+                document.querySelector('.app-footer')
+>>>>>>> cb233c539ce045cc47cef0f5933a2b64b8ec5509
             ];
 
             elementsToHide.forEach((el, index) => {
@@ -239,6 +327,7 @@
                     el.style.display = 'none';
                 }
             });
+<<<<<<< HEAD
             // Adiciona um estilo para remover o fundo escuro do modal durante a impressão
             if (reportModal) {
                 originalStyles['modalOverlayBg'] = reportModal.style.backgroundColor;
@@ -274,6 +363,8 @@
                     modalContent.style.borderRadius = '0'; // Remover borda
                 }
             }
+=======
+>>>>>>> cb233c539ce045cc47cef0f5933a2b64b8ec5509
         }
 
         function showElementsAfterPrint() {
@@ -281,9 +372,13 @@
                 document.querySelector('.app-header'),
                 document.querySelector('.main-menu'),
                 document.getElementById('filterCard'),
+<<<<<<< HEAD
                 document.querySelector('.app-footer'),
                 document.querySelector('.modal-content .close-button'),
                 document.querySelector('.modal-content .report-actions')
+=======
+                document.querySelector('.app-footer')
+>>>>>>> cb233c539ce045cc47cef0f5933a2b64b8ec5509
             ];
 
             elementsToHide.forEach((el, index) => {
@@ -291,6 +386,7 @@
                     el.style.display = originalStyles[index];
                 }
             });
+<<<<<<< HEAD
             if (reportModal && originalStyles['modalOverlayBg']) {
                 reportModal.style.backgroundColor = originalStyles['modalOverlayBg'];
                 reportModal.style.position = originalStyles['modalPosition'];
@@ -315,11 +411,24 @@
         function printResultsSection() {
             hideElementsForPrint();
             window.print();
+=======
+        }
+
+        // Função para imprimir apenas a seção de resultados
+        function printResultsSection() {
+            hideElementsForPrint();
+            window.print();
+            // Um pequeno atraso para garantir que a caixa de diálogo de impressão apareça antes de restaurar os elementos
+>>>>>>> cb233c539ce045cc47cef0f5933a2b64b8ec5509
             setTimeout(showElementsAfterPrint, 500);
         }
 
         // Função para exportar para PDF (agora usando a mesma lógica de impressão para PDF)
         function exportToPdf() {
+<<<<<<< HEAD
+=======
+            // A mensagem de alerta pode ser removida se você implementar uma solução real de PDF.
+>>>>>>> cb233c539ce045cc47cef0f5933a2b64b8ec5509
             alert('A função "Gerar PDF" é um placeholder. Para PDF real, você precisaria de uma biblioteca ou integração com o backend.');
             printResultsSection(); // Reutiliza a função de impressão de seção
         }
@@ -327,12 +436,20 @@
         // Função para exportar para Excel (CSV)
         function exportToExcel() {
             let csv = [];
+<<<<<<< HEAD
             const rows = document.querySelectorAll("#reportModal .data-table tr"); // Seleciona linhas da tabela dentro do modal
+=======
+            const rows = document.querySelectorAll("#resultsCard .data-table tr"); // Seleciona linhas apenas da tabela de resultados
+>>>>>>> cb233c539ce045cc47cef0f5933a2b64b8ec5509
 
             for (let i = 0; i < rows.length; i++) {
                 const row = [], cols = rows[i].querySelectorAll("td, th");
 
                 for (let j = 0; j < cols.length; j++) {
+<<<<<<< HEAD
+=======
+                    // No relatório, não há coluna de ações, então podemos pegar tudo.
+>>>>>>> cb233c539ce045cc47cef0f5933a2b64b8ec5509
                     let data = cols[j].textContent.replace(/(\r\n|\n|\r)/gm, "").replace(/(\s\s)/gm, ' ').trim();
                     data = data.replace(/"/g, '\"\"'); // Escape aspas duplas
                     row.push('"' + data + '"');
@@ -360,6 +477,7 @@
                 alert('Seu navegador não suporta download automático de arquivos CSV. Por favor, copie o conteúdo da tabela.');
             }
         }
+<<<<<<< HEAD
 
         // FUNÇÃO MODIFICADA: Agora exibe os dados em um modal
         function exibirDadosAtendimento(button) {
@@ -416,6 +534,8 @@
                 }
             }
         }
+=======
+>>>>>>> cb233c539ce045cc47cef0f5933a2b64b8ec5509
     </script>
 </body>
 </html>

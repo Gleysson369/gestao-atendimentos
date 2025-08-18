@@ -2,7 +2,10 @@
 
 /* Definição de Cores e Fontes */
 :root {
+<<<<<<< HEAD
     --preto-grafico: #000000;
+=======
+>>>>>>> cb233c539ce045cc47cef0f5933a2b64b8ec5509
     --azul-claro: #e0f0ff;
     --azul-medio: #007bff; /* Um azul vibrante para botões */
     --azul-escuro: #003f88; /* Um azul mais profundo para texto/background */

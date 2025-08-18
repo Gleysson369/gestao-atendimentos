@@ -15,14 +15,21 @@
         </header>
 
         <nav class="main-menu">
+<<<<<<< HEAD
             <a href="/cadastro-usuario" class="menu-button" sec:authorize="hasRole('ADMIN')">Cadastro de Usuário</a>
             <a href="/cadastro-atendimento" class="menu-button" sec:authorize="isAuthenticated()">Cadastro de Atendimentos</a>
             <a href="/relatorio-atendimentos" class="menu-button" sec:authorize="isAuthenticated()">Relatório de Atendimentos</a>
+=======
+            <a href="/cadastro-usuario" class="menu-button">Cadastro de Usuário</a>
+            <a href="/cadastro-atendimento" class="menu-button">Cadastro de Atendimentos</a>
+            <a href="/relatorio-atendimentos" class="menu-button">Relatório de Atendimentos</a>
+>>>>>>> cb233c539ce045cc47cef0f5933a2b64b8ec5509
         </nav>
 
         <main class="dashboard-content">
             <section class="dashboard-section">
                 <h3>Dashboard de BI</h3>
+<<<<<<< HEAD
                 <div class="filter-period-container">
                     <a th:href="@{/main(periodo='diario')}" class="filter-button" th:classappend="${periodoSelecionado == 'diario'} ? 'active' : ''">Diário</a>
                     <a th:href="@{/main(periodo='semanal')}" class="filter-button" th:classappend="${periodoSelecionado == 'semanal'} ? 'active' : ''">Semanal</a> <a th:href="@{/main(periodo='mensal')}" class="filter-button" th:classappend="${periodoSelecionado == 'mensal'} ? 'active' : ''">Mensal</a>
@@ -71,6 +78,26 @@
                     <div class="card full-width">
                         <h4>Top 10 Atendentes</h4>
                         <div class="vertical-bar-chart" id="topAtendentesChart"></div>
+=======
+                <div class="dashboard-grid">
+                    <div class="card">
+                        <h4>Atendimentos Mensais</h4>
+                        <p class="big-number" id="atendimentosMensais">0</p>
+                    </div>
+                    <div class="card">
+                        <h4>Atendimentos Diários</h4>
+                        <p class="big-number" id="atendimentosDiarios">0</p>
+                    </div>
+                    <div class="card full-width">
+                        <h4>Top 10 Clientes Atendidos</h4>
+                        <ul id="topClientes">
+                            </ul>
+                    </div>
+                    <div class="card full-width">
+                        <h4>Top 10 Empresas Atendidas</h4>
+                        <ul id="topEmpresas">
+                            </ul>
+>>>>>>> cb233c539ce045cc47cef0f5933a2b64b8ec5509
                     </div>
                 </div>
             </section>
@@ -80,7 +107,10 @@
             <div class="user-profile">
                 <img th:src="@{/img/Logo.png}" alt="Logo da Gestão de Atendimentos" class="app-logo-footer">
                 <span class="user-name" sec:authorize="isAuthenticated()" sec:authentication="principal.fullName">Usuário</span>
+<<<<<<< HEAD
                 <p class="app-version">Versão: <span th:text="${appVersion}"></span></p>
+=======
+>>>>>>> cb233c539ce045cc47cef0f5933a2b64b8ec5509
             </div>
             <form th:action="@{/logout}" method="post">
                 <input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}" />
@@ -90,6 +120,7 @@
     </div>
 
     <script th:inline="javascript">
+<<<<<<< HEAD
         const dashboardData = {
             atendimentosTotais: [[${atendimentosTotais != null ? atendimentosTotais : 0}]],
             atendimentosMensais: [[${atendimentosMensais != null ? atendimentosMensais : 0}]],
@@ -168,5 +199,67 @@
             createVerticalBarChart('topAtendentesChart', dashboardData.topAtendentes);
         });
     </script>
+=======
+    // Define um objeto JavaScript 'dashboardData' para armazenar os dados do backend.
+    // O 'th:inline="javascript"' permite que expressões Thymeleaf sejam diretamente
+    // inseridas no JavaScript.
+    const dashboardData = {
+        // Atribui os valores das variáveis do modelo Spring Boot (backend)
+        // às propriedades JavaScript.
+        atendimentosMensais: [[${atendimentosMensais}]],
+        atendimentosDiarios: [[${atendimentosDiarios}]],
+
+        // Preenche o array 'topClientes' com dados do backend.
+        // O th:each itera sobre a lista 'topClientes' e cria objetos JavaScript
+        // no formato { nome: valor, quantidade: valor }.
+        topClientes: [
+            <th:block th:each="c, iterStat : ${topClientes}">
+                { nome: [[${c[0]}]], quantidade: [[${c[1]}]] }[[${!iterStat.last ? ',' : ''}]]
+            </th:block>
+        ],
+
+        // Preenche o array 'topEmpresas' de forma similar a 'topClientes'.
+        topEmpresas: [
+            <th:block th:each="e, iterStat : ${topEmpresas}">
+                { nome: [[${e[0]}]], quantidade: [[${e[1]}]] }[[${!iterStat.last ? ',' : ''}]]
+            </th:block>
+        ]
+    };
+
+    // Garante que o script só seja executado após o DOM estar completamente carregado.
+    document.addEventListener('DOMContentLoaded', function() {
+        // Atualiza os elementos HTML com os IDs 'atendimentosMensais' e 'atendimentosDiarios'
+        // com os valores do objeto 'dashboardData'.
+        const atendimentosMensaisElement = document.getElementById('atendimentosMensais');
+        if (atendimentosMensaisElement) {
+            atendimentosMensaisElement.innerText = dashboardData.atendimentosMensais;
+        }
+
+        const atendimentosDiariosElement = document.getElementById('atendimentosDiarios');
+        if (atendimentosDiariosElement) {
+            atendimentosDiariosElement.innerText = dashboardData.atendimentosDiarios;
+        }
+
+        // Função auxiliar para popular listas (evita repetição de código)
+        function populateList(elementId, dataArray) {
+            const listElement = document.getElementById(elementId);
+            if (listElement) {
+                listElement.innerHTML = ''; // Limpa o conteúdo existente
+
+                dataArray.forEach(item => {
+                    const li = document.createElement('li');
+                    // Usa template literals para formatar o texto do item da lista.
+                    li.innerText = `${item.nome} - ${item.quantidade} atendimentos`;
+                    listElement.appendChild(li);
+                });
+            }
+        }
+
+        // Popula as listas de Top Clientes e Top Empresas usando a função auxiliar.
+        populateList('topClientes', dashboardData.topClientes);
+        populateList('topEmpresas', dashboardData.topEmpresas);
+    });
+</script>
+>>>>>>> cb233c539ce045cc47cef0f5933a2b64b8ec5509
 </body>
 </html>

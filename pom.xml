@@ -6,10 +6,18 @@
 		<groupId>org.springframework.boot</groupId>
 		<artifactId>spring-boot-starter-parent</artifactId>
 		<version>3.5.0</version>
+<<<<<<< HEAD
 		<relativePath/> </parent>
 	<groupId>com.gleysson.flavio</groupId>
 	<artifactId>gestao-atendimentos</artifactId>
 	<version>1.0.10-Beta</version>
+=======
+		<relativePath/> <!-- lookup parent from repository -->
+	</parent>
+	<groupId>com.gleysson.flavio</groupId>
+	<artifactId>gestao-atendimentos</artifactId>
+	<version>0.0.1-SNAPSHOT</version>
+>>>>>>> cb233c539ce045cc47cef0f5933a2b64b8ec5509
 	<name>gestao-atendimentos</name>
 	<description>Demo project for Spring Boot</description>
 	<url/>
@@ -28,7 +36,10 @@
 	<properties>
 		<java.version>17</java.version>
 	</properties>
+<<<<<<< HEAD
 
+=======
+>>>>>>> cb233c539ce045cc47cef0f5933a2b64b8ec5509
 	<dependencies>
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
@@ -63,6 +74,14 @@
 			<scope>runtime</scope>
 		</dependency>
 		<dependency>
+<<<<<<< HEAD
+=======
+			<groupId>org.projectlombok</groupId>
+			<artifactId>lombok</artifactId>
+			<optional>true</optional>
+		</dependency>
+		<dependency>
+>>>>>>> cb233c539ce045cc47cef0f5933a2b64b8ec5509
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter-test</artifactId>
 			<scope>test</scope>
@@ -75,6 +94,7 @@
 	</dependencies>
 
 	<build>
+<<<<<<< HEAD
 		<resources>
 			<resource>
 				<directory>src/main/resources</directory>
@@ -85,8 +105,38 @@
 			<plugin>
 				<groupId>org.springframework.boot</groupId>
 				<artifactId>spring-boot-maven-plugin</artifactId>
+=======
+		<plugins>
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-compiler-plugin</artifactId>
+				<configuration>
+					<annotationProcessorPaths>
+						<path>
+							<groupId>org.projectlombok</groupId>
+							<artifactId>lombok</artifactId>
+						</path>
+					</annotationProcessorPaths>
+				</configuration>
+			</plugin>
+			<plugin>
+				<groupId>org.springframework.boot</groupId>
+				<artifactId>spring-boot-maven-plugin</artifactId>
+				<configuration>
+					<excludes>
+						<exclude>
+							<groupId>org.projectlombok</groupId>
+							<artifactId>lombok</artifactId>
+						</exclude>
+					</excludes>
+				</configuration>
+>>>>>>> cb233c539ce045cc47cef0f5933a2b64b8ec5509
 			</plugin>
 		</plugins>
 	</build>
 
+<<<<<<< HEAD
 </project>
+=======
+</project>
+>>>>>>> cb233c539ce045cc47cef0f5933a2b64b8ec5509

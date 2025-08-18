@@ -2,6 +2,7 @@ package com.gleysson.flavio.gestao_atendimentos.repository;
 
 import com.gleysson.flavio.gestao_atendimentos.model.Atendimento;
 import com.gleysson.flavio.gestao_atendimentos.model.Usuario;
+<<<<<<< HEAD
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.JpaSpecificationExecutor;
 import org.springframework.data.jpa.repository.Query;
@@ -111,4 +112,22 @@ public interface AtendimentoRepository extends JpaRepository<Atendimento, Long>,
     // Novo método semanal para o usuário logado
     @Query("SELECT COUNT(a) FROM Atendimento a WHERE a.usuarioAtendente = :usuarioAtendente AND a.dataHoraAtendimento >= :dataInicial")
     Long countWeeklyByUsuarioAtendente(@Param("usuarioAtendente") Usuario usuarioAtendente, @Param("dataInicial") LocalDateTime dataInicial);
+=======
+import java.time.LocalDateTime;
+import java.util.List;
+
+import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.JpaSpecificationExecutor; // NOVO IMPORT
+
+// Adicione JpaSpecificationExecutor<Atendimento>
+public interface AtendimentoRepository extends JpaRepository<Atendimento, Long>, JpaSpecificationExecutor<Atendimento> {
+
+    List<Atendimento> findByNomeClienteContainingIgnoreCase(String nomeCliente);
+
+    List<Atendimento> findByCanalAtendimento(Atendimento.CanalAtendimento canalAtendimento);
+
+    List<Atendimento> findByDataHoraAtendimentoBetween(LocalDateTime inicio, LocalDateTime fim);
+
+    List<Atendimento> findByUsuarioAtendente(Usuario usuarioAtendente);
+>>>>>>> cb233c539ce045cc47cef0f5933a2b64b8ec5509
 }

@@ -5,6 +5,7 @@
     <link rel="stylesheet" th:href="@{/css/main.css}">
     <link rel="stylesheet" th:href="@{/css/forms.css}">
     <link rel="stylesheet" th:href="@{/css/cadastro-atendimento.css}">
+<<<<<<< HEAD
     <link rel="stylesheet" th:href="@{/css/modal.css}"> 
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <style>
@@ -97,11 +98,19 @@
             width: 100%;
         }
     </style>
+=======
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+>>>>>>> cb233c539ce045cc47cef0f5933a2b64b8ec5509
 </head>
 <body>
     <div class="main-container">
         <header class="app-header">
             <h1>Cadastro de Atendimentos</h1>
+<<<<<<< HEAD
+=======
+            <div class="user-info" sec:authorize="isAuthenticated()">
+            </div>
+>>>>>>> cb233c539ce045cc47cef0f5933a2b64b8ec5509
         </header>
 
         <nav class="main-menu">
@@ -160,8 +169,13 @@
                         <select id="canalAtendimento" th:field="*{canalAtendimento}" required>
                             <option value="">Selecione o Canal</option>
                             <option th:each="canal : ${T(com.gleysson.flavio.gestao_atendimentos.model.Atendimento.CanalAtendimento).values()}"
+<<<<<<< HEAD
                                     th:value="${canal}" th:text="${canal.displayValue}"
                                     th:selected="${atendimento.canalAtendimento != null and atendimento.canalAtendimento.name() == canal.name()}"></option>
+=======
+                                            th:value="${canal}" th:text="${canal}"
+                                            th:selected="${atendimento.canalAtendimento != null and atendimento.canalAtendimento.name() == canal}"></option>
+>>>>>>> cb233c539ce045cc47cef0f5933a2b64b8ec5509
                         </select>
                     </div>
 
@@ -182,10 +196,63 @@
                 </form>
             </section>
 
+<<<<<<< HEAD
             <button id="openModalBtn" class="action-button primary" style="margin-bottom: 20px;">Atendimentos Cadastrados</button>
 
             <section class="card full-width atendimento-list-section">
                 </section>
+=======
+            <section class="card full-width atendimento-list-section">
+                <h4>Atendimentos Cadastrados</h4>
+                <div class="table-responsive">
+                    <table class="data-table">
+                        <thead>
+                            <tr>
+                                <th>ID Atendente</th>
+                                <th>Atendente</th>
+                                <th>Departamento Atendente</th>
+                                <th>ID Atendimento</th>
+                                <th>Empresa</th>
+                                <th>Cliente</th>
+                                <th>Data/Hora</th>
+                                <th>Motivo</th>
+                                <th>Solução</th>
+                                <th>Canal</th>
+                                <th>Ações</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr th:each="atendimentoItem : ${atendimentos}">
+                                <td th:text="${atendimentoItem.usuarioAtendente?.id}" data-label="ID Atendente:">Usuário ID</td>
+                                <td th:text="${atendimentoItem.usuarioAtendente?.fullName}" data-label="Atendente:">Nome Atendente</td>
+                                <td th:text="${atendimentoItem.usuarioAtendente?.departamento}" data-label="Departamento Atendente:">Depto Atendente</td>
+                                <td th:text="${atendimentoItem.id}" data-label="ID:">1</td>
+                                <td th:text="${atendimentoItem.empresaCliente}" data-label="Empresa:">Empresa XYZ</td>
+                                <td th:text="${atendimentoItem.nomeCliente}" data-label="Cliente:">João da Silva</td>
+                                <td th:text="${#temporals.format(atendimentoItem.dataHoraAtendimento, 'dd/MM/yyyy HH:mm')}" data-label="Data/Hora:">01/01/2025 10:30</td>
+                                <td th:text="${atendimentoItem.motivoContato}" data-label="Motivo:">Dúvida sobre fatura</td>
+                                <td th:text="${atendimentoItem.solucaoPassada}" data-label="Solução:">Fatura explicada e enviada por email.</td>
+                                <td th:text="${atendimentoItem.canalAtendimento}" data-label="Canal:">TELEFONE</td>
+                                <td data-label="Ações:">
+                                    <div class="action-buttons-cell">
+                                        <a th:href="@{/cadastro-atendimento/editar/{id}(id=${atendimentoItem.id})}" class="action-button edit-button">Editar</a>
+                                        <form th:action="@{/cadastro-atendimento/deletar/{id}(id=${atendimentoItem.id})}"
+                                              method="post"
+                                              onsubmit="return confirm('Tem certeza que deseja deletar este atendimento?');">
+                                            <input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}" />
+                                            <button type="submit" class="action-button delete-button">Deletar</button>
+                                        </form>
+                                    </div>
+                                </td>
+                            </tr>
+                            <tr th:if="${#lists.isEmpty(atendimentos)}">
+                                <td colspan="11">Nenhum atendimento cadastrado.</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </section>
+>>>>>>> cb233c539ce045cc47cef0f5933a2b64b8ec5509
         </main>
 
         <footer class="app-footer">
@@ -200,6 +267,7 @@
         </footer>
     </div>
 
+<<<<<<< HEAD
     <div id="atendimentoModal" class="modal">
         <div class="modal-content">
             <span class="close-button">&times;</span>
@@ -254,6 +322,8 @@
         </div>
     </div>
 
+=======
+>>>>>>> cb233c539ce045cc47cef0f5933a2b64b8ec5509
     <script th:inline="javascript">
         document.addEventListener('DOMContentLoaded', function() {
             const dataHoraField = document.getElementById('dataHoraAtendimento');
@@ -276,6 +346,7 @@
                     event.preventDefault();
                 }
             });
+<<<<<<< HEAD
 
             // Lógica para o modal
             const modal = document.getElementById("atendimentoModal");
@@ -302,6 +373,8 @@
                     modal.style.display = "none";
                 }
             }
+=======
+>>>>>>> cb233c539ce045cc47cef0f5933a2b64b8ec5509
         });
     </script>
 </body>
