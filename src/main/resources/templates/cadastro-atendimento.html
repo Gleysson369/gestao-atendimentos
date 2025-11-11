@@ -1,0 +1,236 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+<head>
+    <title>Cadastro de Atendimentos</title>
+    <link rel="stylesheet" th:href="@{/css/cadastro-atendimento.css}">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet" />
+    <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
+</head>
+<body>
+    <div class="main-container">
+        <header class="app-header">
+            <h1>Cadastro de Atendimentos</h1>
+        </header>
+
+        <nav class="main-menu">
+            <a th:href="@{/main}" class="menu-button">Tela Principal</a>
+            <a href="/cadastro-usuario" class="menu-button" sec:authorize="hasRole('ADMIN')">Cadastro de Usuário</a>
+            <a href="/relatorio-atendimentos" class="menu-button" sec:authorize="isAuthenticated()">Relatório de Atendimentos</a>
+        </nav>
+
+        <main class="dashboard-content">
+            <section class="card full-width">
+                <h3>Formulário de Cadastro de Atendimentos</h3>
+
+                <div th:if="${successMessage}" class="success-message">
+                    <p th:text="${successMessage}"></p>
+                </div>
+                <div th:if="${errorMessage}" class="error-message">
+                    <p th:text="${errorMessage}"></p>
+                </div>
+
+                <form th:action="@{/cadastro-atendimento/salvar}" th:object="${atendimento}" method="post" id="atendimentoForm">
+                    <input type="hidden" th:field="*{id}" />
+                    <input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}" />
+
+                    <div class="input-group">
+                        <label for="nomeCliente">Nome do Cliente:</label>
+                        <input type="text" id="nomeCliente" th:field="*{nomeCliente}" placeholder="Nome Completo do Cliente" required>
+                    </div>
+
+                    <div class="input-group">
+                        <label for="empresaCliente">Empresa do Cliente:</label>
+                        <input type="text" id="empresaCliente" th:field="*{empresaCliente}"
+                        placeholder="Nome da Empresa do Cliente" required
+                        oninput="this.value = this.value.toUpperCase()">
+                    </div>
+
+                    <div class="input-group">
+                        <label for="dataHoraAtendimento">Data e Hora de Atendimento:</label>
+                        <input type="datetime-local" id="dataHoraAtendimento" th:field="*{dataHoraAtendimento}" required>
+                    </div>
+
+                    <div class="input-group">
+                        <label for="telefone">Telefone:</label>
+                        <input type="text" id="telefone" th:field="*{telefone}" placeholder="Telefone de contato (opcional)">
+                    </div>
+
+                    <div class="input-group">
+                        <label for="anydesk">AnyDesk:</label>
+                        <input type="text" id="anydesk" th:field="*{anydesk}" placeholder="ID do AnyDesk (opcional)">
+                    </div>
+
+                    <div class="input-group">
+                        <label for="numeroCRS">Número da CRS:</label>
+                        <input type="text" id="numeroCRS" th:field="*{numeroCRS}" placeholder="Número da CRS (opcional)">
+                    </div>
+
+                    <div class="input-group">
+                        <label for="canalAtendimento">Canal de Atendimento:</label>
+                        <select id="canalAtendimento" name="canalAtendimento" th:field="*{canalAtendimento}" required>
+                            <option th:each="canal : ${T(com.gleysson.flavio.gestao_atendimentos.model.Atendimento.CanalAtendimento).values()}"
+                                        th:value="${canal}"
+                                        th:text="${canal.displayValue}"
+                                        th:selected="${canal.name() == 'MKON_WHATSAPP'}">
+                            </option>
+                        </select>
+                    </div>
+
+                    <div class="input-group">
+                        <label for="tipodeocorrencia">Tipo de Ocorrência:</label>
+                        <select id="tipodeocorrencia" th:field="*{tipoDeOcorrencia}" required>
+                            <option value="">Selecione a Ocorrência</option>
+                            <option th:each="ocorrencia : ${T(com.gleysson.flavio.gestao_atendimentos.model.Atendimento.TipoDeOcorrencia).values()}"
+                                        th:value="${ocorrencia.name()}" th:text="${ocorrencia.displayValue}"
+                                        th:selected="${atendimento.tipoDeOcorrencia != null and atendimento.tipoDeOcorrencia.name() == ocorrencia.name()}"></option>
+                        </select>
+                    </div>
+                    
+                    <div class="input-group checkbox-group">
+                        <input type="checkbox" id="atendimentoTransferencia" name="atendimentoTransferencia" th:field="*{atendimentoTransferencia}">
+                        <label for="atendimentoTransferencia">Atendimento de Transferido por outro núcleo</label>
+                    </div>
+
+                    <div class="input-group" id="protocoloAtendimentoGroup" style="display:none;">
+                        <label for="protocoloAtendimento">Protocolo de Atendimento:</label>
+                        <input type="text" id="protocoloAtendimento" th:field="*{protocoloAtendimento}" placeholder=" Protocolo (opcional)">
+                    </div>
+
+                    <div class="input-group">
+                        <label for="motivoContato">Motivo do Contato (Assunto):</label>
+                        <textarea id="motivoContato" th:field="*{motivoContato}" rows="4" placeholder="Descreva o motivo do contato" required></textarea>
+                    </div>
+
+                    <div class="input-group">
+                        <label for="solucaoPassada">Solução Passada (Observações):</label>
+                        <textarea id="solucaoPassada" th:field="*{solucaoPassada}" rows="4" placeholder="Descreva a solução fornecida" required></textarea>
+                    </div>
+
+                    <div class="button-group-form">
+                        <button type="submit" class="action-button primary">Salvar Atendimento</button>
+                        <a th:if="${atendimento.id != null}" th:href="@{/cadastro-atendimento}" class="action-button secondary">Novo Atendimento</a>
+                    </div>
+                </form>
+            </section>
+
+            <section class="card filter-card">
+                <h3>Buscar Atendimentos</h3>
+                <form th:action="@{/cadastro-atendimento/buscar}" method="get" th:object="${filtros}">
+                    <div class="filter-form-group">
+                        <div class="input-group">
+                            <label for="filtroDataInicio">Data Início:</label>
+                            <input type="date" id="filtroDataInicio" th:field="*{dataInicio}">
+                        </div>
+                        <div class="input-group">
+                            <label for="filtroDataFim">Data Fim:</label>
+                            <input type="date" id="filtroDataFim" th:field="*{dataFim}">
+                        </div>
+                    </div>
+                    <div class="button-group-form">
+                        <button type="submit" class="action-button primary">Buscar</button>
+                    </div>
+                </form>
+            </section>
+
+            <section class="card full-width atendimento-list-section">
+                <h3>Atendimentos Encontrados</h3>
+                <div class=list th:if="${#lists.isEmpty(atendimentos)}">
+                    <p>Nenhum atendimento encontrado. Utilize o filtro buscar atendimento pela data de cadastro.</p>
+                </div>
+                <div th:unless="${#lists.isEmpty(atendimentos)}" class="table-responsive">
+                    <table class="data-table">
+                        <thead>
+                            <tr>
+                                <th>ID Atendente</th>
+                                <th>Atendente</th>
+                                <th>Departamento Atendente</th>
+                                <th>ID Atendimento</th>
+                                <th>Empresa</th>
+                                <th>Cliente</th>
+                                <th>Data/Hora</th>
+                                <th>Motivo</th>
+                                <th>Solução</th>
+                                <th>Canal</th>
+                                <th>Ações</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr th:each="atendimentoItem : ${atendimentos}">
+                                <td th:text="${atendimentoItem.usuarioAtendente?.id}" data-label="ID Atendente:">Usuário ID</td>
+                                <td th:text="${atendimentoItem.usuarioAtendente?.fullName}" data-label="Atendente:">Nome Atendente</td>
+                                <td th:text="${atendimentoItem.usuarioAtendente?.departamento?.displayValue}" data-label="Departamento Atendente:">Depto Atendente</td>
+                                <td th:text="${atendimentoItem.id}" data-label="ID:">1</td>
+                                <td th:text="${atendimentoItem.empresaCliente}" data-label="Empresa:">Empresa XYZ</td>
+                                <td th:text="${atendimentoItem.nomeCliente}" data-label="Cliente:">João da Silva</td>
+                                <td th:text="${#temporals.format(atendimentoItem.dataHoraAtendimento, 'dd/MM/yyyy HH:mm')}" data-label="Data/Hora:">01/01/2025 10:30</td>
+                                <td th:text="${atendimentoItem.motivoContato}" data-label="Motivo:">Dúvida sobre fatura</td>
+                                <td th:text="${atendimentoItem.solucaoPassada}" data-label="Solução:">Fatura explicada e enviada por email.</td>
+                                <td th:text="${atendimentoItem.canalAtendimento?.displayValue}" data-label="Canal:">TELEFONE</td>
+                                <td data-label="Ações:">
+                                    <div class="action-buttons-cell">
+                                        <a th:href="@{/cadastro-atendimento/editar/{id}(id=${atendimentoItem.id})}" class="action-button edit-button">Editar</a>
+                                        <form th:action="@{/cadastro-atendimento/deletar/{id}(id=${atendimentoItem.id})}"
+                                                method="post"
+                                                onsubmit="return confirm('Tem certeza que deseja deletar este atendimento?');">
+                                            <input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}" />
+                                            <button type="submit" class="action-button delete-button">Deletar</button>
+                                        </form>
+                                    </div>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </section>
+        </main>
+
+        <footer class="app-footer">
+            <div class="user-profile">
+                <img th:src="@{/img/Logo.png}" alt="Logo da Gestão de Atendimentos" class="app-logo-footer">
+                <span class="user-name" sec:authorize="isAuthenticated()" sec:authentication="principal.fullName">Usuário</span>
+            </div>
+            
+            <form th:action="@{/logout}" method="post">
+                <input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}" />
+                <button type="submit" class="logout-button">Sair</button>
+            </form>
+        </footer>
+    </div>
+    <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
+    <script>
+        // JQuery (precisa estar aqui para o select2 funcionar)
+        $(document).ready(function() {
+        
+            // Script para a data e hora
+            const dataHoraCampo = document.getElementById('dataHoraAtendimento');
+            const dataAtual = new Date();
+            const ano = dataAtual.getFullYear();
+            const mes = (dataAtual.getMonth() + 1).toString().padStart(2, '0');
+            const dia = dataAtual.getDate().toString().padStart(2, '0');
+            const hora = dataAtual.getHours().toString().padStart(2, '0');
+            const minuto = dataAtual.getMinutes().toString().padStart(2, '0');
+            const valorFormatado = `${ano}-${mes}-${dia}T${hora}:${minuto}`;
+            dataHoraCampo.value = valorFormatado;
+        
+            // Ativa o Select2
+            $('#tipodeocorrencia').select2({
+                placeholder: "Digite para buscar a ocorrência",
+                allowClear: true // Permite limpar o campo
+            });
+            
+            // Lógica para mostrar/esconder o campo de protocolo com o checkbox
+            const transferenciaCheckbox = document.getElementById('atendimentoTransferencia');
+            const protocoloAtendimentoGroup = document.getElementById('protocoloAtendimentoGroup');
+        
+            transferenciaCheckbox.addEventListener('change', function() {
+                if (this.checked) {
+                    protocoloAtendimentoGroup.style.display = 'block';
+                } else {
+                    protocoloAtendimentoGroup.style.display = 'none';
+                }
+            });
+        });
+    </script>
+</body>
+</html>

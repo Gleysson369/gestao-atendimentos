@@ -1,0 +1,324 @@
+@import url('_variables.css');
+
+/* Seção do formulario*/
+.dashboard-content .card,
+.card.full-width {
+    background-color: var(--branco);
+    border-radius: var(--borda-arredondada);
+    box-shadow: 0 5px 15px var(--sombra-leve);
+    padding: 25px;
+    margin-bottom: 30px;
+}
+
+.card.full-width h3, 
+.card.filter-card h3 {
+    color: var(--azul-escuro);
+    margin-bottom: 25px;
+    font-size: 1.6em;
+    border-bottom: 2px solid var(--azul-claro);
+    padding-bottom: 10px;
+    text-align: center;
+}
+
+/* Formulário */
+form {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+}
+
+.input-group {
+    display: flex;
+    flex-direction: column;
+    margin-bottom: 15px;
+}
+
+.input-group label {
+    font-weight: 600;
+    margin-bottom: 8px;
+    color: var(--cinza-escuro-texto);
+    font-size: 0.95em;
+}
+
+.input-group input[type="text"],
+.input-group input[type="password"],
+.input-group input[type="email"],
+.input-group input[type="datetime-local"],
+.input-group textarea,
+.input-group select {
+    padding: 12px 15px;
+    border: 1px solid var(--borda-claro);
+    border-radius: var(--borda-arredondada-pequena);
+    font-size: 1em;
+    color: var(--cinza-escuro-texto);
+    background-color: var(--branco);
+    transition: border-color 0.3s ease, box-shadow 0.3s ease;
+}
+
+/* Estilo específico para inputs de data na seção de filtros */
+.card.filter-card .input-group input[type="date"] {
+    padding: 12px 15px;
+    border: 1px solid var(--borda-claro);
+    border-radius: var(--borda-arredondada-pequena);
+    font-size: 1em;
+    color: var(--cinza-escuro-texto);
+    background-color: var(--branco);
+    transition: border-color 0.3s ease, box-shadow 0.3s ease;
+}
+
+.input-group input:focus,
+.input-group textarea:focus,
+.input-group select:focus {
+    border-color: var(--azul-medio);
+    box-shadow: 0 0 0 0.2rem var(--azul-foco);
+    outline: none;
+}
+
+.input-group textarea {
+    resize: vertical;
+    min-height: 100px;
+}
+
+/* Estilo para a seção do card de filtros */
+.card.filter-card {
+    background-color: var(--branco);
+    border-radius: var(--borda-arredondada);
+    box-shadow: 0 4px 8px var(--sombra-media);
+    padding: 20px;
+    margin-bottom: 25px;
+}
+
+/* Organiza os campos de data lado a lado */
+.filter-form-group {
+    display: flex;
+    gap: 20px; /* Espaço entre os campos */
+    margin-bottom: 20px;
+}
+
+/* Estilo para os inputs de data dentro do formulário de filtro */
+.filter-form-group .input-group {
+    flex: 1; /* Ocupa o espaço disponível igualmente */
+}
+
+/* Alinhamento do botão de busca */
+.button-group-form {
+    display: flex;
+    justify-content: flex-end; /* Alinha o botão à direita */
+    margin-top: 10px;
+}
+
+/* Botões da tela formulario */
+
+.action-button {
+    padding: 12px 25px;
+    border: none;
+    border-radius: var(--borda-arredondada-pequena);
+    font-weight: 600;
+    cursor: pointer;
+    transition: var(--transicao-rapida);
+    text-decoration: none;
+    display: inline-block;
+    text-align: center; /* Garante que o texto dentro do botão esteja centralizado */
+    white-space: nowrap; /* Evita que o texto do botão quebre em várias linhas */
+}
+
+.action-button.primary {
+    background-color: var(--azul-medio);
+    color: var(--branco);
+}
+
+.action-button.primary:hover {
+    background-color: var(--azul-escuro);
+}
+
+.action-button.secondary {
+    background-color: var(--cinza-claro);
+    color: var(--azul-escuro);
+}
+
+.action-button.secondary:hover {
+    background-color: var(--azul-claro);
+    color: var(--azul-medio);
+}
+
+.edit-button {
+    background-color: var(--azul-medio);
+    color: var(--branco);
+}
+
+.edit-button:hover {
+    background-color: var(--azul-escuro);
+}
+
+.delete-button {
+    background-color: var(--vermelho-principal);
+    color: var(--branco);
+}
+
+.delete-button:hover {
+    background-color: var(--vermelho-escuro);
+}
+
+/* Mensagens */
+.success-message, .error-message {
+    padding: 15px 20px;
+    border-radius: 5px;
+    margin-bottom: 20px;
+    font-weight: 600;
+    text-align: center;
+}
+
+.success-message {
+    background-color: var(--cor-verde-claro);
+    color: var(--cor-sucesso);
+    border: 1px solid var(--cor-verde-suave);
+}
+
+.error-message {
+    background-color: var(--vermelho-claro);
+    color: var(--vermelho-escuro);
+    border: 1px solid var(--vermelho-principal);
+}
+
+/* Tabela responsiva */
+.table-responsive {
+    overflow-x: auto; /* Permite scroll horizontal em telas pequenas */
+    width: 100%;
+    border-radius: var(--borda-arredondada);
+    box-shadow: 0 2px 8px var(--sombra-leve);
+    background-color: var(--branco);
+    padding: 1px;
+}
+
+.input-group.checkbox-group {
+    flex-direction: row;
+    align-items: center;
+    gap: 10px;
+}
+
+.input-group.checkbox-group label {
+    margin: 0;
+}
+
+.data-table {
+    width: 100%;
+    /* table-layout: fixed; REMOVIDO ou ajustado. Fixed pode forçar colunas a ficarem muito pequenas. */
+    /* word-wrap: break-word; Isso faz a quebra, mas precisamos de espaço */
+    border-collapse: collapse;
+}
+
+.data-table th, .data-table td {
+    padding: 12px 10px; /* Aumenta o padding para mais espaço interno */
+    text-align: left;
+    border-bottom: 1px solid var(--borda-claro);
+    vertical-align: top; /* Alinha o conteúdo ao topo para multilinhas */
+}
+
+.data-table thead th {
+    background-color: var(--azul-escuro); /* Cor de fundo do cabeçalho */
+    color: var(--branco); /* Cor do texto do cabeçalho */
+    font-weight: 600;
+    text-align: center;
+    position: sticky; /* Mantém o cabeçalho visível ao rolar */
+    top: 0;
+    z-index: 10;
+}
+
+/* Larguras para as colunas da tabela */
+.data-table th:nth-child(1), .data-table td:nth-child(1) { min-width: 60px; max-width: 80px; } /* ID Atendente */
+.data-table th:nth-child(2), .data-table td:nth-child(2) { min-width: 120px; max-width: 180px; } /* Atendente */
+.data-table th:nth-child(3), .data-table td:nth-child(3) { min-width: 120px; max-width: 150px; } /* Departamento */
+.data-table th:nth-child(4), .data-table td:nth-child(4) { min-width: 50px; max-width: 70px; } /* ID Atendimento */
+.data-table th:nth-child(5), .data-table td:nth-child(5) { min-width: 100px; max-width: 150px; } /* Empresa */
+.data-table th:nth-child(6), .data-table td:nth-child(6) { min-width: 100px; max-width: 150px; } /* Cliente */
+.data-table th:nth-child(7), .data-table td:nth-child(7) { min-width: 120px; max-width: 150px; } /* Data/Hora */
+.data-table th:nth-child(8), .data-table td:nth-child(8) { min-width: 200px; max-width: 300px; } /* Motivo */
+.data-table th:nth-child(9), .data-table td:nth-child(9) { min-width: 200px; max-width: 300px; } /* Solução */
+.data-table th:nth-child(10), .data-table td:nth-child(10) { min-width: 80px; max-width: 120px; } /* Canal */
+.data-table th:nth-child(11), .data-table td:nth-child(11) { min-width: 120px; max-width: 150px; } /* Ações */
+
+/* Estilo para a célula de ações */
+.action-buttons-cell {
+    display: flex; /* Permite que os botões fiquem lado a lado */
+    gap: 5px; /* Espaço entre os botões */
+    flex-wrap: wrap; /* Permite que os botões quebrem para a próxima linha se não houver espaço */
+    justify-content: flex-start; /* Alinha os botões ao início da célula */
+    align-items: center; /* Centraliza verticalmente os botões */
+    height: 100%; /* Ocupa a altura total da célula para melhor alinhamento */
+}
+
+.list p {
+    text-align: center;
+    font-weight: bold;
+    color: var(--vermelho-principal);
+}
+
+
+/* Responsividade da tabela para telas pequenas */
+@media (max-width: 768px) {
+    .dashboard-content {
+        padding: 20px;
+    }
+
+    .card.full-width {
+        padding: 20px;
+    }
+
+    .input-group input,
+    .input-group textarea,
+    .input-group select {
+        padding: 10px 12px;
+    }
+
+    .button-group-form {
+        flex-direction: column;
+    }
+
+    .data-table {
+        font-size: 0.85em; /* Reduz a fonte para caber mais */
+    }
+
+    /* Esconde cabeçalhos da tabela e exibe data-label em telas pequenas */
+    .data-table thead {
+        display: none;
+    }
+
+    .data-table, .data-table tbody, .data-table tr, .data-table td {
+        display: block;
+        width: 100%;
+    }
+
+    .data-table tr {
+        margin-bottom: 15px;
+        border: 1px solid var(--borda-claro);
+        border-radius: var(--borda-arredondada);
+        box-shadow: 0 2px 5px var(--sombra-leve);
+        padding: 10px;
+        background-color: var(--branco);
+    }
+
+    .data-table td {
+        border: none;
+        position: relative;
+        padding-left: 100px; /* Espaço para o data-label */
+        text-align: right;
+    }
+
+    .data-table td::before {
+        content: attr(data-label);
+        position: absolute;
+        left: 10px;
+        width: 90px;
+        padding-right: 10px;
+        white-space: nowrap;
+        text-align: left;
+        font-weight: bold;
+        color: var(--cinza-escuro-texto);
+    }
+
+    .action-buttons-cell {
+        justify-content: flex-end; /* Alinha os botões para a direita em mobile */
+        margin-top: 10px; /* Espaço entre o último campo e os botões */
+    }
+}
+

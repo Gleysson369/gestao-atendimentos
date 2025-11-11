@@ -1,0 +1,265 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+<head>
+    <title>Tela Principal - Gestão de Atendimentos</title>
+    <link rel="stylesheet" th:href="@{/css/main.css}">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+</head>
+<body>
+    <div class="main-container">
+        <header class="app-header">
+            <h1>Gestão de Atendimentos</h1>
+            <div class="user-info" sec:authorize="isAuthenticated()">
+                Bem-vindo(a), <span sec:authentication="principal.fullName">Usuário</span>!
+            </div>
+        </header>
+
+        <nav class="main-menu">
+            <a href="/cadastro-usuario" class="menu-button" sec:authorize="hasRole('ADMIN')">Cadastro de Usuário</a>
+            <a href="/cadastro-atendimento" class="menu-button" sec:authorize="isAuthenticated()">Cadastro de Atendimentos</a>
+            <a href="/relatorio-atendimentos" class="menu-button" sec:authorize="isAuthenticated()">Relatório de Atendimentos</a>
+        </nav>
+
+        <main class="dashboard-content">
+            <section class="dashboard-section">
+                <h3>Dashboard de BI</h3>
+                <div class="filter-period-container">
+                    <a th:href="@{/main(periodo='diario')}" class="filter-button" th:classappend="${periodoSelecionado == 'diario'} ? 'active' : ''">Diário</a>
+                    <a th:href="@{/main(periodo='semanal')}" class="filter-button" th:classappend="${periodoSelecionado == 'semanal'} ? 'active' : ''">Semanal</a> <a th:href="@{/main(periodo='mensal')}" class="filter-button" th:classappend="${periodoSelecionado == 'mensal'} ? 'active' : ''">Mensal</a>
+                    <a th:href="@{/main(periodo='anual')}" class="filter-button" th:classappend="${periodoSelecionado == 'anual'} ? 'active' : ''">Anual</a>
+                    <a th:href="@{/main(periodo='total')}" class="filter-button" th:classappend="${periodoSelecionado == 'total'} ? 'active' : ''">Total</a>
+                </div>
+                
+                <div class="dashboard-grid">
+                    <div class="card">
+                        <h4>Atendimento Geral</h4>
+                        <p class="big-number" th:text="${atendimentosTotais != null ? atendimentosTotais : 0}">0</p>
+                    </div>
+
+                    <div class="card">
+                        <h4>Atendimentos Mensais</h4>
+                        <p class="big-number" th:text="${atendimentosMensais != null ? atendimentosMensais : 0}">0</p>
+                    </div>
+                    <div class="card">
+                        <h4>Atendimentos Diários</h4>
+                        <p class="big-number" th:text="${atendimentosDiarios != null ? atendimentosDiarios : 0}">0</p>
+                    </div>
+                    <div class="card">
+                        <h4>Meus Atendimentos (Mês)</h4>
+                        <p class="big-number" th:text="${dadosDashboard.meusAtendimentosMensais}"></p>
+                    </div>
+
+                    <div class="card">
+                        <h4>Meus Atendimentos (Dia)</h4>
+                        <p class="big-number" th:text="${dadosDashboard.meusAtendimentosDiarios}"></p>
+                    </div>
+
+                    <div class="card">
+                        <h4>Meta Mensal</h4>
+                        <div class="progress-container">
+                            <div class="progress-bar" th:style="'width:' + ${dadosDashboard.progressoMeta} + '%'"></div>
+                        </div>
+                        <div class="meta-info">
+                            <span class="current-value" th:text="${dadosDashboard.meusAtendimentosMensais}">0</span>
+                            <span class="separator">/</span>
+                            <span class="goal-value" th:text="${dadosDashboard.metaAtendimentos}">0</span>
+                        </div>
+                        <form th:action="@{/main/salvarMeta}" method="post">
+                            <div class="meta-input-group">
+                                <input type="number" name="novaMeta" id="novaMeta" placeholder="Nova Meta" min="0" required>
+                                <button type="submit" class="save-meta-button">Salvar</button>
+                            </div>
+                        </form>
+                    </div>
+
+                    <div class="card">
+                        <h4>Total CRS (Mês)</h4>
+                        <p class="big-number" th:text="${dadosDashboard.totalCrsMensal}"></p>
+                    </div>
+
+                    <div class="card full-width">
+                        <h4>Média Móvel (6 meses)</h4>
+                        <div class="line-chart" id="mediaMovelChart"></div>
+                    </div>
+
+                    <div class="card full-width">
+                        <h4>Atendimentos por Departamento</h4>
+                        <div class="vertical-bar-chart" id="atendimentosPorDepartamentoChart"></div>
+                    </div>
+
+                    <div class="card full-width">
+                        <h4>Top 10 Clientes Atendidos</h4>
+                        <div class="vertical-bar-chart" id="topClientesChart"></div>
+                    </div>
+
+                    <div class="card full-width">
+                        <h4>Top 10 Empresas Atendidas</h4>
+                        <div class="vertical-bar-chart" id="topEmpresasChart"></div>
+                    </div>
+
+                    <div class="card full-width">
+                        <h4>Top 10 Atendentes</h4>
+                        <div class="vertical-bar-chart" id="topAtendentesChart"></div>
+                    </div>
+                </div>
+            </section>
+        </main>
+
+        <footer class="app-footer">
+            <div class="user-profile">
+                <img th:src="@{/img/Logo.png}" alt="Logo da Gestão de Atendimentos" class="app-logo-footer">
+                <span class="user-name" sec:authorize="isAuthenticated()" sec:authentication="principal.fullName">Usuário</span>
+            </div>
+
+            <p class="app-version">Versão: <span th:text="${appVersion}"></span></p>
+            
+            <form th:action="@{/logout}" method="post">
+                <input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}" />
+                <button type="submit" class="logout-button">Sair</button>
+            </form>
+        </footer>
+    </div>
+
+    <script th:inline="javascript">
+        const dashboardData = {
+            atendimentosTotais: [[${atendimentosTotais != null ? atendimentosTotais : 0}]],
+            atendimentosMensais: [[${atendimentosMensais != null ? atendimentosMensais : 0}]],
+            atendimentosDiarios: [[${atendimentosDiarios != null ? atendimentosDiarios : 0}]],
+            meusAtendimentos: [[${meusAtendimentos != null ? meusAtendimentos : 0}]],
+            meusAtendimentosDiarios: [[${meusAtendimentosDiarios != null ? meusAtendimentosDiarios : 0}]],
+            topAtendentes: [[${topAtendentes != null ? topAtendentes : '[]'}]],
+            atendimentosPorDepartamento: [[${atendimentosPorDepartamento != null ? atendimentosPorDepartamento : '[]'}]],
+            topClientes: [[${topClientes != null ? topClientes : '[]'}]],
+            topEmpresas: [[${topEmpresas != null ? topEmpresas : '[]'}]],
+            mediaMovelData: [[${dadosDashboard.mediaMovelData != null ? dadosDashboard.mediaMovelData : '[]'}]],
+        };
+
+        function getRandomColor() {
+            const letters = '0123456789ABCDEF';
+            let color = '#';
+            for (let i = 0; i < 6; i++) {
+                color += letters[Math.floor(Math.random() * 16)];
+            }
+            return color;
+        }
+
+        // FUNÇÃO: para criar gráficos de barras verticais
+        function createVerticalBarChart(elementId, dataArray) {
+            const chartContainer = document.getElementById(elementId);
+            if (!chartContainer || !Array.isArray(dataArray) || dataArray.length === 0) {
+                if (chartContainer) chartContainer.innerHTML = '<p>Nenhum dado disponível.</p>';
+                return;
+            }
+            
+            chartContainer.innerHTML = '';
+            
+            const normalizedData = dataArray.map(item => {
+                return {
+                    label: item.nome || item.departamento || item.cliente || item.empresa,
+                    value: Number(item.quantidade)
+                };
+            });
+            
+            const maxQuantity = Math.max(...normalizedData.map(item => item.value)) || 1;
+            const totalHeight = 300;
+
+            normalizedData.forEach(item => {
+                const label = item.label;
+                const value = item.value;
+                const height = (value / maxQuantity) * totalHeight;
+                const color = getRandomColor();
+
+                const barItem = document.createElement('div');
+                barItem.classList.add('vertical-bar-item');
+
+                const bar = document.createElement('div');
+                bar.classList.add('vertical-bar');
+                bar.style.height = `${height}px`;
+                bar.style.backgroundColor = color;
+                bar.style.transition = 'height 0.8s ease-out';
+
+                const barValue = document.createElement('span');
+                barValue.classList.add('vertical-bar-value');
+                barValue.innerText = value;
+                
+                const barLabel = document.createElement('span');
+                barLabel.classList.add('vertical-bar-label');
+                barLabel.innerText = label;
+
+                bar.appendChild(barValue);
+                barItem.appendChild(bar);
+                barItem.appendChild(barLabel);
+                chartContainer.appendChild(barItem);
+            });
+        }
+        
+        // NOVO: Função para criar o gráfico de linha
+        function createLineChart(elementId, dataArray) {
+            const chartContainer = document.getElementById(elementId);
+            if (!chartContainer || !Array.isArray(dataArray) || dataArray.length === 0) {
+                if (chartContainer) chartContainer.innerHTML = '<p>Nenhum dado disponível.</p>';
+                return;
+            }
+
+            const chartWidth = chartContainer.offsetWidth;
+            const chartHeight = chartContainer.offsetHeight;
+
+            // Encontra os valores min e max para escala
+            const values = dataArray.map(item => Number(item[2]));
+            const maxVal = Math.max(...values);
+            const minVal = Math.min(...values);
+
+            // Calcula a escala
+            const yScale = (chartHeight - 40) / (maxVal - minVal || 1);
+            const xScale = chartWidth / (dataArray.length - 1 || 1);
+
+            let pathData = "M";
+
+            dataArray.forEach((item, index) => {
+                const month = item[0];
+                const year = item[1];
+                const value = Number(item[2]);
+
+                const x = index * xScale;
+                const y = chartHeight - 20 - ((value - minVal) * yScale);
+
+                pathData += `${x} ${y} L`;
+
+                // Cria o ponto
+                const point = document.createElement('div');
+                point.classList.add('chart-point');
+                point.style.left = `${x}px`;
+                point.style.top = `${y}px`;
+                point.title = `${month}/${year}: ${value} atendimentos`;
+                chartContainer.appendChild(point);
+
+                // Cria o rótulo
+                const label = document.createElement('span');
+                label.classList.add('chart-label');
+                label.style.left = `${x}px`;
+                label.style.top = `${chartHeight - 15}px`;
+                label.innerText = `${month}/${year}`;
+                chartContainer.appendChild(label);
+            });
+            
+            pathData = pathData.slice(0, -1);
+
+            // Cria a linha
+            const line = document.createElementNS("http://www.w3.org/2000/svg", "svg");
+            line.setAttribute("viewBox", `0 0 ${chartWidth} ${chartHeight}`);
+            line.innerHTML = `<path d="${pathData}" stroke="var(--azul-medio)" stroke-width="3" fill="none" class="line-path" />`;
+            chartContainer.prepend(line);
+        }
+
+        document.addEventListener('DOMContentLoaded', function() {
+            createVerticalBarChart('atendimentosPorDepartamentoChart', dashboardData.atendimentosPorDepartamento);
+            createVerticalBarChart('topClientesChart', dashboardData.topClientes);
+            createVerticalBarChart('topEmpresasChart', dashboardData.topEmpresas);
+            createVerticalBarChart('topAtendentesChart', dashboardData.topAtendentes);
+            
+            // NOVO: Chama a função para o gráfico de linha
+            createLineChart('mediaMovelChart', dashboardData.mediaMovelData);
+        });
+    </script>
+</body>
+</html>

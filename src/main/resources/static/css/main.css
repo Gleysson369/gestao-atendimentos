@@ -1,0 +1,390 @@
+/* src/main/resources/static/css/main.css */
+
+@import url('_variables.css');
+
+body {
+    background: linear-gradient(135deg, var(--azul-claro) 0%, var(--azul-medio) 100%);
+}
+
+.main-container {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    min-height: 100vh;
+    background-color: var(--cinza-claro);
+    box-shadow: 0 0 20px var(--sombra-media);
+    margin: 0 auto;
+    border-radius: var(--borda-arredondada);
+    overflow: hidden;
+}
+
+.user-info {
+    font-size: 1.1em;
+    font-weight: 500;
+}
+
+.main-menu {
+    background-color: var(--azul-medio);
+    padding: 15px 30px;
+    display: flex;
+    justify-content: flex-start;
+    gap: 20px;
+    flex-wrap: wrap;
+    box-shadow: inset 0 -2px 5px rgba(0,0,0,0.1);
+}
+
+.menu-button {
+    background-color: var(--branco);
+    color: var(--azul-escuro);
+    padding: 10px 20px;
+    border-radius: 5px;
+    text-decoration: none;
+    font-weight: 600;
+    transition: var(--transicao-rapida);
+    box-shadow: 0 2px 5px var(--sombra-leve);
+}
+
+.menu-button:hover {
+    background-color: var(--azul-claro);
+    color: var(--azul-medio);
+    transform: translateY(-2px);
+    box-shadow: 0 4px 8px var(--sombra-media);
+}
+
+.dashboard-content {
+    flex-grow: 1;
+    padding: 30px;
+    background-color: var(--branco);
+}
+
+.dashboard-section h3 {
+    color: var(--azul-escuro);
+    margin-bottom: 25px;
+    font-size: 1.6em;
+    border-bottom: 2px solid var(--azul-claro);
+    padding-bottom: 10px;
+}
+
+.dashboard-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 25px;
+}
+
+.card {
+    background-color: var(--cinza-claro);
+    padding: 20px;
+    border-radius: var(--borda-arredondada);
+    box-shadow: 0 5px 15px var(--sombra-leve);
+    text-align: center;
+    transition: var(--transicao-rapida);
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+}
+
+.card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 8px 20px var(--sombra-media);
+}
+
+.card h4 {
+    color: var(--azul-escuro);
+    margin-top: 0;
+    margin-bottom: 30px;
+    font-size: 1.3em;
+    font-weight: 600;
+}
+
+.big-number {
+    font-size: 3em;
+    color: var(--azul-medio);
+    font-weight: 700;
+    margin: 10px 0;
+}
+
+.card ul {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    text-align: left;
+}
+
+.card ul li {
+    padding: 8px 0;
+    border-bottom: 1px dotted #e0e0e0;
+    font-size: 0.95em;
+    color: var(--cinza-escuro-texto);
+}
+
+.card ul li:last-child {
+    border-bottom: none;
+}
+
+.card.full-width {
+    grid-column: 1 / -1;
+}
+
+/* --- Estilos para Gráficos de Barras Verticais --- */
+.vertical-bar-chart {
+    display: flex;
+    justify-content: space-around;
+    align-items: flex-end;
+    width: 100%;
+    height: 350px;
+    padding: 20px;
+    box-sizing: border-box;
+    position: relative;
+    
+    /* ADICIONADO: Espaçamento entre as barras */
+    gap: 20px;
+    
+    /* Simula a grade do plano de fundo */
+    background:
+        linear-gradient(to top, transparent 99%, #ddd 1%),
+        linear-gradient(to right, #ddd 1px, transparent 1px);
+    background-size: 100% 25%, 12.5% 100%;
+}
+
+.vertical-bar-item {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    flex-grow: 1; 
+    min-width: 80px;
+    gap: 10px;
+}
+
+.vertical-bar {
+    position: relative;
+    width: 100%;
+    background-color: var(--cor-principal);
+    border-top-left-radius: 5px;
+    border-top-right-radius: 5px;
+    transition: height 0.8s ease-out;
+    display: flex;
+    justify-content: center;
+    align-items: flex-start;
+}
+
+.vertical-bar-value {
+    position: absolute;
+    top: -25px;
+    font-size: 0.9em;
+    font-weight: bold;
+    color: var(--cor-texto-principal);
+}
+
+.vertical-bar-label {
+    font-size: 0.9em;
+    color: var(--cinza-escuro);
+    word-break: break-word;
+}
+
+.user-name {
+    font-weight: 500;
+    font-size: 1.05em;
+}
+
+/* Responsividade */
+@media (max-width: 768px) {
+    .app-header {
+        flex-direction: column;
+        text-align: center;
+        gap: 10px;
+    }
+
+    .main-menu {
+        justify-content: center;
+        padding: 15px;
+    }
+
+    .menu-button {
+        flex-grow: 1;
+        text-align: center;
+    }
+
+    .dashboard-content {
+        padding: 20px;
+    }
+
+    .dashboard-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .app-footer {
+        flex-direction: column;
+        gap: 15px;
+    }
+
+    .vertical-bar-chart {
+        height: 200px;
+    }
+
+    .vertical-bar-item {
+        width: 40px;
+    }
+}
+/* Estilos para os novos botões de filtro */
+.filter-period-container {
+    display: flex;
+    justify-content: center;
+    gap: 15px;
+    margin-bottom: 25px;
+}
+
+.filter-button {
+    background-color: var(--cinza-claro);
+    color: var(--cinza-escuro-texto);
+    padding: 10px 20px;
+    border-radius: var(--borda-arredondada);
+    text-decoration: none;
+    font-weight: 500;
+    transition: all 0.3s ease;
+    box-shadow: 0 2px 5px var(--sombra-leve);
+}
+
+.filter-button:hover {
+    background-color: var(--azul-claro);
+    color: var(--branco);
+    transform: translateY(-2px);
+    box-shadow: 0 4px 8px var(--sombra-media);
+}
+
+.filter-button.active {
+    background-color: var(--azul-medio);
+    color: var(--branco);
+    box-shadow: 0 2px 5px var(--sombra-media) inset;
+    pointer-events: none; /* Desabilita o clique no botão ativo */
+}
+
+/* No seu main.css */
+/* Estilos para o Gráfico de Progresso */
+.progress-container {
+    width: 100%;
+    height: 20px;
+    background-color: var(--cinza-claro);
+    border-radius: 10px;
+    overflow: hidden;
+    margin-bottom: 15px;
+    box-shadow: inset 0 2px 5px var(--sombra-leve);
+}
+
+.progress-bar {
+    height: 100%;
+    background-color: var(--azul-medio);
+    transition: width 0.8s ease-out; /* Anima a barra quando a página carrega */
+    border-radius: 10px;
+}
+
+.meta-info {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 1.2em;
+    font-weight: 600;
+    color: var(--cinza-escuro-texto);
+}
+
+.meta-info .current-value {
+    color: var(--azul-escuro);
+}
+
+.meta-info .separator {
+    margin: 0 5px;
+}
+
+/* Estilos para o grupo de entrada de meta */
+.meta-input-group {
+    display: flex;
+    gap: 10px;
+    margin-top: 20px;
+}
+
+.meta-input-group input[type="number"] {
+    flex-grow: 1;
+    padding: 8px 1px;
+    border: 1px solid var(--cinza-claro-borda);
+    border-radius: var(--borda-arredondada);
+    font-size: 0.9em;
+    background-color: var(--branco);
+    color: var(--cinza-escuro-texto);
+    box-sizing: border-box;
+    max-width: 100%;
+}
+
+.meta-input-group input[type="number"]:focus {
+    outline: none;
+    border-color: var(--azul-medio);
+    box-shadow: 0 0 5px rgba(52, 152, 219, 0.5);
+}
+
+.save-meta-button {
+    background-color: var(--azul-medio);
+    color: var(--branco);
+    border: none;
+    border-radius: var(--borda-arredondada);
+    padding: 8px 15px;
+    font-size: 0.9em;
+    font-weight: 600;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+.save-meta-button:hover {
+    background-color: var(--azul-escuro);
+}
+/* NOVOS ESTILOS PARA O GRÁFICO DE LINHA */
+.line-chart {
+    position: relative;
+    width: 100%;
+    height: 300px;
+    overflow: visible;
+}
+
+.line-chart svg {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    padding: 20px;
+    box-sizing: border-box;
+    z-index: 1;
+}
+
+line-chart .chart-value {
+    position: absolute;
+    background-color: var(--azul-escuro);
+    color: var(--branco);
+    padding: 2px 5px;
+    border-radius: 3px;
+    font-size: 0.8em;
+    font-weight: bold;
+    transform: translateX(-50%); /* Para centralizar o texto */
+    z-index: 10;
+}
+
+.line-path {
+    transition: stroke-dasharray 2s ease-out; /* Anima a linha */
+}
+
+.chart-point {
+    position: absolute;
+    width: 10px;
+    height: 10px;
+    background-color: var(--azul-escuro);
+    border: 2px solid var(--branco);
+    border-radius: 50%;
+    transform: translate(-50%, -50%);
+    z-index: 2;
+}
+
+.chart-label {
+    position: absolute;
+    bottom: 0;
+    font-size: 0.8em;
+    color: var(--cinza-escuro-texto);
+    transform: translate(-50%, 0);
+}

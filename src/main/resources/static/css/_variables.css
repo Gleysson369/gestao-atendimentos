@@ -1,0 +1,140 @@
+/* src/main/resources/static/css/_variables.css */
+
+/* Definição de Cores e Fontes */
+:root {
+    --preto-grafico: #000000;
+    --azul-claro: #e0f0ff;
+    --azul-medio: #007bff; /* Um azul vibrante para botões */
+    --azul-escuro: #003f88; /* Um azul mais profundo para texto/background */
+    --branco: #ffffff;
+    --cinza-claro: #f8f9fa;
+    --cinza-escuro-texto: #343a40; /* Cor para o texto principal */
+    --cinza-escuro: #888;
+    --sombra-leve: rgba(0, 0, 0, 0.1);
+    --sombra-media: rgba(0, 0, 0, 0.15);
+    --borda-arredondada: 8px;
+    --transicao-rapida: all 0.3s ease-in-out;
+    --fonte-principal: 'Segoe UI', Roboto, Helvetica, Arial, sans-serif; /* Fonte moderna */
+    --vermelho-claro: #f8d7da;
+    --vermelho-principal: #dc3545; /* Vermelho padrão para ação de deletar */
+    --vermelho-escuro: #c82333; /* Vermelho mais escuro para hover */
+    --vermelho-sombra: rgba(220, 53, 69, 0.4); /* Sombra para botões vermelhos */
+    --borda-claro: #ced4da; /* Borda mais clara para inputs e tabelas */
+    --azul-foco: rgba(0, 123, 255, 0.25); /* Sombra de foco para inputs */
+    --borda-arredondada-pequena: 5px; /* Borda arredondada menor para elementos */
+    --transicao-padrao: all 0.2s ease-in-out; /* Transição mais genérica */
+    --fundo-hover-claro: #e9ecef; /* Fundo cinza bem claro para hover em tabelas */
+    --cor-sucesso: #28a745;
+    --cor-verde-claro:#d4edda;
+    --cor-verde-suave:#c3e6cb;
+    --amarelo-claro: #fff3cd;
+    --amarelo:#856404;
+}
+
+/* Estilos globais muito básicos que afetam tudo */
+html {
+    box-sizing: border-box;
+}
+
+*, *::before, *::after {
+    box-sizing: inherit;
+}
+
+body {
+    font-family: var(--fonte-principal);
+    margin: 0;
+    color: var(--cinza-escuro-texto);
+}
+
+.app-header {
+    background-color: var(--azul-escuro);
+    color: var(--branco);
+    padding: 20px 30px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    box-shadow: 0 2px 10px var(--sombra-leve);
+}
+
+.app-header h1 {
+    margin: 0;
+    font-size: 1.8em;
+    font-weight: 700;
+}
+
+.main-menu {
+    background-color: var(--azul-medio);
+    padding: 15px 30px;
+    display: flex;
+    justify-content: flex-start;
+    gap: 20px;
+    flex-wrap: wrap;
+    box-shadow: inset 0 -2px 5px rgba(0,0,0,0.1);
+}
+
+.menu-button {
+    background-color: var(--branco);
+    color: var(--azul-escuro);
+    padding: 10px 20px;
+    border-radius: 5px;
+    text-decoration: none;
+    font-weight: 600;
+    transition: var(--transicao-rapida);
+    box-shadow: 0 2px 5px var(--sombra-leve);
+}
+
+.menu-button:hover {
+    background-color: var(--azul-claro);
+    color: var(--azul-medio);
+    transform: translateY(-2px);
+    box-shadow: 0 4px 8px var(--sombra-media);
+}
+
+/* Rodapé da Aplicação */
+.app-footer {
+    background-color: var(--azul-escuro);
+    color: var(--branco);
+    padding: 15px 30px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border-top: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.app-version {
+    flex-grow: 1; /* Permite que este elemento ocupe o espaço extra */
+    text-align: center; /* Centraliza o texto */
+    margin: 0 50px 0 0; /* Remove margens extras */
+}
+
+.user-profile {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.app-logo-footer {
+    width: 60px;
+    height: auto;
+    border-radius: 0;
+    border: none;
+    object-fit: contain;
+}
+
+.logout-button {
+    background-color: #dc3545;
+    color: var(--branco);
+    padding: 8px 18px;
+    border: none;
+    border-radius: 5px;
+    font-size: 0.95em;
+    font-weight: 600;
+    cursor: pointer;
+    transition: var(--transicao-rapida);
+}
+
+.logout-button:hover {
+    background-color: #c82333;
+    box-shadow: 0 3px 8px var(--sombra-leve);
+    transform: translateY(-1px);
+}
